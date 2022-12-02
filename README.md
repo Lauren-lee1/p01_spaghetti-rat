@@ -1,6 +1,6 @@
 # p01_spaghettiRat
 
-### Roster: **Lauren Lee**, Emerson Gelobter, Nada Hameeed, Brianna Tieu
+### Roster: Lauren Lee, Emerson Gelobter, Nada Hameeed, Brianna Tieu
 #### Roles:
 * **Lauren**:
 * **Emerson**:

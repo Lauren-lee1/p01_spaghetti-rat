@@ -1,6 +1,11 @@
 # p01_spaghettiRat
 
-### Roster: Lauren Lee, Emerson Gelobter, Nada Hameeed, Brianna Tieu
+### spaghetti rat: Lauren Lee, Brianna Tieu, Emerson Gelobter, Nada Hameed
+### SoftDev
+### P01: ArRESTed Development
+### 2022-12-04
+### time spent: 0.1
+
 #### Roles:
 * **Lauren**:
 * **Emerson**:

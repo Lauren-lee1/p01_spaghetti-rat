@@ -1,10 +1,10 @@
 # p01_spaghettiRat
 
-#### spaghetti rat: Lauren Lee, Brianna Tieu, Emerson Gelobter, Nada Hameed
-#### SoftDev
-#### P01: ArRESTed Development
-#### 2022-12-04
-#### time spent: 0.1
+**spaghetti rat**: Lauren Lee, Brianna Tieu, Emerson Gelobter, Nada Hameed 
+SoftDev  
+P01: ArRESTed Development  
+2022-12-04  
+time spent:   
 
 #### Roles:
 * **Lauren**:

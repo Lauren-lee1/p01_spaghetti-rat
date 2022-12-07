@@ -49,3 +49,12 @@ nadaH & laurenL -- 2022-12-07 12:39
   - created databases for users, profile, and preferences, and
   determined which features were optional/mandatory
 ==============================================================
+
+briannaT and emersonG -- 2022-12-07 13:51
+--------------------------------------------------------------
+* added more to the flask app
+  - setting up login and register functionality
+* created login and register templates
+  - played around with foundation to add cooler functionality
+  to login page
+==============================================================

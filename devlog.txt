@@ -35,4 +35,10 @@ laurenL -- 2022-12-04 22:41
 * set up repo
 ==============================================================
 
-
+tieuB -- 2022-12-07 00:47
+--------------------------------------------------------------
+* updated design doc
+    - replaced spotify api with yes/no api b/c oauth is scary :(
+    - added a small blurb next to each api in api list with what 
+    it is being used for
+==============================================================

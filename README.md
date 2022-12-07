@@ -7,10 +7,10 @@ P01: ArRESTed Development
 time spent:   
 
 #### Roles:
-* **Lauren**:
-* **Emerson**:
-* **Nada**:
-* **Brianna**:
+* **Lauren**: database manipulation, api integration
+* **Emerson**: html templates, Flask app
+* **Nada**: database manipulation, api integration
+* **Brianna**: html templates, Flask app
 
 ### Description:
 This is a dating app that matches people based on their preferences. Once signed up, users can update their profile with information and preferences. Only the filled out information and a calculation from the love calculator api will be used to determine matches. In order for users to unlock more information of their matches, it is left up to chance by the yes/no api and their answers to riddles by the riddle api. 

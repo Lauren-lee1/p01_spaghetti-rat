@@ -85,3 +85,9 @@ nadaH & laurenL -- 2022-12-07 22:30
 * spent a VERY long time adding the mbti, good mbti, and bad
   mbti
 ==============================================================
+
+briannaT and emersonG -- 2022-12-07 13:51
+--------------------------------------------------------------
+* made a working flask app
+*worked on html
+==============================================================

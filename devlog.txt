@@ -58,3 +58,30 @@ briannaT and emersonG -- 2022-12-07 13:51
   - played around with foundation to add cooler functionality
   to login page
 ==============================================================
+
+nadaH & laurenL -- 2022-12-07 22:30
+--------------------------------------------------------------
+* continued working on db.py
+  - added automatic star sign calculation
+  - the databases are WORKING
+  - the methods are too, SO FAR HAHA
+  - I remember seeing a shortcut somewhere that deletes the dbs
+    after you make them so we need to find that and add it in
+    later because it's really annoying to keep deleting them
+    every time we test UGH
+  - name space conflicts are annoying as HELL GOSH
+  - lauren is very amazing, we are very ahead of the assignments
+    page deadlines yippee
+  - we are working on importing time so that we can easily
+    calculate the age because that is important and we do not
+    want to do more work than we have to
+  - worked on automatically calculating the age^^
+  - using mbti/star sign is optional
+* decided what the riddle api would be used for
+* updated design doc EVEN MORE
+* added a bunch of comments because we love our future code
+  readers and ourselves as well and would like to spare them
+  and us some suffering <3
+* spent a VERY long time adding the mbti, good mbti, and bad
+  mbti
+==============================================================

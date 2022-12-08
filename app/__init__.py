@@ -14,8 +14,8 @@ from flask import Flask, redirect, render_template, request, session, url_for
 #====================FLASK====================#
 app = Flask(__name__) 
 
-@app.route("/", methods=['GET','POST'])       
-def login():
+@app.route("/register", methods=['GET','POST'])       
+def signUp():
     if request.method == 'POST':
         if 'username' in request.form and 'password' in request.form: # need to check the input to make sure it's valid
             passing = [request.form['username'], request.form['password']]

@@ -3,17 +3,26 @@
 # 2022-12-04
 # time spent:
 
+import db
 
 from flask import Flask, redirect, render_template, request, session, url_for
 
+#====================SQL====================#
+db.create_users_db()
+db.create_profile_db()
+db.create_pref_db()
+
+
+#===========================================#
+
 #====================FLASK====================#
-app = Flask(__name__) 
+app = Flask(__name__)
 
 @app.route("/", methods=['GET', 'POST'])
 def disp_loginpage():
-    return render_template( 'login.html')
+    return render_template('login.html')
 
-'''
+
 @app.route("/login", methods =['GET', 'POST'])
 def authenticate():
     msg = ""
@@ -24,33 +33,33 @@ def authenticate():
         if list(pwd_check)[0][0] == request.form['password']:
             session['username']=request.form['username']
             session['password']=request.form['password']
-            userBlogs = list(c.execute("SELECT * from blogs WHERE username = (?)", passing))
-            # return redirect(url_for('userpage'))
-            return render_template('user.html', user=session['username'], blogList=userBlogs)  # response to a form submission
+            return render_template('home.html')  # response to a form submission
         else:
-            msg = "your password is incorrect"
-    except:
-        msg = "could not find username in our database"
+            msg = "problem"
 
-    return render_template( 'login.html', msg=msg)
-        
-            
-@app.route("/", methods=['GET','POST'])       
+    except:
+        msg ="error"
+
+
+    return render_template('login.html', msg=msg)
+
+'''
+@app.route("/register", methods=['GET','POST'])
 def register():
     if request.method == 'POST':
         if 'username' in request.form and 'password' in request.form: # need to check the input to make sure it's valid
-            passing = [request.form['username'], request.form['password']]
-            c.execute("INSERT INTO users VALUES (?, ?)", passing) # adds user pass combo into the db
-            db.commit()
+            add_user(request.form['username'], request.form['password'])
+            profile_setup(user,name, request.form['birthday'],request.form['height'],request.form['hobby_1'],request.form['hobby_2'],request.form['spotify'],request.form['gender'], request.form['mbti'])
             return render_template('home.html')
 
+
+
         else:
-            
-            #error message
+            #return error message
     return render_template(register.html)
 #================================================#
-'''
 
+'''
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change
     app.run()

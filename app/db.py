@@ -57,7 +57,7 @@ def create_pref_db():
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
     # preferences table
-    c.execute("CREATE TABLE IF NOT EXISTS pref(user TEXT, good_star_sign LIST, height INTEGER, hobby_1 TEXT, hobby_2 TEXT, gender TEXT, bad_star_sign LIST, good_mbti TEXT, bad_mbti LIST)")
+    c.execute("CREATE TABLE IF NOT EXISTS pref(user TEXT, good_star_sign LIST, height INTEGER, hobby_1 TEXT, hobby_2 TEXT, gender LIST, bad_star_sign LIST, good_mbti TEXT, bad_mbti LIST)")
 
     db.commit() #save changes
     db.close()  #close database
@@ -253,9 +253,48 @@ def pref_setup(user, user_star_sign, height, gender, user_mbti, use_mbti, use_st
             good_mbti = ['ENFP','INFP','ENTJ']
             bad_mbti = ['ESFJ','ISFJ','ENFJ','INFJ']
 
+#is star sign a factor in determining if you're a match
+    if use_star_sign == False:
+        good_star_sign == []
+        bad_star_sign == []
+    else:
+        if user_star_sign == 'Aries':
+            good_star_sign = ['Gemini', 'Leo', 'Sagittarius', 'Aquarius']
+            bad_star_sign = ['Cancer', 'Capricorn']
+        if user_star_sign == 'Taurus':
+            good_star_sign = ['Cancer', 'Virgo', 'Capricorn', 'Pisces']
+            bad_star_sign = ['Leo', 'Aquarius']
+        if user_star_sign == 'Gemini':
+            good_star_sign = ['Aries', 'Leo', 'Libra', 'Aquarius']
+            bad_star_sign = ['Virgo', 'Leo']
+        if user_star_sign == 'Cancer':
+            good_star_sign = ['Taurus', 'Virgo', 'Scorpio', 'Pisces']
+            bad_star_sign = ['Aries', 'Libra']
+        if user_star_sign == 'Leo':
+            good_star_sign = ['Aries', 'Gemini', 'Libra', 'Sagittarius']
+            bad_star_sign = ['Taurus', 'Scorpio']
+        if user_star_sign == "Virgo":
+            good_star_sign = ['Taurus','Cancer','Scorpio','Capricorn']
+            bad_star_sign = ['Gemini','Sagittarius']
+        if user_star_sign == "Libra":
+            good_star_sign = ['Gemini','Leo','Sagittarius','Aquarius']
+            bad_star_sign = ['Cancer','Capricorn']
+        if user_star_sign == "Scorpio":
+            good_star_sign = ['Cancer','Virgo','Pisces','Capricorn']
+            bad_star_sign = ['Gemini','Sagittarius']
+        if user_star_sign == "Sagittarius":
+            good_star_sign = ['Aries','Leo','Libra','Aquarius']
+            bad_star_sign = ['Virgo','Pisces']
+        if user_star_sign == "Capricorn":
+            good_star_sign = ['Taurus','Virgo','Scorpio','Pisces']
+            bad_star_sign = ['Aries','Libra']
+        if user_star_sign == "Pisces":
+            good_star_sign = ['Taurus','Cancer','Scorpio','Capricorn']
+            bad_star_sign = ['Gemini','Sagittarius']
 
+#you need a gender preference
     if (gender == ''):
-        return error
+        return 'error'
 
     c.execute("INSERT INTO pref (user, good_star_sign, height, hobby_1, hobby_2, gender, bad_star_sign, good_mbti, bad_mbti) VALUES (?,?,?,?,?,?,?,?,?)", (user, good_star_sign, height, hobby_1, hobby_2, gender, bad_star_sign, good_mbti, bad_mbti))
 
@@ -265,3 +304,40 @@ def pref_setup(user, user_star_sign, height, gender, user_mbti, use_mbti, use_st
 
     db.commit() #save changes
     db.close()  #close database
+
+def match(user, other_user):
+    DB_FILE="pref.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    # check if optional or not
+'''
+matching criteria:
+- mbti (optional)
+- star sign (optional)
+- similar hobbies (at least one hobby is the same)
+- gender (female, male, non-binary)
+    * yes or no
+- age
+    * yes or no
+    * <= 16 -- one year apart
+    * > 16 -- two years apart
+- height preferences (optional)
+- love calculator (uses first name and the compatibility percentage factors into your match)
+
+don't do optional:
+- love calculator (50)
+- 1 shared hobby (30)
+- 2 shared hobbies (20)
+
+choose all optional:
+- Astrology - 15
+- MBTI - 20
+- Height - 20
+- hobby 1 (15)
+- hobby 2 (10)
+- love calculator (20)
+
+choose 1+ optional:
+- remaining percentage is divided up between the number of filled in categories and added
+'''

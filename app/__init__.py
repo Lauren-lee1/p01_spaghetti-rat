@@ -3,25 +3,17 @@
 # 2022-12-04
 # time spent:
 
-import db.py
 
 from flask import Flask, redirect, render_template, request, session, url_for
-
-#====================SQL====================#
-create_users_db()
-
-
-#===========================================#
 
 #====================FLASK====================#
 app = Flask(__name__) 
 
 @app.route("/", methods=['GET', 'POST'])
 def disp_loginpage():
-    
     return render_template( 'login.html')
 
-
+'''
 @app.route("/login", methods =['GET', 'POST'])
 def authenticate():
     msg = ""
@@ -57,7 +49,7 @@ def register():
             #error message
     return render_template(register.html)
 #================================================#
-
+'''
 
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change

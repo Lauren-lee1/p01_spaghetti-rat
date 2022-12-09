@@ -57,7 +57,7 @@ def create_pref_db():
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
     # preferences table
-    c.execute("CREATE TABLE IF NOT EXISTS pref(user TEXT, good_star_sign LIST, height INTEGER, hobby_1 TEXT, hobby_2 TEXT, gender LIST, bad_star_sign LIST, good_mbti TEXT, bad_mbti LIST)")
+    c.execute("CREATE TABLE IF NOT EXISTS pref(user TEXT, good_star_sign LIST, height INTEGER, gender LIST, bad_star_sign LIST, good_mbti TEXT, bad_mbti LIST)")
 
     db.commit() #save changes
     db.close()  #close database
@@ -296,7 +296,7 @@ def pref_setup(user, user_star_sign, height, gender, user_mbti, use_mbti, use_st
     if (gender == ''):
         return 'error'
 
-    c.execute("INSERT INTO pref (user, good_star_sign, height, hobby_1, hobby_2, gender, bad_star_sign, good_mbti, bad_mbti) VALUES (?,?,?,?,?,?,?,?,?)", (user, good_star_sign, height, hobby_1, hobby_2, gender, bad_star_sign, good_mbti, bad_mbti))
+    c.execute("INSERT INTO pref (user, good_star_sign, height,  gender, bad_star_sign, good_mbti, bad_mbti) VALUES (?,?,?,?,?,?,?)", (user, good_star_sign, height, hobby_1, hobby_2, gender, bad_star_sign, good_mbti, bad_mbti))
 
     table = c.execute("SELECT * from pref")
     print("pref table from pref_setup() call")
@@ -350,5 +350,21 @@ choose all optional:
 choose 1+ optional:
 - remaining percentage is divided up between the number of filled in categories and added
 '''
+#user preference information:
 
+good_star_sign = c.execute("SELECT good_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+bad_star_sign = c.execute("SELECT bad_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+
+good_mbti = c.execute("SELECT good_mbti FROM pref WHERE user =?", (user,)).fetchone()
+bad_mbti = c.execute("SELECT bad_mbti FROM pref WHERE user =?", (user,)).fetchone()
+
+height = c.execute("SELECT height FROM pref WHERE user =?", (user,)).fetchone()    
+
+gender = c.execute("SELECT gender FROM pref WHERE user =?", (user,)).fetchone()    
+
+hobby_1 = c.execute("SELECT hobby_1 FROM pref WHERE user =?", (user,)).fetchone()    
+hobby_2 = c.execute("SELECT hobby_2 FROM pref WHERE user =?", (user,)).fetchone()    
+
+#height can be list of lowest and greatest inclusive?
+if good_star_sign == [] and good_mbti == [] and height == "" and gender ==  "":
     

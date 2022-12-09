@@ -12,7 +12,7 @@
 
     <body>
       <h1 class="text-center">Login</h1>
-        <form data-abide novalidate>
+        <form data-abide novalidate action="/login" method="POST">
             <div class="grid-x grid-margin-x">
                 <div class="cell">
                     <div data-abide-error class="alert callout" style="display: none;">
@@ -23,7 +23,7 @@
             <div class="grid-x grid-margin-x">
             <div class="cell small-12">
                     <label>Username
-                    <input type="username" id="username" placeholder="briannaiscool" aria-describedby="exampleHelpTextPassword" required >
+                    <input type="username" name= "username" id="username" placeholder="briannaiscool" aria-describedby="exampleHelpTextPassword" required >
                     <span class="form-error">
                         Username is a required field!
                     </span>
@@ -32,7 +32,7 @@
             </div>
             <div class="cell small-12">
                 <label>Password
-                <input type="password" id="password" placeholder="yeti4preZ" aria-describedby="exampleHelpTextPassword" required >
+                <input type="password" name= "password" id="password" placeholder="yeti4preZ" aria-describedby="exampleHelpTextPassword" required >
                 <span class="form-error">
                     Password is a required field!
                 </span>
@@ -42,7 +42,7 @@
             </div>
             <div class="grid-x grid-margin-x">
                 <fieldset class="cell medium-6">
-                <button class="button" type="submit" value="Submit">Submit</button>
+                <input type="submit" name="submit" value = "submit">
                 </fieldset>
                 <fieldset class="cell medium-6">
                 <button class="button" type="reset" value="Reset">Reset</button>

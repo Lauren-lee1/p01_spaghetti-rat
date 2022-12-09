@@ -36,10 +36,12 @@ database
 def authenticate():
     msg = ""
 
-    if auth.authLogin():
+    user = [request.form['username']]
+    passw = [request.form['password']]
+    if auth.authLogin(user, passw):
         render_template('home.html', msg = msg)
     
-    
+    print("sssssdfsdfdsfsd")
     msg = 'wrong username or password'
 
 

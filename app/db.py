@@ -25,6 +25,32 @@ def create_users_db():
     db.close()  #close database
 
 '''
+Used for user.db
+Checks if login credentials match any in the database
+'''
+def valid_login(user, passw):
+    DB_FILE="users.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    # check if username is in table
+    username = c.execute("SELECT user FROM users WHERE user = ?", (user,)).fetchone()
+
+    if username is None:
+        exists = False
+    else:
+        exists = True
+
+    # check if password is in table
+    password = c.execute("SELECT pass FROM users WHERE pass =?", (passw,)).fetchone()
+    if password is None:
+        exists = False
+
+    db.commit() #save changes
+    db.close()  #close database
+    return exists
+
+'''
 creates profile table:
 user (string) | name (string) |
 birthday (string) | star_sign (string) |
@@ -314,57 +340,56 @@ def love_pcnt(name, other_name):
     #INTEGRATE API HERE
 '''
 
-def match(user, other_user):
-    DB_FILE="pref.db"
-    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+# def match(user, other_user):
+#     DB_FILE="pref.db"
+#     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+#     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
-    # check if optional or not
-'''
-matching criteria:
-- mbti (optional)
-- star sign (optional)
-- similar hobbies (at least one hobby is the same)
-- gender (female, male, non-binary)
-    * yes or no
-- age
-    * yes or no
-    * <= 16 -- one year apart
-    * > 16 -- two years apart
-- height preferences (optional)
-- love calculator (uses first name and the compatibility percentage factors into your match)
+#     # check if optional or not
+# '''
+# matching criteria:
+# - mbti (optional)
+# - star sign (optional)
+# - similar hobbies (at least one hobby is the same)
+# - gender (female, male, non-binary)
+#     * yes or no
+# - age
+#     * yes or no
+#     * <= 16 -- one year apart
+#     * > 16 -- two years apart
+# - height preferences (optional)
+# - love calculator (uses first name and the compatibility percentage factors into your match)
 
-don't do optional:
-- love calculator (50)
-- 1 shared hobby (30)
-- 2 shared hobbies (20)
+# don't do optional:
+# - love calculator (50)
+# - 1 shared hobby (30)
+# - 2 shared hobbies (20)
 
-choose all optional:
-- Astrology - 15
-- MBTI - 20
-- Height - 20
-- hobby 1 (15)
-- hobby 2 (10)
-- love calculator (20)
+# choose all optional:
+# - Astrology - 15
+# - MBTI - 20
+# - Height - 20
+# - hobby 1 (15)
+# - hobby 2 (10)
+# - love calculator (20)
 
-choose 1+ optional:
-- remaining percentage is divided up between the number of filled in categories and added
-'''
-#user preference information:
+# choose 1+ optional:
+# - remaining percentage is divided up between the number of filled in categories and added
+# '''
+# #user preference information:
 
-good_star_sign = c.execute("SELECT good_star_sign FROM pref WHERE user =?", (user,)).fetchone()
-bad_star_sign = c.execute("SELECT bad_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+# good_star_sign = c.execute("SELECT good_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+# bad_star_sign = c.execute("SELECT bad_star_sign FROM pref WHERE user =?", (user,)).fetchone()
 
-good_mbti = c.execute("SELECT good_mbti FROM pref WHERE user =?", (user,)).fetchone()
-bad_mbti = c.execute("SELECT bad_mbti FROM pref WHERE user =?", (user,)).fetchone()
+# good_mbti = c.execute("SELECT good_mbti FROM pref WHERE user =?", (user,)).fetchone()
+# bad_mbti = c.execute("SELECT bad_mbti FROM pref WHERE user =?", (user,)).fetchone()
 
-height = c.execute("SELECT height FROM pref WHERE user =?", (user,)).fetchone()    
+# height = c.execute("SELECT height FROM pref WHERE user =?", (user,)).fetchone()    
 
-gender = c.execute("SELECT gender FROM pref WHERE user =?", (user,)).fetchone()    
+# gender = c.execute("SELECT gender FROM pref WHERE user =?", (user,)).fetchone()    
 
-hobby_1 = c.execute("SELECT hobby_1 FROM pref WHERE user =?", (user,)).fetchone()    
-hobby_2 = c.execute("SELECT hobby_2 FROM pref WHERE user =?", (user,)).fetchone()    
+# hobby_1 = c.execute("SELECT hobby_1 FROM pref WHERE user =?", (user,)).fetchone()    
+# hobby_2 = c.execute("SELECT hobby_2 FROM pref WHERE user =?", (user,)).fetchone()    
 
-#height can be list of lowest and greatest inclusive?
-if good_star_sign == [] and good_mbti == [] and height == "" and gender ==  "":
-    
+# #height can be list of lowest and greatest inclusive?
+# if good_star_sign == [] and good_mbti == [] and height == "" and gender ==  "":

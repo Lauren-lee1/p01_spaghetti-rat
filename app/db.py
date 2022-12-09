@@ -305,6 +305,15 @@ def pref_setup(user, user_star_sign, height, gender, user_mbti, use_mbti, use_st
     db.commit() #save changes
     db.close()  #close database
 
+'''
+#LOVE API --> uses actual name, not username
+def love_pcnt(name, other_name):
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+    #INTEGRATE API HERE
+'''
+
 def match(user, other_user):
     DB_FILE="pref.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
@@ -341,3 +350,5 @@ choose all optional:
 choose 1+ optional:
 - remaining percentage is divided up between the number of filled in categories and added
 '''
+
+    

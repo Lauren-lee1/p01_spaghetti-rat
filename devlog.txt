@@ -109,3 +109,8 @@ briannaT and emersonG -- 2022-12-08 18:43
     routes to html pages
   - looked more into form submission and storing user input
 ==============================================================
+
+nadaH -- 2022-12-08 21:38
+--------------------------------------------------------------
+* starting working on implementing love calculator api
+==============================================================

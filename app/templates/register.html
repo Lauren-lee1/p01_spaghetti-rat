@@ -13,7 +13,7 @@
 
     <body>
       <h1 class="text-center">Register</h1>
-        <form data-abide novalidate>
+        <form data-abide novalidate action="/register" method="POST">
             <div class="grid-x grid-margin-x">
                 <div class="cell">
                     <div data-abide-error class="alert callout" style="display: none;">
@@ -43,7 +43,7 @@
             </div>
             <div class="grid-x grid-margin-x">
                 <fieldset class="cell medium-6">
-                <button class="button" type="submit" value="Submit">Submit</button>
+                <input type="submit" name="submit" value = "submit">
                 </fieldset>
                 <fieldset class="cell medium-6">
                 <button class="button" type="reset" value="Reset">Reset</button>

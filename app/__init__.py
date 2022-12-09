@@ -39,9 +39,9 @@ def authenticate():
     user = [request.form['username']]
     passw = [request.form['password']]
     if auth.authLogin(user, passw):
-        render_template('home.html', msg = msg)
+        session['username'] = request.form['username']
+        return render_template('home.html', msg = msg)
     
-    print("sssssdfsdfdsfsd")
     msg = 'wrong username or password'
 
 
@@ -52,13 +52,16 @@ register route, allows user to create a new account
 '''
 @app.route("/register", methods=['GET','POST'])
 def register():
-    if request.method == 'POST':
+    if 'username' in session: #home page rendered if there is a session
+        return render_template('home.html', msg="")
+    else:
         if 'username' in request.form and 'password' in request.form: # need to check the input to make sure it's valid
-            db.add_user(request.form['username'], request.form['password'])
-            return render_template('home.html')#, msg = msg)
+            if user_exists(request.form['username']):
+                db.add_user(request.form['username'], request.form['password'])
+                return render_template('login.html')#, msg = msg)
         else:
             #return error message
-            return render_template('register.html')#, msg = msg)
+              return render_template('register.html')#, msg = msg)
     return render_template('register.html')#, msg = msg)
 #================================================#
 

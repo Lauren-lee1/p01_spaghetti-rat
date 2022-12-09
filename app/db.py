@@ -50,6 +50,21 @@ def valid_login(user, passw):
     db.close()  #close database
     return exists
 
+def user_exists(user):
+    DB_FILE="users.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    username = c.execute("SELECT user FROM users WHERE user = ?", (user,)).fetchone()
+
+    if username is None:
+        exists = False
+    else:
+        exists = True
+
+    db.commit() #save changes
+    db.close()  #close database
+    return exists 
 '''
 creates profile table:
 user (string) | name (string) |

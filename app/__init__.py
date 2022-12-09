@@ -3,7 +3,7 @@
 # 2022-12-04
 # time spent:
 
-import db
+#import db
 import auth
 
 from flask import Flask, redirect, render_template, request, session, url_for

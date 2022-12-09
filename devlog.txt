@@ -92,6 +92,13 @@ briannaT and emersonG -- 2022-12-07 13:51
 * worked on html
 ==============================================================
 
+nadaH and laurenL -- 2022-12-08 13:11
+--------------------------------------------------------------
+* continued working on db.py
+* started working on percentages and finalized numbers
+* finished automatic star sign calculator + compatibility
+==============================================================
+
 briannaT and emersonG -- 2022-12-08 18:43
 --------------------------------------------------------------
 * created and added to auth.py

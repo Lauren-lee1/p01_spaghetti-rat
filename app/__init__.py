@@ -14,7 +14,6 @@ db.create_users_db()
 db.create_profile_db()
 db.create_pref_db()
 '''
-
 #===========================================#
 
 #====================FLASK====================#
@@ -38,10 +37,10 @@ def authenticate():
     msg = ""
 
     if auth.authLogin():
-        render_template('home.html')
+        render_template('home.html', msg = msg)
     
     
-    msg = 'error'
+    msg = 'wrong username or password'
 
 
     return render_template('login.html', msg=msg)
@@ -54,11 +53,11 @@ def register():
     if request.method == 'POST':
         if 'username' in request.form and 'password' in request.form: # need to check the input to make sure it's valid
             db.add_user(request.form['username'], request.form['password'])
-            return render_template('home.html')
+            return render_template('home.html')#, msg = msg)
         else:
             #return error message
-            return render_template('register.html')
-    return render_template('register.html')
+            return render_template('register.html')#, msg = msg)
+    return render_template('register.html')#, msg = msg)
 #================================================#
 
 if __name__ == "__main__":  # true if this file NOT imported

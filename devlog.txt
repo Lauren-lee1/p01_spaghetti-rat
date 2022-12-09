@@ -89,5 +89,16 @@ nadaH & laurenL -- 2022-12-07 22:30
 briannaT and emersonG -- 2022-12-07 13:51
 --------------------------------------------------------------
 * made a working flask app
-*worked on html
+* worked on html
+==============================================================
+
+briannaT and emersonG -- 2022-12-08 18:43
+--------------------------------------------------------------
+* created and added to auth.py
+  - added feature to check for correct credentials
+  - feature to check for an existing session
+* finalized login.html and register.html
+  - looked more into foundation documentation to see how to link
+    routes to html pages
+  - looked more into form submission and storing user input
 ==============================================================

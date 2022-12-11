@@ -121,3 +121,12 @@ laurenL -- 2022-12-09 15:51
 * next steps : sessions, add to db, and msg
 ==============================================================
 
+==============================================================
+briannaT -- 2022-12-10 10:40
+--------------------------------------------------------------
+* working registration and login 
+* created user sessions and logout functionality
+* messages shown to users when there is a successful / unsuccessful
+  login or registration
+* added epic secret key
+==============================================================

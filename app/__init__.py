@@ -3,7 +3,7 @@
 # 2022-12-04
 # time spent:
 
-#import db
+import db
 import auth
 
 from flask import Flask, redirect, render_template, request, session, url_for
@@ -18,12 +18,15 @@ db.create_pref_db()
 
 #====================FLASK====================#
 app = Flask(__name__)
+app.secret_key = "heightorpersonality"
 
 '''
 root route, renders the login page
 '''
 @app.route("/", methods=['GET', 'POST'])
 def disp_loginpage():
+    if 'username' in session: #home page rendered if there is a session
+        return render_template('home.html', msg="successfully logged in")
     return render_template('login.html')
 
 '''
@@ -34,35 +37,38 @@ database
 '''
 @app.route("/login", methods =['GET', 'POST'])
 def authenticate():
-    msg = ""
+    user = request.form['username']
+    passw = request.form['password']
+    #print(db.valid_login(user, passw))
 
-    user = [request.form['username']]
-    passw = [request.form['password']]
-    if auth.authLogin(user, passw):
-        session['username'] = request.form['username']
-        return render_template('home.html', msg = msg)
-    
-    msg = 'wrong username or password'
-
-
-    return render_template('login.html', msg=msg)
+    if db.valid_login(user, passw):
+        session['username'] = user
+        return render_template('home.html', msg = "successfully logged in")
+    else:
+        return render_template('login.html', msg="login failed")
 
 '''
 register route, allows user to create a new account
 '''
 @app.route("/register", methods=['GET','POST'])
-def register():
-    if 'username' in session: #home page rendered if there is a session
-        return render_template('home.html', msg="")
+def register_account():
+    if request.method == 'GET':
+        return render_template('register.html')
+    user = request.form['newUser']
+    #user = request.form.get('newUser')
+    passw = request.form['newPass']
+    #passw = request.form.get('newPass')
+
+    if db.user_exists(user):
+        return render_template('register.html', msg="username is in use!")
     else:
-        if 'username' in request.form and 'password' in request.form: # need to check the input to make sure it's valid
-            if user_exists(request.form['username']):
-                db.add_user(request.form['username'], request.form['password'])
-                return render_template('login.html')#, msg = msg)
-        else:
-            #return error message
-              return render_template('register.html')#, msg = msg)
-    return render_template('register.html')#, msg = msg)
+        db.add_user(user, passw)
+        return render_template('login.html', msg = "user registered!, log in with your new credentials.")
+
+@app.route("/logout", methods=['GET', 'POST'])
+def log_out():
+    session.pop('username', None)
+    return redirect('/')
 #================================================#
 
 if __name__ == "__main__":  # true if this file NOT imported

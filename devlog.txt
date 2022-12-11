@@ -115,13 +115,13 @@ nadaH -- 2022-12-08 21:38
 * starting working on implementing love calculator api
 
 ==============================================================
+
 laurenL -- 2022-12-09 15:51
 --------------------------------------------------------------
 * made login verification work
 * next steps : sessions, add to db, and msg
 ==============================================================
 
-==============================================================
 briannaT -- 2022-12-10 10:40
 --------------------------------------------------------------
 * working registration and login 
@@ -129,4 +129,12 @@ briannaT -- 2022-12-10 10:40
 * messages shown to users when there is a successful / unsuccessful
   login or registration
 * added epic secret key
+==============================================================
+
+laurenL -- 2022-12-11 12:30
+--------------------------------------------------------------
+* made low_height and high_height in pref chart to allow range
+* created mbti and star sign compatibility and incompatibility functions that replace lists in the db
+* made hobbies only a profile thing
+* began matching, STILL IN PROGRESS
 ==============================================================

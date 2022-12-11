@@ -87,10 +87,9 @@ def create_profile_db():
 '''
 creates preferences table:
 user (string) |
-good_star_sign (list) *optional* | height (int) *optional*|
-hobby_1 (string) *optional*| hobby_2 (string) *optional*|
-gender (string) | bad_star_sign (list) *optional*|
-good_mbti (list) *optional*| bad_mbti (list) *optional*|
+star_sign (string) *optional, for reference* | mbti(string) *optional, for reference* | 
+low_height (int) *optional*| high_height (int) *optional* |
+female (int) *binary* | male (int) *binary* | nonbinary (int) *binary* | 
 '''
 def create_pref_db():
     DB_FILE="pref.db"
@@ -98,7 +97,7 @@ def create_pref_db():
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
     # preferences table
-    c.execute("CREATE TABLE IF NOT EXISTS pref(user TEXT, good_star_sign LIST, height INTEGER, gender LIST, bad_star_sign LIST, good_mbti TEXT, bad_mbti LIST)")
+    c.execute("CREATE TABLE IF NOT EXISTS pref(user TEXT, star_sign TEXT, mbti TEXT, use_star_sign INTEGER, use_mbti INTEGER, use_low_height INTEGER, high_height INTEGER, female INTEGER, male INTEGER, nonbinary INTEGER)")
 
     db.commit() #save changes
     db.close()  #close database
@@ -174,6 +173,57 @@ def set_star_sign(birthday):
     if (month == 2 and date >=19) or (month == 3 and date <=20):
             star_sign = "Pisces"
     return star_sign
+    
+def get_bad_star_sign(star_sign):
+    if user_star_sign == 'Aries':
+        bad_star_sign = ['Cancer', 'Capricorn']
+    if user_star_sign == 'Taurus':
+        bad_star_sign = ['Leo', 'Aquarius']
+    if user_star_sign == 'Gemini':
+        bad_star_sign = ['Virgo', 'Leo']
+    if user_star_sign == 'Cancer':
+        bad_star_sign = ['Aries', 'Libra']
+    if user_star_sign == 'Leo':
+        bad_star_sign = ['Taurus', 'Scorpio']
+    if user_star_sign == "Virgo":
+        bad_star_sign = ['Gemini','Sagittarius']
+    if user_star_sign == "Libra":
+         bad_star_sign = ['Cancer','Capricorn']
+    if user_star_sign == "Scorpio":
+          bad_star_sign = ['Gemini','Sagittarius']
+    if user_star_sign == "Sagittarius":
+        bad_star_sign = ['Virgo','Pisces']
+    if user_star_sign == "Capricorn":
+        bad_star_sign = ['Aries','Libra']
+    if user_star_sign == "Pisces":
+        bad_star_sign = ['Gemini','Sagittarius']
+    return bad_star_sign
+
+def get_good_star_sign(star_sign):
+    if user_star_sign == 'Aries':
+        good_star_sign = ['Gemini', 'Leo', 'Sagittarius', 'Aquarius']
+    if user_star_sign == 'Taurus':
+        good_star_sign = ['Cancer', 'Virgo', 'Capricorn', 'Pisces']
+    if user_star_sign == 'Gemini':
+        good_star_sign = ['Aries', 'Leo', 'Libra', 'Aquarius']
+    if user_star_sign == 'Cancer':
+        good_star_sign = ['Taurus', 'Virgo', 'Scorpio', 'Pisces']
+    if user_star_sign == 'Leo':
+        good_star_sign = ['Aries', 'Gemini', 'Libra', 'Sagittarius']
+    if user_star_sign == "Virgo":
+        good_star_sign = ['Taurus','Cancer','Scorpio','Capricorn']
+    if user_star_sign == "Libra":
+        good_star_sign = ['Gemini','Leo','Sagittarius','Aquarius']
+    if user_star_sign == "Scorpio":
+        good_star_sign = ['Cancer','Virgo','Pisces','Capricorn']
+    if user_star_sign == "Sagittarius":
+        good_star_sign = ['Aries','Leo','Libra','Aquarius']
+    if user_star_sign == "Capricorn":
+        good_star_sign = ['Taurus','Virgo','Scorpio','Pisces']
+    if user_star_sign == "Pisces":
+        good_star_sign = ['Taurus','Cancer','Scorpio','Capricorn']
+    return good_star_sign
+
 
 '''
 calculate age from birthday!
@@ -195,6 +245,76 @@ def set_age(birthday):
         return age
     else:
         return age-1
+
+def get_good_mbti(mbti):
+    if user_mbti == "ESTP":
+        good_mbti = ['ISTP', 'ESFJ', 'ISFJ']
+    if user_mbti == "ISTP":
+        good_mbti = ['ESTP', 'ESFJ', 'ISFJ']
+    if user_mbti == "ESFP":
+        good_mbti = ['ISFP', 'ESTJ', 'ISTJ']
+    if user_mbti == "ISFP":
+        good_mbti = ['ESFP', 'ESTJ', 'ISTJ']
+    if user_mbti == "ESTJ":
+        good_mbti = ['ESFP', 'ISFP', 'ISTJ']
+    if user_mbti == "ISTJ":
+        good_mbti = ['ESFP', 'ISFP', 'ESTJ']
+    if user_mbti == "ESFJ":
+        good_mbti = ['ESTP','ISTP','ISFJ']
+    if user_mbti == "ISFJ":
+        good_mbti = ['ESTP','ISTP','ESFJ']
+    if user_mbti == "ENFP":
+        good_mbti = ['INFP','ENTJ','INTJ']
+    if user_mbti == "INFP":
+        good_mbti = ['ENFP','ENTJ','INTJ']
+    if user_mbti == "ENFJ":
+        good_mbti = ['INFJ','ENTP','INTP']
+    if user_mbti == "INFJ":
+        good_mbti = ['ENFJ','ENTP','INTP']
+    if user_mbti == "ENTP":
+        good_mbti = ['ENFJ','INFJ','INTP']
+    if user_mbti == "INTP":
+        good_mbti = ['ENFJ','INFJ','ENTP']
+    if user_mbti == "ENTJ":
+        good_mbti = ['ENFP','INFP','INTJ']
+    if user_mbti == "INTJ":
+        good_mbti = ['ENFP','INFP','ENTJ']
+    return good_mbti
+
+def get_bad_mbti(mbti):
+    if user_mbti == "ESTP":
+        bad_mbti = ['ESFP', 'ISFP', 'ENFP', 'INFP']
+    if user_mbti == "ISTP":
+        bad_mbti = ['ESFP', 'ISFP', 'ENFP', 'INFP']
+    if user_mbti == "ESFP":
+        bad_mbti = ['ESTP', 'ISTP', 'ENTP', 'INTP']
+    if user_mbti == "ISFP":
+        bad_mbti = ['ISFP', 'ISTP', 'ENTP', 'INTP']
+    if user_mbti == "ESTJ":
+        bad_mbti = ['ESFP', 'ISFP', 'ENFP', 'INFJ']
+    if user_mbti == "ISTJ":
+        bad_mbti = ['ESFP', 'ISFP', 'ENFP', 'INFJ']
+    if user_mbti == "ESFJ":
+        bad_mbti = ['ESTJ','ISTJ','ENTJ','INTJ']
+    if user_mbti == "ISFJ":
+        bad_mbti = ['ESTJ','ISTJ','ENTJ','INTJ']
+    if user_mbti == "ENFP":
+        bad_mbti = ['ESTP','ISTP','ENTP','INTP']
+    if user_mbti == "INFP":
+        bad_mbti = ['ESTP','ISTP','ENTP','INTP']
+    if user_mbti == "ENFJ":
+        bad_mbti = ['ESTJ','ISTJ','ENTJ','INTJ']
+    if user_mbti == "INFJ":
+        bad_mbti = ['ESTJ','ISTJ','ENTJ','INTJ']
+    if user_mbti == "ENTP":
+        bad_mbti = ['ESFP','ISFP','ENFP','INFP']
+    if user_mbti == "INTP":
+        bad_mbti = ['ESFP','ISFP','ENFP','INFP']
+    if user_mbti == "ENTJ":
+        bad_mbti = ['ESFJ','ISFJ','ENFJ','INFJ']
+    if user_mbti == "INTJ":
+        bad_mbti = ['ESFJ','ISFJ','ENFJ','INFJ']
+    return good_mbti
 
 '''
 set up your profile (optional items listed in profile.db setup)
@@ -234,110 +354,17 @@ def profile_setup(user, name, birthday, height, hobby_1, hobby_2, spotify, gende
 '''
 set up your preference db
 '''
-def pref_setup(user, user_star_sign, height, gender, user_mbti, use_mbti, use_star_sign):
+def pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary):
     DB_FILE="pref.db"
 
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
-    if user_mbti == False: #no preference set if user doesn't want to use it
-        good_mbti == []
-        bad_mbti ==[]
-    else: #set compatible and incompatible mbti based on mbti
-        #https://www.typematchapp.com/16-personalities-compatibility-chart-2/
-        if user_mbti == "ESTP":
-            good_mbti = ['ISTP', 'ESFJ', 'ISFJ']
-            bad_mbti = ['ESFP', 'ISFP', 'ENFP', 'INFP']
-        if user_mbti == "ISTP":
-            good_mbti = ['ESTP', 'ESFJ', 'ISFJ']
-            bad_mbti = ['ESFP', 'ISFP', 'ENFP', 'INFP']
-        if user_mbti == "ESFP":
-            good_mbti = ['ISFP', 'ESTJ', 'ISTJ']
-            bad_mbti = ['ESTP', 'ISTP', 'ENTP', 'INTP']
-        if user_mbti == "ISFP":
-            good_mbti = ['ESFP', 'ESTJ', 'ISTJ']
-            bad_mbti = ['ISFP', 'ISTP', 'ENTP', 'INTP']
-        if user_mbti == "ESTJ":
-            good_mbti = ['ESFP', 'ISFP', 'ISTJ']
-            bad_mbti = ['ESFP', 'ISFP', 'ENFP', 'INFJ']
-        if user_mbti == "ISTJ":
-            good_mbti = ['ESFP', 'ISFP', 'ESTJ']
-            bad_mbti = ['ESFP', 'ISFP', 'ENFP', 'INFJ']
-        if user_mbti == "ESFJ":
-            good_mbti = ['ESTP','ISTP','ISFJ']
-            bad_mbti = ['ESTJ','ISTJ','ENTJ','INTJ']
-        if user_mbti == "ISFJ":
-            good_mbti = ['ESTP','ISTP','ESFJ']
-            bad_mbti = ['ESTJ','ISTJ','ENTJ','INTJ']
-        if user_mbti == "ENFP":
-            good_mbti = ['INFP','ENTJ','INTJ']
-            bad_mbti = ['ESTP','ISTP','ENTP','INTP']
-        if user_mbti == "INFP":
-            good_mbti = ['ENFP','ENTJ','INTJ']
-            bad_mbti = ['ESTP','ISTP','ENTP','INTP']
-        if user_mbti == "ENFJ":
-            good_mbti = ['INFJ','ENTP','INTP']
-            bad_mbti = ['ESTJ','ISTJ','ENTJ','INTJ']
-        if user_mbti == "INFJ":
-            good_mbti = ['ENFJ','ENTP','INTP']
-            bad_mbti = ['ESTJ','ISTJ','ENTJ','INTJ']
-        if user_mbti == "ENTP":
-            good_mbti = ['ENFJ','INFJ','INTP']
-            bad_mbti = ['ESFP','ISFP','ENFP','INFP']
-        if user_mbti == "INTP":
-            good_mbti = ['ENFJ','INFJ','ENTP']
-            bad_mbti = ['ESFP','ISFP','ENFP','INFP']
-        if user_mbti == "ENTJ":
-            good_mbti = ['ENFP','INFP','INTJ']
-            bad_mbti = ['ESFJ','ISFJ','ENFJ','INFJ']
-        if user_mbti == "INTJ":
-            good_mbti = ['ENFP','INFP','ENTJ']
-            bad_mbti = ['ESFJ','ISFJ','ENFJ','INFJ']
-
-#is star sign a factor in determining if you're a match
-    if use_star_sign == False:
-        good_star_sign == []
-        bad_star_sign == []
-    else:
-        if user_star_sign == 'Aries':
-            good_star_sign = ['Gemini', 'Leo', 'Sagittarius', 'Aquarius']
-            bad_star_sign = ['Cancer', 'Capricorn']
-        if user_star_sign == 'Taurus':
-            good_star_sign = ['Cancer', 'Virgo', 'Capricorn', 'Pisces']
-            bad_star_sign = ['Leo', 'Aquarius']
-        if user_star_sign == 'Gemini':
-            good_star_sign = ['Aries', 'Leo', 'Libra', 'Aquarius']
-            bad_star_sign = ['Virgo', 'Leo']
-        if user_star_sign == 'Cancer':
-            good_star_sign = ['Taurus', 'Virgo', 'Scorpio', 'Pisces']
-            bad_star_sign = ['Aries', 'Libra']
-        if user_star_sign == 'Leo':
-            good_star_sign = ['Aries', 'Gemini', 'Libra', 'Sagittarius']
-            bad_star_sign = ['Taurus', 'Scorpio']
-        if user_star_sign == "Virgo":
-            good_star_sign = ['Taurus','Cancer','Scorpio','Capricorn']
-            bad_star_sign = ['Gemini','Sagittarius']
-        if user_star_sign == "Libra":
-            good_star_sign = ['Gemini','Leo','Sagittarius','Aquarius']
-            bad_star_sign = ['Cancer','Capricorn']
-        if user_star_sign == "Scorpio":
-            good_star_sign = ['Cancer','Virgo','Pisces','Capricorn']
-            bad_star_sign = ['Gemini','Sagittarius']
-        if user_star_sign == "Sagittarius":
-            good_star_sign = ['Aries','Leo','Libra','Aquarius']
-            bad_star_sign = ['Virgo','Pisces']
-        if user_star_sign == "Capricorn":
-            good_star_sign = ['Taurus','Virgo','Scorpio','Pisces']
-            bad_star_sign = ['Aries','Libra']
-        if user_star_sign == "Pisces":
-            good_star_sign = ['Taurus','Cancer','Scorpio','Capricorn']
-            bad_star_sign = ['Gemini','Sagittarius']
-
 #you need a gender preference
-    if (gender == ''):
+    if (female is None or male is NONE or nonbinary is NONE):
         return 'error'
 
-    c.execute("INSERT INTO pref (user, good_star_sign, height,  gender, bad_star_sign, good_mbti, bad_mbti) VALUES (?,?,?,?,?,?,?)", (user, good_star_sign, height, hobby_1, hobby_2, gender, bad_star_sign, good_mbti, bad_mbti))
+    c.execute("INSERT INTO pref (user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary) VALUES (?,?,?,?,?,?,?,?,?,?)", (user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary))
 
     table = c.execute("SELECT * from pref")
     print("pref table from pref_setup() call")
@@ -346,65 +373,82 @@ def pref_setup(user, user_star_sign, height, gender, user_mbti, use_mbti, use_st
     db.commit() #save changes
     db.close()  #close database
 
-'''
+
 #LOVE API --> uses actual name, not username
 def love_pcnt(name, other_name):
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
     #INTEGRATE API HERE
+
+
+def match(user, other_user):
+    DB_FILE="pref.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    # check if optional or not
+'''
+matching criteria:
+- mbti (optional)
+- star sign (optional)
+- similar hobbies (at least one hobby is the same)
+- gender (female, male, non-binary)
+    * yes or no
+- age
+    * yes or no
+    * <= 16 -- one year apart
+    * > 16 -- two years apart
+- height preferences (optional)
+- love calculator (uses first name and the compatibility percentage factors into your match)
+
+don't do optional:
+- love calculator (50)
+- 1 shared hobby (30)
+- 2 shared hobbies (20)
+
+choose all optional:
+- Astrology - 15
+- MBTI - 20
+- Height - 20
+- hobby 1 (15)
+- hobby 2 (10)
+- love calculator (20)
+
+choose 1+ optional:
+- remaining percentage is divided up between the number of filled in categories and added
 '''
 
-# def match(user, other_user):
-#     DB_FILE="pref.db"
-#     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-#     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
-#     # check if optional or not
-# '''
-# matching criteria:
-# - mbti (optional)
-# - star sign (optional)
-# - similar hobbies (at least one hobby is the same)
-# - gender (female, male, non-binary)
-#     * yes or no
-# - age
-#     * yes or no
-#     * <= 16 -- one year apart
-#     * > 16 -- two years apart
-# - height preferences (optional)
-# - love calculator (uses first name and the compatibility percentage factors into your match)
+#user preference information:
+use_star_sign = c.execute("SELECT use_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+use_mbti = c.execute("SELECT use_mbti FROM pref WHERE user =?", (user,)).fetchone()
 
-# don't do optional:
-# - love calculator (50)
-# - 1 shared hobby (30)
-# - 2 shared hobbies (20)
+if use_star_sign == 1:
+    good_star_sign = c.execute("SELECT good_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+    bad_star_sign = c.execute("SELECT bad_star_sign FROM pref WHERE user =?", (user,)).fetchone()
 
-# choose all optional:
-# - Astrology - 15
-# - MBTI - 20
-# - Height - 20
-# - hobby 1 (15)
-# - hobby 2 (10)
-# - love calculator (20)
+if use_mbti == 1 :
+    good_mbti = c.execute("SELECT good_mbti FROM pref WHERE user =?", (user,)).fetchone()
+    bad_mbti = c.execute("SELECT bad_mbti FROM pref WHERE user =?", (user,)).fetchone()
 
-# choose 1+ optional:
-# - remaining percentage is divided up between the number of filled in categories and added
-# '''
-# #user preference information:
+low_height = c.execute("SELECT low_height FROM pref WHERE user =?", (user,)).fetchone()    
+high_height = c.execute("SELECT high_height FROM pref WHERE user =?", (user,)).fetchone()    
 
-# good_star_sign = c.execute("SELECT good_star_sign FROM pref WHERE user =?", (user,)).fetchone()
-# bad_star_sign = c.execute("SELECT bad_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+female = c.execute("SELECT female FROM pref WHERE user =?", (user,)).fetchone()    
+male = c.execute("SELECT male FROM pref WHERE user =?", (user,)).fetchone()    
+nonbinary = c.execute("SELECT nonbinary FROM pref WHERE user =?", (user,)).fetchone()    
+gender_pref=[female, male, nonbinary]
 
-# good_mbti = c.execute("SELECT good_mbti FROM pref WHERE user =?", (user,)).fetchone()
-# bad_mbti = c.execute("SELECT bad_mbti FROM pref WHERE user =?", (user,)).fetchone()
+# DB_FILE="users.db"
+# db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+# c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
-# height = c.execute("SELECT height FROM pref WHERE user =?", (user,)).fetchone()    
+# age = c.execute("SELECT age FROM users WHERE user =?", (user,)).fetchone()
+# hobby_1 = c.execute("SELECT hobby_1 FROM users WHERE user =?", (user,)).fetchone()    
+# hobby_2 = c.execute("SELECT hobby_2 FROM users WHERE user =?", (user,)).fetchone()    
 
-# gender = c.execute("SELECT gender FROM pref WHERE user =?", (user,)).fetchone()    
-
-# hobby_1 = c.execute("SELECT hobby_1 FROM pref WHERE user =?", (user,)).fetchone()    
-# hobby_2 = c.execute("SELECT hobby_2 FROM pref WHERE user =?", (user,)).fetchone()    
-
-# #height can be list of lowest and greatest inclusive?
-# if good_star_sign == [] and good_mbti == [] and height == "" and gender ==  "":
+# #filter by height and gender first:
+# if gender_pref[0] == 1
+#     c.execute("SELECT user FROM users WHERE (age<=? or age>=?) AND  gender=?"), (age+2, age-2, )
+# if star_sign == [] and good_mbti == [] and height == "" and gender ==  "":

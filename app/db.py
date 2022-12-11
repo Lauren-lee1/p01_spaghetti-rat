@@ -8,6 +8,7 @@ p01
 
 import sqlite3
 import datetime
+from api import *
 
 '''
 creates users table:
@@ -376,18 +377,8 @@ def pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_
 
 #LOVE API --> uses actual name, not username
 def love_pcnt(name, other_name):
-    DB_FILE="profile.db"
-    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
-    #INTEGRATE API HERE
+    return api.love_calculator(name, other_name)
 
-
-def match(user, other_user):
-    DB_FILE="pref.db"
-    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
-
-    # check if optional or not
 '''
 matching criteria:
 - mbti (optional)
@@ -418,37 +409,82 @@ choose all optional:
 choose 1+ optional:
 - remaining percentage is divided up between the number of filled in categories and added
 '''
+def match(user, other_user):
+    DB_FILE="pref.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+    # check if optional or not
 
 
-#user preference information:
-use_star_sign = c.execute("SELECT use_star_sign FROM pref WHERE user =?", (user,)).fetchone()
-use_mbti = c.execute("SELECT use_mbti FROM pref WHERE user =?", (user,)).fetchone()
+    #user preference information:
+    use_star_sign = c.execute("SELECT use_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+    use_mbti = c.execute("SELECT use_mbti FROM pref WHERE user =?", (user,)).fetchone()
 
-if use_star_sign == 1:
-    good_star_sign = c.execute("SELECT good_star_sign FROM pref WHERE user =?", (user,)).fetchone()
-    bad_star_sign = c.execute("SELECT bad_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+    if use_star_sign == 1:
+        good_star_sign = c.execute("SELECT good_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+        bad_star_sign = c.execute("SELECT bad_star_sign FROM pref WHERE user =?", (user,)).fetchone()
 
-if use_mbti == 1 :
-    good_mbti = c.execute("SELECT good_mbti FROM pref WHERE user =?", (user,)).fetchone()
-    bad_mbti = c.execute("SELECT bad_mbti FROM pref WHERE user =?", (user,)).fetchone()
+    if use_mbti == 1 :
+        good_mbti = c.execute("SELECT good_mbti FROM pref WHERE user =?", (user,)).fetchone()
+        bad_mbti = c.execute("SELECT bad_mbti FROM pref WHERE user =?", (user,)).fetchone()
 
-low_height = c.execute("SELECT low_height FROM pref WHERE user =?", (user,)).fetchone()    
-high_height = c.execute("SELECT high_height FROM pref WHERE user =?", (user,)).fetchone()    
+    low_height = c.execute("SELECT low_height FROM pref WHERE user =?", (user,)).fetchone()    
+    high_height = c.execute("SELECT high_height FROM pref WHERE user =?", (user,)).fetchone()    
 
-female = c.execute("SELECT female FROM pref WHERE user =?", (user,)).fetchone()    
-male = c.execute("SELECT male FROM pref WHERE user =?", (user,)).fetchone()    
-nonbinary = c.execute("SELECT nonbinary FROM pref WHERE user =?", (user,)).fetchone()    
-gender_pref=[female, male, nonbinary]
+    female = c.execute("SELECT female FROM pref WHERE user =?", (user,)).fetchone()    
+    male = c.execute("SELECT male FROM pref WHERE user =?", (user,)).fetchone()    
+    nonbinary = c.execute("SELECT nonbinary FROM pref WHERE user =?", (user,)).fetchone()    
+    gender_pref=[female, male, nonbinary]
 
-# DB_FILE="users.db"
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    age = c.execute("SELECT age FROM profile WHERE user =?", (user,)).fetchone()
+    hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user =?", (user,)).fetchone()    
+    hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user =?", (user,)).fetchone()    
+    name = c.execute("SELECT name FROM profile WHERE user =?", (user,)).fetchone()    
+
+    #filter by height and gender first:
+    female = []
+    male = []
+    nonbinary = []
+    if age > 16:
+        if gender_pref[0] == 1:
+            female = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+2, age-2, "female" )).fetchall()
+        if gender_pref[1] == 1:
+            male = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+2, age-2, "male" )).fetchall()
+        if gender_pref[2] == 1:
+            nonbinary = c.execute("SELECT user FROM profile WHERE (age<=? AND age>=?) AND gender=?", (age+2, age-2, "nonbinary" )).fetchall()
+    total = female + male + nonbinary
+    matches = {}
+    if use_star_sign == 0 and use_mbti == 0 and low_height is None and high_height is None:
+        for x in total:
+            x = list(x)[0]
+            #love calculator = 50%
+            other_name = c.execute("SELECT name FROM profile WHERE user=?", (x)).fetchone()
+            love_calc = 0.5 * api.love_calculator(name, other_name)
+            #hobby 
+            shared_hobby = 0
+            other_hobby_1 =  c.execute("SELECT hobby_1 FROM profile WHERE user=?", (x)).fetchone()
+            other_hobby_2 =  c.execute("SELECT hobby_2 FROM profile WHERE user=?", (x)).fetchone()
+            if hobby_2 == other_hobby_2 or hobby_2 == other_hobby_1 or hobby_1 == other_hobby_2 or hobby_1 == other_hobby_1:
+                shared_hobby = shared_hobby + 30
+            if (hobby_2 == other_hobby_1 or hobby_2 == other_hobby_2) and (hobby_1 == other_hobby_1 or hobby_1 ==other_hobby_2):
+                shared_hobby = shared_hobby + 20
+            matches[other_name] = shared_hobby + love_calc
+
+
+# DB_FILE="test.db"
 # db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
 # c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
-# age = c.execute("SELECT age FROM users WHERE user =?", (user,)).fetchone()
-# hobby_1 = c.execute("SELECT hobby_1 FROM users WHERE user =?", (user,)).fetchone()    
-# hobby_2 = c.execute("SELECT hobby_2 FROM users WHERE user =?", (user,)).fetchone()    
+# c.execute("CREATE TABLE IF NOT EXISTS test(user TEXT, age INTEGER)")
+# test = ['user', 'name', 'b','asdf',3,4,'asdf','asdf','asdf','asdf','asdf']
+# c.execute("INSERT INTO test (user, age) VALUES (?,?)", ('hello',5))
+# c.execute("INSERT INTO test (user, age) VALUES (?,?)", ('hell',6))
+# c.execute("INSERT INTO test (user, age) VALUES (?,?)", ('hel',2))
+# print(list(c.execute("SELECT user FROM test WHERE age>?", (3,)).fetchall()))
 
-# #filter by height and gender first:
-# if gender_pref[0] == 1
-#     c.execute("SELECT user FROM users WHERE (age<=? or age>=?) AND  gender=?"), (age+2, age-2, )
-# if star_sign == [] and good_mbti == [] and height == "" and gender ==  "":
+# db.commit() #save changes
+# db.close()  #close databas

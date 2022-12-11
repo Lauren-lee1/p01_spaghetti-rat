@@ -131,10 +131,16 @@ briannaT -- 2022-12-10 10:40
 * added epic secret key
 ==============================================================
 
-laurenL -- 2022-12-11 12:30
+laurenL -- 2022-12-11 00:30
 --------------------------------------------------------------
 * made low_height and high_height in pref chart to allow range
 * created mbti and star sign compatibility and incompatibility functions that replace lists in the db
 * made hobbies only a profile thing
 * began matching, STILL IN PROGRESS
+==============================================================
+
+laurenL -- 2022-12-11 11:53
+--------------------------------------------------------------
+* connected love calc api
+* made matches for those who don't want optional stuff
 ==============================================================

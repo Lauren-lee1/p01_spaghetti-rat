@@ -374,10 +374,80 @@ def pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_
     db.commit() #save changes
     db.close()  #close database
 
+def match_hobbies(user, non_user):
+    ret_val = 0
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+    # check if optional or not
+    hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user =?", (user,)).fetchone()    
+    hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user =?", (user,)).fetchone()
 
-#LOVE API --> uses actual name, not username
-def love_pcnt(name, other_name):
-    return api.love_calculator(name, other_name)
+    other_hobby_1 =  c.execute("SELECT hobby_1 FROM profile WHERE user=?", (other_user)).fetchone()
+    other_hobby_2 =  c.execute("SELECT hobby_2 FROM profile WHERE user=?", (other_user)).fetchone()
+    if hobby_2 == other_hobby_2 or hobby_2 == other_hobby_1 or hobby_1 == other_hobby_2 or hobby_1 == other_hobby_1:
+        ret_val = 1
+    if (hobby_2 == other_hobby_1 or hobby_2 == other_hobby_2) and (hobby_1 == other_hobby_1 or hobby_1 ==other_hobby_2):
+        ret_val = 2
+    return ret_val
+
+def match_star_sign(user, other_user):
+    DB_FILE="pref.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    good_star_sign = c.execute("SELECT good_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+    bad_star_sign = c.execute("SELECT bad_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    star_sign = c.execute("SELECT star_sign FROM profile WHERE user =?", (other_user,)).fetchone()
+
+    for x in good_star_sign:
+        if x == star_sign:
+            return 1
+    for x in bad_star_sign:
+        if x == star_sign:
+            return -1
+    return 0
+
+def match_mbti(user, other_user):
+    DB_FILE="pref.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    good_mbti = c.execute("SELECT good_mbti FROM pref WHERE user =?", (user,)).fetchone()
+    bad_mbti = c.execute("SELECT bad_mtbi FROM pref WHERE user =?", (user,)).fetchone()
+
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    mbti = c.execute("SELECT mbti FROM profile WHERE user =?", (other_user,)).fetchone()
+
+    for x in good_mbti:
+        if x == mbti:
+            return 1
+    for x in bad_mbti:
+        if x == mbti:
+            return -1
+    return 0
+
+def match_height(user, other_user):
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    height = c.execute("SELECT heignt FROM profile WHERE user =?", (other_user,)).fetchone()
+
+    DB_FILE="pref.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    low_height = c.execute("SELECT low_heignt FROM pref WHERE user =?", (user,)).fetchone()
+    high_height = c.execute("SELECT high_heignt FROM pref WHERE user =?", (user,)).fetchone()
 
 '''
 matching criteria:
@@ -410,10 +480,9 @@ choose 1+ optional:
 - remaining percentage is divided up between the number of filled in categories and added
 '''
 def match(user, other_user):
-    DB_FILE="pref.db"
+    DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
-    # check if optional or not
 
 
     #user preference information:
@@ -441,8 +510,8 @@ def match(user, other_user):
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
     age = c.execute("SELECT age FROM profile WHERE user =?", (user,)).fetchone()
-    hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user =?", (user,)).fetchone()    
-    hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user =?", (user,)).fetchone()    
+    #hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user =?", (user,)).fetchone()    
+    #hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user =?", (user,)).fetchone()    
     name = c.execute("SELECT name FROM profile WHERE user =?", (user,)).fetchone()    
 
     #filter by height and gender first:
@@ -458,6 +527,7 @@ def match(user, other_user):
             nonbinary = c.execute("SELECT user FROM profile WHERE (age<=? AND age>=?) AND gender=?", (age+2, age-2, "nonbinary" )).fetchall()
     total = female + male + nonbinary
     matches = {}
+    #=======all no optional==============#
     if use_star_sign == 0 and use_mbti == 0 and low_height is None and high_height is None:
         for x in total:
             x = list(x)[0]
@@ -466,13 +536,40 @@ def match(user, other_user):
             love_calc = 0.5 * api.love_calculator(name, other_name)
             #hobby 
             shared_hobby = 0
-            other_hobby_1 =  c.execute("SELECT hobby_1 FROM profile WHERE user=?", (x)).fetchone()
-            other_hobby_2 =  c.execute("SELECT hobby_2 FROM profile WHERE user=?", (x)).fetchone()
-            if hobby_2 == other_hobby_2 or hobby_2 == other_hobby_1 or hobby_1 == other_hobby_2 or hobby_1 == other_hobby_1:
+            #other_hobby_1 =  c.execute("SELECT hobby_1 FROM profile WHERE user=?", (x)).fetchone()
+            #other_hobby_2 =  c.execute("SELECT hobby_2 FROM profile WHERE user=?", (x)).fetchone()
+            if match_hobbies(user, x) == 1:
                 shared_hobby = shared_hobby + 30
-            if (hobby_2 == other_hobby_1 or hobby_2 == other_hobby_2) and (hobby_1 == other_hobby_1 or hobby_1 ==other_hobby_2):
+            if match_hobbies(user, x) == 2:
                 shared_hobby = shared_hobby + 20
             matches[other_name] = shared_hobby + love_calc
+    #============ all optional selected ====================#
+    if user_star_sign == 1 and use_mbti == 1 and low_height is None and high_height is None:
+        for x in total:
+            #star sign
+            star_sign_score = 0
+            if match_star_sign(user, x) == 1:
+                star_sign = 15
+            if match_star_sign(user, x) == -1:
+                star_sign = -10
+            #mbti
+            mbti_score = 0
+            if match_mbti(user, x) == 1:
+                mbti = 20
+            if match_mbti(user, x) == -1:
+                mbti = -10
+            #height 
+
+            #hobby
+            shared_hobby = 0
+            if match_hobbies(user, x) == 1:
+                shared_hobby = 10
+            if match_hobbies(user, x) == 2:
+                shared_hobby = 25
+
+            
+            
+
 
 
 # DB_FILE="test.db"

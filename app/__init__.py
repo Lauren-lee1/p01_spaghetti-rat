@@ -69,6 +69,12 @@ def register_account():
 def log_out():
     session.pop('username', None)
     return redirect('/')
+
+'''
+profile route, allows user to add / edit their personal matching information
+'''
+#@app.route("/profile", methods=['GET', 'POST'])
+
 #================================================#
 
 if __name__ == "__main__":  # true if this file NOT imported

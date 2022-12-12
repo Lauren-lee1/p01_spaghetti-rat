@@ -144,3 +144,13 @@ laurenL -- 2022-12-11 11:53
 * connected love calc api
 * made matches for those who don't want optional stuff
 ==============================================================
+
+laurenL & nadaH -- 2022-12-12 13:19
+--------------------------------------------------------------
+* created helper function that would match people based on star sign, hobbies, and mbti
+==============================================================
+
+laurenL & nadaH -- 2022-12-12 
+--------------------------------------------------------------
+* creating algo for certain optional options
+==============================================================

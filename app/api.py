@@ -12,7 +12,7 @@ def love_calculator(name1, name2):
     querystring = {"sname":name1,"fname":name2}
 
     headers = {
-        "X-RapidAPI-Key": "",
+        "X-RapidAPI-Key": key,
         "X-RapidAPI-Host": "love-calculator.p.rapidapi.com"
     }
 

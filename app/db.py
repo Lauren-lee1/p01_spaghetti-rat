@@ -98,7 +98,7 @@ def create_pref_db():
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
     # preferences table
-    c.execute("CREATE TABLE IF NOT EXISTS pref(user TEXT, star_sign TEXT, mbti TEXT, use_star_sign INTEGER, use_mbti INTEGER, use_low_height INTEGER, high_height INTEGER, female INTEGER, male INTEGER, nonbinary INTEGER)")
+    c.execute("CREATE TABLE IF NOT EXISTS pref(user TEXT, star_sign TEXT, mbti TEXT, use_star_sign INTEGER, use_mbti INTEGER, low_height INTEGER, high_height INTEGER, female INTEGER, male INTEGER, nonbinary INTEGER)")
 
     db.commit() #save changes
     db.close()  #close database
@@ -368,7 +368,7 @@ def pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
 #you need a gender preference
-    if (female is None or male is NONE or nonbinary is NONE):
+    if (female is None or male is None or nonbinary is None):
         return 'error'
 
     c.execute("INSERT INTO pref (user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary) VALUES (?,?,?,?,?,?,?,?,?,?)", (user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary))
@@ -379,7 +379,8 @@ def pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_
 
     db.commit() #save changes
     db.close()  #close database
-
+    
+#===========================need to be tested===================================#
 '''
 returns how many shared hobbies user and other user have in common
 '''
@@ -714,16 +715,3 @@ def get_extra_match_info(match):
 
 # db.commit() #save changes
 # db.close()  #close databas
-
-print("here we go:\n")
-profile_setup("grape", "nada h", "2005-11-26", "66", "drawing", "video games", "spotify", "female", "ISTJ")
-
-DB_FILE="profile.db"
-db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-c = db.cursor()
-
-table = c.execute("SELECT * from profile")
-print("user table from add_user() call")
-print(table.fetchall())
-
-pref_setup("grape", "", "", 1 , 1, 68, 74, 0, 1, 0)

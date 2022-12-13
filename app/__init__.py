@@ -4,16 +4,16 @@
 # time spent:
 
 import db
-import auth
+#import auth
 
 from flask import Flask, redirect, render_template, request, session, url_for
 
 #====================SQL====================#
-'''
+
 db.create_users_db()
 db.create_profile_db()
 db.create_pref_db()
-'''
+
 #===========================================#
 
 #====================FLASK====================#

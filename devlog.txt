@@ -150,7 +150,7 @@ laurenL & nadaH -- 2022-12-12 13:19
 * created helper function that would match people based on star sign, hobbies, and mbti
 ==============================================================
 
-laurenL & nadaH -- 2022-12-12
+laurenL & nadaH -- 2022-12-12 19:00
 --------------------------------------------------------------
 * creating algo for certain optional options
 * eliminated matches that are outside of age range and gender preferences
@@ -161,4 +161,11 @@ laurenL & nadaH -- 2022-12-12
 * the only thing that could really differ in preferences is height (which
   is probably the most important thing anyway) - so we accounted for that
 * still can't really test but we expect a lot of debugging!
+==============================================================
+
+laurenL & nadaH & emersonG-- 2022-12-13 13:19
+--------------------------------------------------------------
+* debugging db.py
+* home --> match page
+* put api key into text document
 ==============================================================

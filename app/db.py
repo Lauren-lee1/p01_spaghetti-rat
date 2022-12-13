@@ -379,8 +379,7 @@ def pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_
 
     db.commit() #save changes
     db.close()  #close database
-    
-#===========================need to be tested===================================#
+
 '''
 returns how many shared hobbies user and other user have in common
 '''
@@ -395,10 +394,10 @@ def match_hobbies(user, non_user):
 
     other_hobby_1 =  c.execute("SELECT hobby_1 FROM profile WHERE user=?", (other_user)).fetchone()
     other_hobby_2 =  c.execute("SELECT hobby_2 FROM profile WHERE user=?", (other_user)).fetchone()
-    if hobby_2 == other_hobby_2 or hobby_2 == other_hobby_1 or hobby_1 == other_hobby_2 or hobby_1 == other_hobby_1:
-        ret_val = 1
-    if (hobby_2 == other_hobby_1 or hobby_2 == other_hobby_2) and (hobby_1 == other_hobby_1 or hobby_1 ==other_hobby_2):
-        ret_val = 2
+    if (hobby_2 == other_hobby_2 and hobby_1 == other_hobby_1) or (hobby_1 == other_hobby_2 and hobby_2 == other_hobby_1):
+         ret_val = 2
+    if  (hobby_2 == other_hobby_2 and hobby_1 != other_hobby_1) or (hobby_2 != other_hobby_2 and hobby_1 == other_hobby_1) or (hobby_1 != other_hobby_2 and hobby_2 == other_hobby_1) or (hobby_1 == other_hobby_2 and hobby_2 != other_hobby_1) :
+         ret_val = 1
     return ret_val
 
 '''
@@ -471,7 +470,7 @@ def match_height(user, other_user):
     if height >= low_height and height <= high_height:
         return True
     return False
-
+#===========================need to be tested===================================#
 '''
 matching criteria:
 - mbti (optional)
@@ -700,18 +699,3 @@ def get_extra_match_info(match):
 
     return "\nbirthday: " + birthday + "\nstar sign: " + star_sign + "\nmbti: " + mbti + "\nheight: " + height + "\nhobby 1: " + hobby_1 + "\nhobby 2: " + hobby_2
 
-
-
-# DB_FILE="test.db"
-# db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-# c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
-
-# c.execute("CREATE TABLE IF NOT EXISTS test(user TEXT, age INTEGER)")
-# test = ['user', 'name', 'b','asdf',3,4,'asdf','asdf','asdf','asdf','asdf']
-# c.execute("INSERT INTO test (user, age) VALUES (?,?)", ('hello',5))
-# c.execute("INSERT INTO test (user, age) VALUES (?,?)", ('hell',6))
-# c.execute("INSERT INTO test (user, age) VALUES (?,?)", ('hel',2))
-# print(list(c.execute("SELECT user FROM test WHERE age>?", (3,)).fetchall()))
-
-# db.commit() #save changes
-# db.close()  #close databas

@@ -124,7 +124,7 @@ laurenL -- 2022-12-09 15:51
 
 briannaT -- 2022-12-10 10:40
 --------------------------------------------------------------
-* working registration and login 
+* working registration and login
 * created user sessions and logout functionality
 * messages shown to users when there is a successful / unsuccessful
   login or registration
@@ -150,7 +150,15 @@ laurenL & nadaH -- 2022-12-12 13:19
 * created helper function that would match people based on star sign, hobbies, and mbti
 ==============================================================
 
-laurenL & nadaH -- 2022-12-12 
+laurenL & nadaH -- 2022-12-12
 --------------------------------------------------------------
 * creating algo for certain optional options
+* eliminated matches that are outside of age range and gender preferences
+* worked on matches dictionary --> determined percentages, crunched
+  some numbers to find out how to divvy up unused points
+* worked on matching users from both sides (so that both of their preferences
+  match and it's not some weird stalker site)
+* the only thing that could really differ in preferences is height (which
+  is probably the most important thing anyway) - so we accounted for that
+* still can't really test but we expect a lot of debugging!
 ==============================================================

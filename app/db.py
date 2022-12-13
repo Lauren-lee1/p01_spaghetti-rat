@@ -65,7 +65,7 @@ def user_exists(user):
 
     db.commit() #save changes
     db.close()  #close database
-    return exists 
+    return exists
 '''
 creates profile table:
 user (string) | name (string) |
@@ -88,9 +88,9 @@ def create_profile_db():
 '''
 creates preferences table:
 user (string) |
-star_sign (string) *optional, for reference* | mbti(string) *optional, for reference* | 
+star_sign (string) *optional, for reference* | mbti(string) *optional, for reference* |
 low_height (int) *optional*| high_height (int) *optional* |
-female (int) *binary* | male (int) *binary* | nonbinary (int) *binary* | 
+female (int) *binary* | male (int) *binary* | nonbinary (int) *binary* |
 '''
 def create_pref_db():
     DB_FILE="pref.db"
@@ -174,8 +174,8 @@ def set_star_sign(birthday):
     if (month == 2 and date >=19) or (month == 3 and date <=20):
             star_sign = "Pisces"
     return star_sign
-    
-def get_bad_star_sign(star_sign):
+
+def get_bad_star_sign(user_star_sign):
     if user_star_sign == 'Aries':
         bad_star_sign = ['Cancer', 'Capricorn']
     if user_star_sign == 'Taurus':
@@ -189,18 +189,20 @@ def get_bad_star_sign(star_sign):
     if user_star_sign == "Virgo":
         bad_star_sign = ['Gemini','Sagittarius']
     if user_star_sign == "Libra":
-         bad_star_sign = ['Cancer','Capricorn']
+        bad_star_sign = ['Cancer','Capricorn']
     if user_star_sign == "Scorpio":
-          bad_star_sign = ['Gemini','Sagittarius']
+        bad_star_sign = ['Gemini','Sagittarius']
     if user_star_sign == "Sagittarius":
         bad_star_sign = ['Virgo','Pisces']
     if user_star_sign == "Capricorn":
         bad_star_sign = ['Aries','Libra']
     if user_star_sign == "Pisces":
         bad_star_sign = ['Gemini','Sagittarius']
+    if user_star_sign == ["Aquarius"]
+        bad_star_sign = ['Taurus']
     return bad_star_sign
 
-def get_good_star_sign(star_sign):
+def get_good_star_sign(user_star_sign):
     if user_star_sign == 'Aries':
         good_star_sign = ['Gemini', 'Leo', 'Sagittarius', 'Aquarius']
     if user_star_sign == 'Taurus':
@@ -223,6 +225,8 @@ def get_good_star_sign(star_sign):
         good_star_sign = ['Taurus','Virgo','Scorpio','Pisces']
     if user_star_sign == "Pisces":
         good_star_sign = ['Taurus','Cancer','Scorpio','Capricorn']
+    if user_star_sign = "Aquarius":
+        good_star_sign = ['Sagittarius','Libra','Gemini','Aries']
     return good_star_sign
 
 
@@ -374,13 +378,16 @@ def pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_
     db.commit() #save changes
     db.close()  #close database
 
+'''
+returns how many shared hobbies user and other user have in common
+'''
 def match_hobbies(user, non_user):
     ret_val = 0
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
     # check if optional or not
-    hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user =?", (user,)).fetchone()    
+    hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user =?", (user,)).fetchone()
     hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user =?", (user,)).fetchone()
 
     other_hobby_1 =  c.execute("SELECT hobby_1 FROM profile WHERE user=?", (other_user)).fetchone()
@@ -391,6 +398,9 @@ def match_hobbies(user, non_user):
         ret_val = 2
     return ret_val
 
+'''
+returns if other_user star_sign matches other user mbti preferences
+'''
 def match_star_sign(user, other_user):
     DB_FILE="pref.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
@@ -413,6 +423,9 @@ def match_star_sign(user, other_user):
             return -1
     return 0
 
+'''
+returns if other_user mbti matches other user mbti preferences
+'''
 def match_mbti(user, other_user):
     DB_FILE="pref.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
@@ -435,6 +448,9 @@ def match_mbti(user, other_user):
             return -1
     return 0
 
+'''
+returns if other_user height matches user height preference
+''''
 def match_height(user, other_user):
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
@@ -501,12 +517,12 @@ def match(user, other_user):
         good_mbti = c.execute("SELECT good_mbti FROM pref WHERE user =?", (user,)).fetchone()
         bad_mbti = c.execute("SELECT bad_mbti FROM pref WHERE user =?", (user,)).fetchone()
 
-    low_height = c.execute("SELECT low_height FROM pref WHERE user =?", (user,)).fetchone()    
-    high_height = c.execute("SELECT high_height FROM pref WHERE user =?", (user,)).fetchone()    
+    low_height = c.execute("SELECT low_height FROM pref WHERE user =?", (user,)).fetchone()
+    high_height = c.execute("SELECT high_height FROM pref WHERE user =?", (user,)).fetchone()
 
-    female = c.execute("SELECT female FROM pref WHERE user =?", (user,)).fetchone()    
-    male = c.execute("SELECT male FROM pref WHERE user =?", (user,)).fetchone()    
-    nonbinary = c.execute("SELECT nonbinary FROM pref WHERE user =?", (user,)).fetchone()    
+    female = c.execute("SELECT female FROM pref WHERE user =?", (user,)).fetchone()
+    male = c.execute("SELECT male FROM pref WHERE user =?", (user,)).fetchone()
+    nonbinary = c.execute("SELECT nonbinary FROM pref WHERE user =?", (user,)).fetchone()
     gender_pref=[female, male, nonbinary]
 
     DB_FILE="profile.db"
@@ -514,9 +530,9 @@ def match(user, other_user):
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
     age = c.execute("SELECT age FROM profile WHERE user =?", (user,)).fetchone()
-    #hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user =?", (user,)).fetchone()    
-    #hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user =?", (user,)).fetchone()    
-    name = c.execute("SELECT name FROM profile WHERE user =?", (user,)).fetchone()    
+    #hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user =?", (user,)).fetchone()
+    #hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user =?", (user,)).fetchone()
+    name = c.execute("SELECT name FROM profile WHERE user =?", (user,)).fetchone()
 
     #filter by height and gender first:
     female = []
@@ -529,6 +545,13 @@ def match(user, other_user):
             male = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+2, age-2, "male" )).fetchall()
         if gender_pref[2] == 1:
             nonbinary = c.execute("SELECT user FROM profile WHERE (age<=? AND age>=?) AND gender=?", (age+2, age-2, "nonbinary" )).fetchall()
+    if age <= 16:
+        if gender_pref[0] == 1:
+            female = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+1, age-1, "female" )).fetchall()
+        if gender_pref[1] == 1:
+            male = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+1, age-1, "male" )).fetchall()
+        if gender_pref[2] == 1:
+            nonbinary = c.execute("SELECT user FROM profile WHERE (age<=? AND age>=?) AND gender=?", (age+1, age-1, "nonbinary" )).fetchall()
     total = female + male + nonbinary
     matches = {}
     #=======all no optional==============#
@@ -538,7 +561,7 @@ def match(user, other_user):
             #love calculator = 50%
             other_name = c.execute("SELECT name FROM profile WHERE user=?", (x)).fetchone()
             love_calc = 0.5 * api.love_calculator(name, other_name)
-            #hobby 
+            #hobby
             shared_hobby = 0
             #other_hobby_1 =  c.execute("SELECT hobby_1 FROM profile WHERE user=?", (x)).fetchone()
             #other_hobby_2 =  c.execute("SELECT hobby_2 FROM profile WHERE user=?", (x)).fetchone()
@@ -546,10 +569,11 @@ def match(user, other_user):
                 shared_hobby = shared_hobby + 30
             if match_hobbies(user, x) == 2:
                 shared_hobby = shared_hobby + 20
-            matches[x] = ((shared_hobby + love_calc) / float(150.0)) * 100
+            matches[x] = ((shared_hobby + love_calc)
     #============ all optional selected ====================#
     if use_star_sign == 1 and use_mbti == 1 and low_height is not None and high_height is not None:
         for x in total:
+            x = list(x)[0]
             #star sign
             star_sign_score = 0
             if match_star_sign(user, x) == 1:
@@ -562,10 +586,13 @@ def match(user, other_user):
                 mbti_score = 20
             if match_mbti(user, x) == -1:
                 mbti_score = -10
-            #height 
+            #height
             height_score = 0
-            if match_height:
+            if match_height(user, x):
                 height_score = 20
+            if match_height(x, user):
+                height_score = height_score + 20
+            height_score = height_score/2
             #hobby
             shared_hobby = 0
             if match_hobbies(user, x) == 1:
@@ -576,7 +603,7 @@ def match(user, other_user):
             other_name = c.execute("SELECT name FROM profile WHERE user=?", (x)).fetchone()
             love_calc = 0.2 * api.love_calculator(name, other_name)
             #total
-            matches[x] = ((star_sign_score + mbti_score + height_score + shared_hobby + love_calc) / float(180.0)) * 100
+            matches[x] = ((star_sign_score + mbti_score + height_score + shared_hobby + love_calc)
     #================= any one is optional ======================#
     optional = [15, 20, 20]
     options = [True, True, True]
@@ -587,13 +614,14 @@ def match(user, other_user):
             options[1] = False
         if low_height is None:
             options[2] = False
-        points = 0
+        total_points = 0
         counter = 0
         for x in range(3):
             if options[x] == False:
                 counter = counter + 1
-                points = points + optional[x]   
+                total_points = total_points + optional[x]
         for x in total:
+            x = list(x)[0]
             #star sign
             star_sign_score = 0
             if use_star_sign == 1:
@@ -601,7 +629,7 @@ def match(user, other_user):
                     star_sign_score = 15
                 if match_star_sign(user, x) == -1:
                     star_sign_score = -10
-            #mbti           
+            #mbti
             mbti_score = 0
             if use_mbti == 1:
                 if match_mbti(user, x) == 1:
@@ -611,8 +639,11 @@ def match(user, other_user):
             #height
             height_score = 0
             if low_height is not None:
-                if match_height:
+                if match_height(user, x):
                     height_score = 20
+                if match_height(x, user):
+                    height_score = height_score + 20
+                height_score = height_score/2
             #hobby
             shared_hobby = 0
             if match_hobbies(user, x) == 1:
@@ -622,15 +653,49 @@ def match(user, other_user):
             #love calculator
             other_name = c.execute("SELECT name FROM profile WHERE user=?", (x)).fetchone()
             #division
-            points = points / float(5 - counter)
-            shared_hobby = shared_hobby + points
-            height_score = height_score + points
-            mbti_score = mbti_score + points
-            star_sign_score = star_sign_score + points
-            love_calc = (0.2 + (points/100)) * api.love_calculator(name, other_name)
-            matches[x] = ((star_sign_score + mbti_score + height_score + shared_hobby + love_calc) / float(star_sign_score + mbti_score + height_score + shared_hobby + love_calc + (points /(5  * (5-counter+1))) + (0.2 + (points/100)))) * 100
+            total_points = points #total_points is how many points are coming from the unused metric(s), points is the points you want distributed to each used metric
+            points = (total_points / float(5 - counter)) * (5-counter-1)
+            love_calc = ((points + api.love_calculator(name, other_name) ) / (points + 100)) * 20
+            matches[x] = ((star_sign_score + mbti_score + height_score + shared_hobby + love_calc + points)
 
-            #star_sign_score + mbti_score + height_score + shared_hobby + love_calc + (points /(5  * (5-counter+1))) + (0.2 + (points/100))* 100
+''''
+get preliminary information of match
+*string match (match name)
+*dict matches
+return name and match percentage
+''''
+def get_match_info(match, matches):
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()
+
+    name = c.execute("SELECT name FROM profile WHERE user=?", (match)).fetchone()
+    percentage = matches[match]
+
+    return name + "\nmatch percentage: " + percentage + "%"
+
+''''
+get extra information of match
+*dict matches
+return birthday, star sign, mbti, height, hobbies, and spotify
+''''
+def get_extra_match_info(match):
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()
+
+    birthday = c.execute("SELECT birthday FROM profile WHERE user=?", (match)).fetchone()
+    star_sign = c.execute("SELECT star_sign FROM profile WHERE user=?", (match)).fetchone()
+    mbti = c.execute("SELECT mbti FROM profile WHERE user=?", (match)).fetchone()
+
+    height = c.execute("SELECT height FROM profile WHERE user=?", (match)).fetchone()
+    hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user=?", (match)).fetchone()
+    hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user=?", (match)).fetchone()
+
+    spotify = c.execute("SELECT spotify FROM profile WHERE user=?", (match)).fetchone()
+
+    return "\nbirthday: " + birthday + "\nstar sign: " + star_sign + "\nmbti: " + mbti + "\nheight: " + height + "\nhobby 1: " + hobby_1 + "\nhobby 2: " + hobby_2
+
 
 
 # DB_FILE="test.db"

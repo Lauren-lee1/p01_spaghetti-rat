@@ -198,7 +198,7 @@ def get_bad_star_sign(user_star_sign):
         bad_star_sign = ['Aries','Libra']
     if user_star_sign == "Pisces":
         bad_star_sign = ['Gemini','Sagittarius']
-    if user_star_sign == ["Aquarius"]
+    if user_star_sign == ["Aquarius"]:
         bad_star_sign = ['Taurus']
     return bad_star_sign
 
@@ -225,7 +225,7 @@ def get_good_star_sign(user_star_sign):
         good_star_sign = ['Taurus','Virgo','Scorpio','Pisces']
     if user_star_sign == "Pisces":
         good_star_sign = ['Taurus','Cancer','Scorpio','Capricorn']
-    if user_star_sign = "Aquarius":
+    if user_star_sign == "Aquarius":
         good_star_sign = ['Sagittarius','Libra','Gemini','Aries']
     return good_star_sign
 
@@ -450,7 +450,7 @@ def match_mbti(user, other_user):
 
 '''
 returns if other_user height matches user height preference
-''''
+'''
 def match_height(user, other_user):
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
@@ -569,7 +569,7 @@ def match(user, other_user):
                 shared_hobby = shared_hobby + 30
             if match_hobbies(user, x) == 2:
                 shared_hobby = shared_hobby + 20
-            matches[x] = ((shared_hobby + love_calc)
+            matches[x] = (shared_hobby + love_calc)
     #============ all optional selected ====================#
     if use_star_sign == 1 and use_mbti == 1 and low_height is not None and high_height is not None:
         for x in total:
@@ -603,7 +603,7 @@ def match(user, other_user):
             other_name = c.execute("SELECT name FROM profile WHERE user=?", (x)).fetchone()
             love_calc = 0.2 * api.love_calculator(name, other_name)
             #total
-            matches[x] = ((star_sign_score + mbti_score + height_score + shared_hobby + love_calc)
+            matches[x] = (star_sign_score + mbti_score + height_score + shared_hobby + love_calc)
     #================= any one is optional ======================#
     optional = [15, 20, 20]
     options = [True, True, True]
@@ -656,14 +656,15 @@ def match(user, other_user):
             total_points = points #total_points is how many points are coming from the unused metric(s), points is the points you want distributed to each used metric
             points = (total_points / float(5 - counter)) * (5-counter-1)
             love_calc = ((points + api.love_calculator(name, other_name) ) / (points + 100)) * 20
-            matches[x] = ((star_sign_score + mbti_score + height_score + shared_hobby + love_calc + points)
+            matches[x] = (star_sign_score + mbti_score + height_score + shared_hobby + love_calc + points)
 
-''''
+'''
 get preliminary information of match
 *string match (match name)
 *dict matches
 return name and match percentage
-''''
+'''
+
 def get_match_info(match, matches):
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
@@ -674,11 +675,11 @@ def get_match_info(match, matches):
 
     return name + "\nmatch percentage: " + percentage + "%"
 
-''''
+'''
 get extra information of match
 *dict matches
 return birthday, star sign, mbti, height, hobbies, and spotify
-''''
+'''
 def get_extra_match_info(match):
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create

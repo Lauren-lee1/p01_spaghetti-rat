@@ -349,9 +349,11 @@ def profile_setup(user, name, birthday, height, hobby_1, hobby_2, spotify, gende
     c.execute("INSERT INTO profile (user, name, birthday, star_sign, height, age, hobby_1, hobby_2, spotify, gender, mbti) VALUES (?,?,?,?,?,?,?,?,?,?,?)", (user, name, birthday, star_sign, height, age, hobby_1, hobby_2, spotify, gender, mbti))
 
     #prints users table
+    '''
     table = c.execute("SELECT * from profile")
     print(" table from set up profile call")
     print(table.fetchall())
+    '''
 
     db.commit() #save changes
     db.close()  #close database
@@ -712,3 +714,16 @@ def get_extra_match_info(match):
 
 # db.commit() #save changes
 # db.close()  #close databas
+
+print("here we go:\n")
+profile_setup("grape", "nada h", "2005-11-26", "66", "drawing", "video games", "spotify", "female", "ISTJ")
+
+DB_FILE="profile.db"
+db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+c = db.cursor()
+
+table = c.execute("SELECT * from profile")
+print("user table from add_user() call")
+print(table.fetchall())
+
+pref_setup("grape", "", "", 1 , 1, 68, 74, 0, 1, 0)

@@ -8,7 +8,7 @@ def love_calculator(name1, name2):
         with open("app/key_love_calculator.txt", "r") as file:
             key = file.read().strip()
     except:
-        return("where the file at?")
+        return(0)
 
     url = "https://love-calculator.p.rapidapi.com/getPercentage"
 

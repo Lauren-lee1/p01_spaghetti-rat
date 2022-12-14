@@ -4,8 +4,11 @@ import json
 def love_calculator(name1, name2):
 
     key = ""
-    with open("keys/key_love_calculator.txt", "r") as file:
-        key = file.read()
+    try:
+        with open("app/key_love_calculator.txt", "r") as file:
+            key = file.read().strip()
+    except:
+        return("where the file at?")
 
     url = "https://love-calculator.p.rapidapi.com/getPercentage"
 

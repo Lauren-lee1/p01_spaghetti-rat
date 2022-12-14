@@ -175,3 +175,16 @@ nadaH-- 2022-12-13 20:10
 * debugging db.py more
 * tested specific matching methods (helpers)
 ==============================================================
+
+briannaT-- 2022-12-14 5:32
+--------------------------------------------------------------
+* created profile.html for form submissions to collect user data to
+  create user and preference profiles for users
+* added specific requirements for certain form submission fields
+  using the required pattern html tag
+* added functions in __init__.py to take form submissions and create
+  user profiles
+* tidied up files: deleted auth.py, added riddle.html (to be
+  displayed before matches) and match.html (added an example card for 
+  the individual cards to be displayed)
+==============================================================

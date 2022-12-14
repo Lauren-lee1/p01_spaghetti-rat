@@ -89,6 +89,7 @@ def create_profile_db():
 creates preferences table:
 user (string) |
 star_sign (string) *optional, for reference* | mbti(string) *optional, for reference* |
+use_star_sign (int/boolean) | use_mbti (int/bool) |
 low_height (int) *optional*| high_height (int) *optional* |
 female (int) *binary* | male (int) *binary* | nonbinary (int) *binary* |
 '''

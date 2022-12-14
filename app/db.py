@@ -177,6 +177,7 @@ def set_star_sign(birthday):
     return star_sign
 
 def get_bad_star_sign(user_star_sign):
+    bad_star_sign = ""
     if user_star_sign == 'Aries':
         bad_star_sign = ['Cancer', 'Capricorn']
     if user_star_sign == 'Taurus':
@@ -199,11 +200,12 @@ def get_bad_star_sign(user_star_sign):
         bad_star_sign = ['Aries','Libra']
     if user_star_sign == "Pisces":
         bad_star_sign = ['Gemini','Sagittarius']
-    if user_star_sign == ["Aquarius"]:
+    if user_star_sign == "Aquarius":
         bad_star_sign = ['Taurus']
     return bad_star_sign
 
 def get_good_star_sign(user_star_sign):
+    good_star_sign = ""
     if user_star_sign == 'Aries':
         good_star_sign = ['Gemini', 'Leo', 'Sagittarius', 'Aquarius']
     if user_star_sign == 'Taurus':
@@ -252,7 +254,8 @@ def set_age(birthday):
     else:
         return age-1
 
-def get_good_mbti(mbti):
+def get_good_mbti(user_mbti):
+    good_mbti = ""
     if user_mbti == "ESTP":
         good_mbti = ['ISTP', 'ESFJ', 'ISFJ']
     if user_mbti == "ISTP":
@@ -287,7 +290,8 @@ def get_good_mbti(mbti):
         good_mbti = ['ENFP','INFP','ENTJ']
     return good_mbti
 
-def get_bad_mbti(mbti):
+def get_bad_mbti(user_mbti):
+    bad_mbti = ""
     if user_mbti == "ESTP":
         bad_mbti = ['ESFP', 'ISFP', 'ENFP', 'INFP']
     if user_mbti == "ISTP":
@@ -320,7 +324,7 @@ def get_bad_mbti(mbti):
         bad_mbti = ['ESFJ','ISFJ','ENFJ','INFJ']
     if user_mbti == "INTJ":
         bad_mbti = ['ESFJ','ISFJ','ENFJ','INFJ']
-    return good_mbti
+    return bad_mbti
 
 '''
 set up your profile (optional items listed in profile.db setup)
@@ -374,9 +378,11 @@ def pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_
 
     c.execute("INSERT INTO pref (user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary) VALUES (?,?,?,?,?,?,?,?,?,?)", (user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary))
 
+    '''
     table = c.execute("SELECT * from pref")
     print("pref table from pref_setup() call")
     print(table.fetchall())
+    '''
 
     db.commit() #save changes
     db.close()  #close database
@@ -384,7 +390,7 @@ def pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_
 '''
 returns how many shared hobbies user and other user have in common
 '''
-def match_hobbies(user, non_user):
+def match_hobbies(user, other_user):
     ret_val = 0
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
@@ -393,8 +399,8 @@ def match_hobbies(user, non_user):
     hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user =?", (user,)).fetchone()
     hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user =?", (user,)).fetchone()
 
-    other_hobby_1 =  c.execute("SELECT hobby_1 FROM profile WHERE user=?", (other_user)).fetchone()
-    other_hobby_2 =  c.execute("SELECT hobby_2 FROM profile WHERE user=?", (other_user)).fetchone()
+    other_hobby_1 =  c.execute("SELECT hobby_1 FROM profile WHERE user=?", (other_user,)).fetchone()
+    other_hobby_2 =  c.execute("SELECT hobby_2 FROM profile WHERE user=?", (other_user,)).fetchone()
     if (hobby_2 == other_hobby_2 and hobby_1 == other_hobby_1) or (hobby_1 == other_hobby_2 and hobby_2 == other_hobby_1):
          ret_val = 2
     if  (hobby_2 == other_hobby_2 and hobby_1 != other_hobby_1) or (hobby_2 != other_hobby_2 and hobby_1 == other_hobby_1) or (hobby_1 != other_hobby_2 and hobby_2 == other_hobby_1) or (hobby_1 == other_hobby_2 and hobby_2 != other_hobby_1) :
@@ -405,12 +411,12 @@ def match_hobbies(user, non_user):
 returns if other_user star_sign matches other user mbti preferences
 '''
 def match_star_sign(user, other_user):
-    DB_FILE="pref.db"
+    DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
-    good_star_sign = c.execute("SELECT good_star_sign FROM pref WHERE user =?", (user,)).fetchone()
-    bad_star_sign = c.execute("SELECT bad_star_sign FROM pref WHERE user =?", (user,)).fetchone()
+    good_star_sign = get_good_star_sign(c.execute("SELECT star_sign FROM profile WHERE user =?", (user,)).fetchone())
+    bad_star_sign = get_bad_star_sign(c.execute("SELECT star_sign FROM profile WHERE user =?", (user,)).fetchone())
 
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
@@ -430,12 +436,12 @@ def match_star_sign(user, other_user):
 returns if other_user mbti matches other user mbti preferences
 '''
 def match_mbti(user, other_user):
-    DB_FILE="pref.db"
+    DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
-    good_mbti = c.execute("SELECT good_mbti FROM pref WHERE user =?", (user,)).fetchone()
-    bad_mbti = c.execute("SELECT bad_mtbi FROM pref WHERE user =?", (user,)).fetchone()
+    good_mbti = get_good_mbti(c.execute("SELECT mbti FROM profile WHERE user =?", (user,)).fetchone())
+    bad_mbti = get_bad_mbti(c.execute("SELECT mbti FROM profile WHERE user =?", (user,)).fetchone())
 
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
@@ -459,14 +465,14 @@ def match_height(user, other_user):
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
-    height = c.execute("SELECT heignt FROM profile WHERE user =?", (other_user,)).fetchone()
+    height = c.execute("SELECT height FROM profile WHERE user =?", (other_user,)).fetchone()
 
     DB_FILE="pref.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
-    low_height = c.execute("SELECT low_heignt FROM pref WHERE user =?", (user,)).fetchone()
-    high_height = c.execute("SELECT high_heignt FROM pref WHERE user =?", (user,)).fetchone()
+    low_height = c.execute("SELECT low_height FROM pref WHERE user =?", (user,)).fetchone()
+    high_height = c.execute("SELECT high_height FROM pref WHERE user =?", (user,)).fetchone()
 
     if height >= low_height and height <= high_height:
         return True
@@ -700,3 +706,46 @@ def get_extra_match_info(match):
 
     return "\nbirthday: " + birthday + "\nstar sign: " + star_sign + "\nmbti: " + mbti + "\nheight: " + height + "\nhobby 1: " + hobby_1 + "\nhobby 2: " + hobby_2
 
+#testing methods
+
+create_users_db()
+create_profile_db()
+create_pref_db()
+
+DB_FILE="profile.db"
+db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+c = db.cursor()
+
+print("\n============PROFILE TABLE============\n") #WORKS
+
+profile_setup("grapes", "Nada Hameed", "2005-11-26", "66", "Drawing", "Video Games", "spotify", "female", "ESTP")
+profile_setup("shua", "Joshua Hong", "1995-12-30", "70", "Singing", "Dancing", "spotify", "male", "ISFJ")
+
+table = c.execute("SELECT * from profile")
+print(" table from set up profile call")
+print(table.fetchall())
+
+DB_FILE="pref.db"
+db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+c = db.cursor()
+
+print("\n============PREF TABLE============\n") #WORKS
+
+pref_setup("grapes", "", "", "1", "1", "68", "74", "0", "1", "0")
+pref_setup("shua", "", "", "1", "1", "62", "68", "1", "0", "0")
+
+table = c.execute("SELECT * from pref")
+print(" table from set up profile call")
+print(table.fetchall())
+
+print("\n============MATCH STAR SIGN============\n") #WORKS
+print(match_star_sign("grapes", "shua"))
+
+print("\n============MATCH HEIGHT============\n") #WORKS
+print(match_height("grapes", "shua"))
+
+print("\n============MATCH HOBBIES============\n") #WORKS
+print(match_hobbies("grapes","shua"))
+
+print("\n============MATCH MBTI============\n") #DOESN"T WORK
+print(match_mbti("grapes","shua"))

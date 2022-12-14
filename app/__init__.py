@@ -71,10 +71,45 @@ def log_out():
     return redirect('/')
 
 '''
-profile route, allows user to add / edit their personal matching information
+profile route, allows user to add / edit their personal matching information and creates corresponding profile in db
 '''
-#@app.route("/profile", methods=['GET', 'POST'])
+@app.route("/profile", methods=['GET', 'POST'])
+def disp_profile():
+    if request.method == 'GET':
+        return render_template('profile.html')
+    user = session['username']
+    name = request.form['name']
+    birthday = request.form['birthday']
+    height = request.form['height']
+    hobby_1 = request.form['hobby1']
+    hobby_2 = request.form['hobby2']
+    spotify = None
+    gender = request.form['gender']
+    mbti = request.form['mbti']
+    db.profile_setup(user, name, birthday, height, hobby_1, hobby_2, spotify, gender, mbti)
+    return render_template('profile.html', personal_info="Your personal information has been successfully updated!")
 
+'''
+preferences route, allows user to add / edit their romantic preferences and creates a table with the info in db
+'''
+@app.route("/preferences", methods=['GET', 'POST'])
+def pref_table():
+    user = session['username']
+    star_sign = request.form['pref_star']
+    mbti = request.form['pref_mbti']
+    use_star_sign = request.form['use_star']
+    use_mbti = request.form['use_mbti']
+    low_height = request.form['low_height']
+    high_height = request.form['high_height']
+    female = request.form['pref_female']
+    male = request.form['pref_male']
+    nonbinary = request.form['pref_nonbinary']
+    db.pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary)
+    return render_template('profile.html', pref_info="Your preferences have been successfully updated!")
+
+@app.route("/match", methods=['GET', 'POST'])
+def disp_matches():
+    return render_template('match.html')
 #================================================#
 
 if __name__ == "__main__":  # true if this file NOT imported

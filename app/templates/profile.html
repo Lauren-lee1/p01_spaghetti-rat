@@ -4,93 +4,129 @@
 -->
 
 <!doctype html>
-    <!-- stylesheet -->
-    <html class="no-js" lang="en">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/js/foundation.min.js" crossorigin="anonymous"></script>
-    <title>login</title>
+    <head>
+      <!-- stylesheet -->
+      <html class="no-js" lang="en">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/js/foundation.min.js" crossorigin="anonymous"></script>
+      <title>login</title>
     </head>
 
 
     <body>
+      <h1>Your Profile</h1>
+      <a href="/">Return Home</a>
         <form action="/profile" method="POST">
-            <div class="grid-x grid-margin-x">
-              <div class="cell small-12">
-                <label>Username
-                  <input type="text" placeholder="coolusername" name="username" aria-describedby="exampleHelpTextNumber" required >
-                </label>
-                <p class="help-text" id="exampleHelpTextNumber">Here's how you use this input field!</p>
-              </div>
+            {{personal_info}}
+            <h3>Personal Information</h3>
+            <div class="grid-x grid-padding-x">
               <div class="cell small-12">
                 <label>Name
-                  <input type="text" placeholder="your real name :)" name="name" aria-describedby="exampleHelpTextNothing" required>
+                  <input type="text" placeholder="your full name :o" name="name" aria-describedby="nametext" required>
                 </label>
-                <p class="help-text" id="exampleHelpTextNothing">This input is ignored by Abide using `data-abide-ignore`</p>
               </div>
               <div class="cell small-12">
                 <label>Birthday
-                  <input type="text" id="password" placeholder="yeti4preZ" name="birthday"aria-describedby="exampleHelpTextPassword" required >
-                  <span class="form-error">
-                    I'm required!
-                  </span>
-                <p class="help-text" id="exampleHelpTextPassword">Enter a password please.</p>
+                  <input type="text" id="password" placeholder="yearmonthday, ex:2005-09-19" name="birthday" aria-describedby="birthdaytext" required>
                 </label>
+                  <p class="help-text" id="helptextbirthday">Add your birthday (year, month, date) <b>exactly as shown in the following format:</b> xxxx-xx-xx</p>
               </div>
               <div class="cell small-12">
-                <label>Re-enter Password
-                  <input type="password" placeholder="yeti4preZ" aria-describedby="exampleHelpText2" required pattern="alpha_numeric" data-equalto="password">
-                  <span class="form-error">
-                    Hey, passwords are supposed to match!
-                  </span>
+                <label>Height
+                  <input type="text" placeholder="67" name="height" aria-describedby="heighttext" required pattern="[0-9]{2}">
                 </label>
-                <p class="help-text" id="exampleHelpText2">This field is using the `data-equalto="password"` attribute, causing it to match the password field above.</p>
+                <p class="help-text" id="helptextheight">Your height <b>in inches!</b></p>
               </div>
-            </div>
-            <div class="grid-x grid-margin-x">
-              <div class="cell medium-6">
-                <label>URL Pattern, not required, but throws error if it doesn't match the Regular Expression for a valid URL.
-                  <input type="text" placeholder="https://get.foundation" pattern="url">
+              <div class="cell small-12">
+                <label>First Hobby
+                  <input type="text" placeholder="firstcoolhobby" name="hobby1" aria-describedby="hobby1text" required>
                 </label>
+                <p class="help-text" id="helptexthobby1">One of your hobbies!</p>
               </div>
-              <div class="cell medium-6">
-                <label>European Cars, Choose One, it can't be the blank option.
-                  <select id="select" required>
-                    <option value=""></option>
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="audi">Audi</option>
-                  </select>
+              <div class="cell small-12">
+                <label>Second Hobby
+                  <input type="text" placeholder="othercoolhobby" name="hobby2" aria-describedby="hobby2text" required>
                 </label>
+                <p class="help-text" id="helptexthobby2">Another one of your hobbies!</p>
               </div>
-            </div>
-            <div class="grid-x grid-margin-x">
-              <fieldset class="cell medium-6">
-                <legend>Choose Your Favorite, and this is required, so you have to pick one.</legend>
-                <input type="radio" name="pokemon" value="Red" id="pokemonRed"><label for="pokemonRed">Red</label>
-                <input type="radio" name="pokemon" value="Blue" id="pokemonBlue" required><label for="pokemonBlue">Blue</label>
-                <input type="radio" name="pokemon" value="Yellow" id="pokemonYellow"><label for="pokemonYellow">Yellow</label>
-              </fieldset>
-              <fieldset class="cell medium-6">
-                <legend>Choose Your Favorite - not required, you can leave this one blank.</legend>
-                <input type="radio" name="pockets" value="Red" id="pocketsRed"><label for="pocketsRed">Red</label>
-                <input type="radio" name="pockets" value="Blue" id="pocketsBlue"><label for="pocketsBlue">Blue</label>
-                <input type="radio" name="pockets" value="Yellow" id="pocketsYellow"><label for="pocketsYellow">Yellow</label>
-              </fieldset>
-              <fieldset class="cell medium-6">
-                <legend>Check these out</legend>
-                <input id="checkbox1" type="checkbox"><label for="checkbox1">Checkbox 1</label>
-                <input id="checkbox2" type="checkbox" required><label for="checkbox2">Checkbox 2</label>
-                <input id="checkbox3" type="checkbox"><label for="checkbox3">Checkbox 3</label>
-              </fieldset>
-            </div>
-            <div class="grid-x grid-margin-x">
+              <div class="cell small-12">
+                <label>Gender
+                  <input type="text" placeholder="ex: nonbinary" name="gender" aria-describedby="gendertext" required>
+                </label>
+                <p class="help-text" id="helptextgender">Input your gender!</p>
+              </div>
+              <div class="cell small-12">
+                <label>MBTI
+                  <input type="text" placeholder="ex: ISFP" name="mbti" aria-describedby="mbtitext" required pattern="[A-Z]{4}">
+                </label>
+                <p class="help-text" id="helptextmbti">Input your MBTI type! <b>Please use only uppercase letters.</b></p>
+              </div>
               <fieldset class="cell medium-6">
                 <button class="button" type="submit" value="Submit">Submit</button>
               </fieldset>
+            </div>
+          </form>
+
+          <br>
+          <h1>Your Preferences</h1>
+          {{pref_info}}
+          <form action="/preferences" method="POST">
+            <div class="grid-x grid-padding-x">
+              <div class="cell small-12">
+                <label>Star Sign
+                  <input type="text" placeholder="ex: Virgo" name="pref_star" aria-describedby="starsigntext">
+                </label>
+                <p class="help-text" id="helptextname">Your ideal partner's star sign!</p>
+              </div>
+              <div class="cell small-12">
+                <label>MBTI
+                  <input type="text" placeholder="ex: ENTJ" name="pref_mbti" aria-describedby="mbtitext">
+                </label>
+                <p class="help-text" id="helptextname">Your ideal partner's MBTI type!</p>
+              </div>
+              <div class="cell small-12">
+                <label>Would you like to your star sign preference to find your ideal match?
+                  <input type="text" placeholder="0 or 1" name="use_star" aria-describedby="use_star" required pattern="[0,1]{1}">
+                </label>
+                <p class="help-text" id="helptextuse_star"><b>Use binary!</b> (0 = nay, 1 = yay)</p>
+              </div>
+              <div class="cell small-12">
+                <label>Would you like to your MBTI preference to find your ideal match?
+                  <input type="text" placeholder="0 or 1" name="use_mbti" aria-describedby="use_mbti" required pattern="[0,1]{1}">
+                </label>
+                <p class="help-text" id="helptextuse_mbti"><b>Use binary!</b> (0 = nay, 1 = yay)</p>
+              </div>
+              <div class="cell small-12">
+                <label>What the shortest height your match should be?
+                  <input type="text" placeholder="short king?" name="low_height" aria-describedby="lowestheight">
+                </label>
+                <p class="help-text" id="helptextlow_height">Please use <b>inches!</b></p>
+              </div>
+              <div class="cell small-12">
+                <label>What the tallest height your match should be?
+                  <input type="text" placeholder="green giant?" name="high_height" aria-describedby="highestheight">
+                </label>
+                <p class="help-text" id="helptexthigh_height">Please use <b>inches!</b></p>
+              </div>
+              <h3>Indicate your gender preferences below. Use binary! (0 = nay, 1 = yay)</h3>
+              <div class="cell small-12">
+                <label>Female
+                  <input type="text" placeholder="0 or 1" name="pref_female" aria-describedby="femaletext" required pattern="[0,1]{1}">
+                </label>
+              </div>
+              <div class="cell small-12">
+                <label>Male
+                  <input type="text" placeholder="0 or 1" name="pref_male" aria-describedby="maletext" required pattern="[0,1]{1}">
+                </label>
+              </div>
+              <div class="cell small-12">
+                <label>Nonbinary
+                  <input type="text" placeholder="0 or 1" name="pref_nonbinary" aria-describedby="nonbinarytext" required pattern="[0,1]{1}">
+                </label>
+              </div>
               <fieldset class="cell medium-6">
-                <button class="button" type="reset" value="Reset">Reset</button>
-              </fieldset>
+                <button class="button" type="submit" value="Submit">Submit</button>
+            </fieldset>
             </div>
           </form>
     </body>

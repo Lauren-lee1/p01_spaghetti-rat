@@ -706,7 +706,10 @@ def get_extra_match_info(match):
 
     return "\nbirthday: " + birthday + "\nstar sign: " + star_sign + "\nmbti: " + mbti + "\nheight: " + height + "\nhobby 1: " + hobby_1 + "\nhobby 2: " + hobby_2
 
-#testing methods
+
+#===============================================================================
+#==================================TESTING======================================
+#===============================================================================
 
 create_users_db()
 create_profile_db()
@@ -747,5 +750,5 @@ print(match_height("grapes", "shua"))
 print("\n============MATCH HOBBIES============\n") #WORKS
 print(match_hobbies("grapes","shua"))
 
-print("\n============MATCH MBTI============\n") #DOESN"T WORK
+print("\n============MATCH MBTI============\n") #DOESN'T WORK
 print(match_mbti("grapes","shua"))

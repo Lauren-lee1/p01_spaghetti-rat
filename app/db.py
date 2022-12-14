@@ -177,7 +177,7 @@ def set_star_sign(birthday):
     return star_sign
 
 def get_bad_star_sign(user_star_sign):
-    bad_star_sign = ""
+    bad_star_sign = []
     if user_star_sign == 'Aries':
         bad_star_sign = ['Cancer', 'Capricorn']
     if user_star_sign == 'Taurus':
@@ -205,7 +205,7 @@ def get_bad_star_sign(user_star_sign):
     return bad_star_sign
 
 def get_good_star_sign(user_star_sign):
-    good_star_sign = ""
+    good_star_sign = []
     if user_star_sign == 'Aries':
         good_star_sign = ['Gemini', 'Leo', 'Sagittarius', 'Aquarius']
     if user_star_sign == 'Taurus':
@@ -255,7 +255,7 @@ def set_age(birthday):
         return age-1
 
 def get_good_mbti(user_mbti):
-    good_mbti = ""
+    good_mbti = []
     if user_mbti == "ESTP":
         good_mbti = ['ISTP', 'ESFJ', 'ISFJ']
     if user_mbti == "ISTP":
@@ -291,7 +291,7 @@ def get_good_mbti(user_mbti):
     return good_mbti
 
 def get_bad_mbti(user_mbti):
-    bad_mbti = ""
+    bad_mbti = []
     if user_mbti == "ESTP":
         bad_mbti = ['ESFP', 'ISFP', 'ENFP', 'INFP']
     if user_mbti == "ISTP":
@@ -436,6 +436,7 @@ def match_star_sign(user, other_user):
 returns if other_user mbti matches other user mbti preferences
 '''
 def match_mbti(user, other_user):
+
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
@@ -456,6 +457,28 @@ def match_mbti(user, other_user):
         if x == mbti:
             return -1
     return 0
+    '''
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    good_mbti = get_good_mbti(c.execute("SELECT mbti FROM profile WHERE user =?", (user,)).fetchone())
+    bad_mbti = get_bad_mbti(c.execute("SELECT mbti FROM profile WHERE user =?", (user,)).fetchone())
+
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    mbti = c.execute("SELECT mbti FROM profile WHERE user =?", (other_user,)).fetchone()
+
+    for x in good_mbti:
+        if x == mbti:
+            return 1
+    for x in bad_mbti:
+        if x == mbti:
+            return -1
+    return 0
+    '''
 
 '''
 returns if other_user height matches user height preference
@@ -508,7 +531,7 @@ choose all optional:
 choose 1+ optional:
 - remaining percentage is divided up between the number of filled in categories and added
 '''
-def match(user, other_user):
+def match(user):
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
@@ -666,6 +689,7 @@ def match(user, other_user):
             points = (total_points / float(5 - counter)) * (5-counter-1)
             love_calc = ((points + api.love_calculator(name, other_name) ) / (points + 100)) * 20
             matches[x] = (star_sign_score + mbti_score + height_score + shared_hobby + love_calc + points)
+    return matches
 
 '''
 get preliminary information of match
@@ -682,7 +706,7 @@ def get_match_info(match, matches):
     name = c.execute("SELECT name FROM profile WHERE user=?", (match)).fetchone()
     percentage = matches[match]
 
-    return name + "\nmatch percentage: " + percentage + "%"
+    return [name, percentage]
 
 '''
 get extra information of match
@@ -721,7 +745,7 @@ c = db.cursor()
 
 print("\n============PROFILE TABLE============\n") #WORKS
 
-profile_setup("grapes", "Nada Hameed", "2005-11-26", "66", "Drawing", "Video Games", "spotify", "female", "ESTP")
+profile_setup("grapes", "Nada Hameed", "2005-03-30", "66", "Singing", "Dancing", "spotify", "female", "ESTP")
 profile_setup("shua", "Joshua Hong", "1995-12-30", "70", "Singing", "Dancing", "spotify", "male", "ISFJ")
 
 table = c.execute("SELECT * from profile")

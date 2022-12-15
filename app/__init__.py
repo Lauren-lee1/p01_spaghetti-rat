@@ -109,15 +109,15 @@ def pref_table():
 
 @app.route("/match", methods=['GET', 'POST'])
 def disp_matches():
-    matchList = {}
-    matches = db.match(session['username'])
-    for match in matches.keys():
-        i = db.get_match_info(match, matches)
-        match_name=""
-        for letter in i[0]: #turn tuple data into string data to be displayed on match page
-            match_name = match_name + letter
-        matchList[match_name]=i[1]
-    return render_template('match.html', matchList = matchList)
+    matchName = ""
+    matchPercent = ""
+    
+    matchList = db.match(session['username'])
+    m = matchList.keys()
+    matchName = m[0]
+    matchPercent = matchList[0]
+
+    return render_template('match.html', matchName = matchName, matchInfo = matchPercent)
 #================================================#
 
 if __name__ == "__main__":  # true if this file NOT imported

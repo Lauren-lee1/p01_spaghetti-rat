@@ -674,7 +674,7 @@ def get_match_info(match, matches):
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()
 
-    name = c.execute("SELECT name FROM profile WHERE user=?", (match,)).fetchone()
+    name = c.execute("SELECT name FROM profile WHERE user=?", (match)).fetchone()
     percentage = matches[match]
 
     return [name, percentage]

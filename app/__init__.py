@@ -109,7 +109,14 @@ def pref_table():
 
 @app.route("/match", methods=['GET', 'POST'])
 def disp_matches():
-    return render_template('match.html')
+    matchName = []
+    matchInfo = []
+    matchList = {}
+    m = db.match(session['username'])
+    for i in m:
+        l = db.get_match_info(m)
+        matchList[l[0]]=l[1]
+    return render_template('match.html', matchName = matchName, matchInfo = matchInfo)
 #================================================#
 
 if __name__ == "__main__":  # true if this file NOT imported

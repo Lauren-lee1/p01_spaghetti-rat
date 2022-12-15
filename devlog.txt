@@ -185,6 +185,15 @@ briannaT-- 2022-12-14 5:32
 * added functions in __init__.py to take form submissions and create
   user profiles
 * tidied up files: deleted auth.py, added riddle.html (to be
-  displayed before matches) and match.html (added an example card for 
+  displayed before matches) and match.html (added an example card for
   the individual cards to be displayed)
+==============================================================
+
+laurenL & emersonG & nadaH-- 2022-12-14 5:32
+--------------------------------------------------------------
+* continued working on match.html and worked on getting match info
+  into the card
+* continued debugging, somehow some things that worked yesterday are
+  not working today hmm
+* where is brianna
 ==============================================================

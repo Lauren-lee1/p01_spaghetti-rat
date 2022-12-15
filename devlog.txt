@@ -204,3 +204,10 @@ nadaH-- 2022-12-14 20:47
   * match_mbti and match_star_sign WORK!
 * match function runs but returns an empty dictionary
 ==============================================================
+
+laurenL- 2022-12-14 21:57
+--------------------------------------------------------------
+* make sure to do list(var)[0] whenever trying to get a single val from the db!
+* edited devlog 
+  * new component map and page map
+==============================================================

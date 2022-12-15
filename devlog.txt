@@ -195,5 +195,12 @@ laurenL & emersonG & nadaH-- 2022-12-14 5:32
   into the card
 * continued debugging, somehow some things that worked yesterday are
   not working today hmm
-* where is brianna
+* where is brianna?
+==============================================================
+
+nadaH-- 2022-12-14 20:47
+--------------------------------------------------------------
+* continued debugging and testing functions
+  * match_mbti and match_star_sign WORK!
+* match function runs but returns an empty dictionary
 ==============================================================

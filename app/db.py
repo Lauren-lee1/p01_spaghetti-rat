@@ -407,78 +407,54 @@ def match_hobbies(user, other_user):
          ret_val = 1
     return ret_val
 
+'''helper fxn for star_sign'''
+def get_star_sign(user):
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    star_sign = (c.execute("SELECT star_sign FROM profile WHERE user =?", (user,)).fetchone())
+
+    return list(star_sign)[0]
+
 '''
 returns if other_user star_sign matches other user mbti preferences
 '''
 def match_star_sign(user, other_user):
-    DB_FILE="profile.db"
-    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+    good_star_sign = get_good_star_sign(get_star_sign(user))
+    bad_star_sign = get_bad_star_sign(get_star_sign(user))
 
-    good_star_sign = get_good_star_sign(c.execute("SELECT star_sign FROM profile WHERE user =?", (user,)).fetchone())
-    bad_star_sign = get_bad_star_sign(c.execute("SELECT star_sign FROM profile WHERE user =?", (user,)).fetchone())
+    their_star_sign = get_star_sign(other_user)
 
-    DB_FILE="profile.db"
-    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
-
-    star_sign = c.execute("SELECT star_sign FROM profile WHERE user =?", (other_user,)).fetchone()
-
-    for x in good_star_sign:
-        if x == star_sign:
-            return 1
-    for x in bad_star_sign:
-        if x == star_sign:
-            return -1
+    if their_star_sign in good_star_sign:
+        return 1
+    if their_star_sign in bad_star_sign:
+        return -1
     return 0
 
+'''helper fxn for mbti'''
+def get_mbti(user):
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    mbti = (c.execute("SELECT mbti FROM profile WHERE user =?", (user,)).fetchone())
+
+    return list(mbti)[0]
 '''
 returns if other_user mbti matches other user mbti preferences
 '''
 def match_mbti(user, other_user):
+    good_mbti = get_good_mbti(get_mbti(user))
+    bad_mbti = get_bad_mbti(get_mbti(user))
 
-    DB_FILE="profile.db"
-    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+    their_mbti = get_mbti(other_user)
 
-    good_mbti = get_good_mbti(c.execute("SELECT mbti FROM profile WHERE user =?", (user,)).fetchone())
-    bad_mbti = get_bad_mbti(c.execute("SELECT mbti FROM profile WHERE user =?", (user,)).fetchone())
-
-    DB_FILE="profile.db"
-    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
-
-    mbti = c.execute("SELECT mbti FROM profile WHERE user =?", (other_user,)).fetchone()
-
-    for x in good_mbti:
-        if x == mbti:
-            return 1
-    for x in bad_mbti:
-        if x == mbti:
-            return -1
+    if their_mbti in good_mbti:
+        return 1
+    if their_mbti in bad_mbti:
+        return -1
     return 0
-    '''
-    DB_FILE="profile.db"
-    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
-
-    good_mbti = get_good_mbti(c.execute("SELECT mbti FROM profile WHERE user =?", (user,)).fetchone())
-    bad_mbti = get_bad_mbti(c.execute("SELECT mbti FROM profile WHERE user =?", (user,)).fetchone())
-
-    DB_FILE="profile.db"
-    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
-    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
-
-    mbti = c.execute("SELECT mbti FROM profile WHERE user =?", (other_user,)).fetchone()
-
-    for x in good_mbti:
-        if x == mbti:
-            return 1
-    for x in bad_mbti:
-        if x == mbti:
-            return -1
-    return 0
-    '''
 
 '''
 returns if other_user height matches user height preference
@@ -532,7 +508,7 @@ choose 1+ optional:
 - remaining percentage is divided up between the number of filled in categories and added
 '''
 def match(user):
-    DB_FILE="profile.db"
+    DB_FILE="pref.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
@@ -561,7 +537,7 @@ def match(user):
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
-    age = c.execute("SELECT age FROM profile WHERE user =?", (user,)).fetchone()
+    age = list(c.execute("SELECT age FROM profile WHERE user =?", (user,)).fetchone())[0]
     #hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user =?", (user,)).fetchone()
     #hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user =?", (user,)).fetchone()
     name = c.execute("SELECT name FROM profile WHERE user =?", (user,)).fetchone()
@@ -746,7 +722,7 @@ c = db.cursor()
 print("\n============PROFILE TABLE============\n") #WORKS
 
 profile_setup("grapes", "Nada Hameed", "2005-03-30", "66", "Singing", "Dancing", "spotify", "female", "ESTP")
-profile_setup("shua", "Joshua Hong", "1995-12-30", "70", "Singing", "Dancing", "spotify", "male", "ISFJ")
+profile_setup("shua", "Joshua Hong", "2005-12-30", "70", "Singing", "Dancing", "spotify", "male", "ISFJ")
 
 table = c.execute("SELECT * from profile")
 print(" table from set up profile call")
@@ -765,14 +741,17 @@ table = c.execute("SELECT * from pref")
 print(" table from set up profile call")
 print(table.fetchall())
 
-print("\n============MATCH STAR SIGN============\n") #WORKS
+print("\n============MATCH STAR SIGN============\n") #should return -1 ---WORKS
 print(match_star_sign("grapes", "shua"))
 
-print("\n============MATCH HEIGHT============\n") #WORKS
+print("\n============MATCH HEIGHT============\n") #should return true ---WORKS
 print(match_height("grapes", "shua"))
 
-print("\n============MATCH HOBBIES============\n") #WORKS
+print("\n============MATCH HOBBIES============\n") #should return 2 ---WORKS
 print(match_hobbies("grapes","shua"))
 
-print("\n============MATCH MBTI============\n") #DOESN'T WORK
+print("\n============MATCH MBTI============\n") #should return 1 ---WORKS
 print(match_mbti("grapes","shua"))
+
+print("\n============MATCH============\n") #should return {"shua"}
+print(match("grapes"))

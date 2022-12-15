@@ -1,5 +1,7 @@
 import requests
+from urllib import request
 import json
+from flask import Flask, render_template
 
 def love_calculator(name1, name2):
 
@@ -22,3 +24,23 @@ def love_calculator(name1, name2):
     response = requests.request("GET", url, headers=headers, params=querystring)
 
     return json.loads(response.text)["percentage"]
+
+def yes_no(): #no keys
+    url = "https://yesno.wtf/api"
+    open = request.urlopen(url)
+   
+    dictionary = json.loads(open.read())
+    return dictionary['answer']
+
+def duck():
+    url = "https://random-d.uk/api/quack"
+
+    open = request.urlopen(url)
+   
+    dictionary = json.loads(open.read())
+   
+    img = dictionary['url']
+
+    return render_template('match.html',image = img)
+
+print(duck())

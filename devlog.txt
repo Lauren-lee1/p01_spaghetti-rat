@@ -211,3 +211,11 @@ laurenL- 2022-12-14 21:57
 * edited devlog 
   * new component map and page map
 ==============================================================
+
+briannaT-- 2022-12-15 0:32
+--------------------------------------------------------------
+* working display of individual cards with basic info (name + percentage) 
+  for each match
+* looked more into how to implement working js into profile page for 
+  dropdown menus, still confuzzled
+==============================================================

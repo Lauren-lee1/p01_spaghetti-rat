@@ -557,7 +557,7 @@ def match(user):
     #=======all no optional==============#
     if use_star_sign == 0 and use_mbti == 0 and low_height is None and high_height is None:
         for x in total:
-            ("**************sssss******************8888")
+            ("**************sssss******************")
             x = list(x)[0]
             #love calculator = 50%
             other_name = c.execute("SELECT name FROM profile WHERE user=?", (x,)).fetchone()
@@ -573,7 +573,7 @@ def match(user):
             matches[x] = (shared_hobby + love_calc)
     #============ all optional selected ====================#
     if use_star_sign == 1 and use_mbti == 1 and low_height is not None and high_height is not None:
-        print("********************************8888")
+        print("********************************")
         for x in total:
             x = list(x)[0]
             #star sign
@@ -610,7 +610,7 @@ def match(user):
     optional = [15, 20, 20]
     options = [True, True, True]
     if use_star_sign == 0 or use_mbti == 0 or low_height is None and high_height is None:
-        ("*******************asdfasdfasd*************8888")
+        ("*******************asdfasdfasd*************")
         if use_star_sign == 0 :
             options[0] = False
         if use_mbti == 0:
@@ -716,8 +716,9 @@ c = db.cursor()
 
 print("\n============PROFILE TABLE============\n") #WORKS
 
-profile_setup("grapes", "Nada Hameed", "2005-03-30", "66", "Singing", "Dancing", "spotify", "female", "ESTP")
-profile_setup("shua", "Joshua Hong", "2005-12-30", "70", "Singing", "Dancing", "spotify", "male", "ISFJ")
+profile_setup("grapes", "Nada Hameed", "2005-11-26", "66", "Drawing", "Video Games", "spotify", "female", "INTJ")
+profile_setup("hong", "Joshua Hong", "2005-12-30", "70", "Singing", "Dancing", "spotify", "male", "ISFJ")
+profile_setup("frog", "Frog Flipper", "2005-07-23", "72", "Video Games", "Dancing", "spotify", "male", "ENFP")
 
 table = c.execute("SELECT * from profile")
 print(" table from set up profile call")
@@ -730,23 +731,24 @@ c = db.cursor()
 print("\n============PREF TABLE============\n") #WORKS
 
 pref_setup("grapes", "", "", "1", "1", "68", "74", "0", "1", "0")
-pref_setup("shua", "", "", "1", "1", "62", "68", "1", "0", "0")
-
+pref_setup("hong", "", "", "1", "1", "62", "68", "1", "0", "0")
+pref_setup("frog", "", "", "1", "1", "64", "70", "1", "0", "0")
+'''
 table = c.execute("SELECT * from pref")
 print(" table from set up profile call")
 print(table.fetchall())
 
 print("\n============MATCH STAR SIGN============\n") #should return -1 ---WORKS
-print(match_star_sign("grapes", "shua"))
+print(match_star_sign("grapes", "hong"))
 
 print("\n============MATCH HEIGHT============\n") #should return true ---WORKS
-print(match_height("grapes", "shua"))
+print(match_height("grapes", "hong"))
 
 print("\n============MATCH HOBBIES============\n") #should return 2 ---WORKS
-print(match_hobbies("grapes","shua"))
+print(match_hobbies("grapes","hong"))
 
 print("\n============MATCH MBTI============\n") #should return 1 ---WORKS
-print(match_mbti("grapes","shua"))
-
-print("\n============MATCH============\n") #should return {"shua"}
+print(match_mbti("grapes","hong"))
+'''
+print("\n============MATCH============\n") # --WORKS
 print(match("grapes"))

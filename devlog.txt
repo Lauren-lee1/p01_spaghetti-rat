@@ -220,4 +220,5 @@ briannaT-- 2022-12-15 0:32
   dropdown menus, still confuzzled
 * added js script to the bottom of profile.html, all foundation elements 
   that require js should be fully functional
+* turned bugged logout button into working logout link, to be fixed soon
 ==============================================================

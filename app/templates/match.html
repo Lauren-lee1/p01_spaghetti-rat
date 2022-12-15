@@ -13,14 +13,18 @@
     </head>
 
     <body>
+      <h1>Your Matches</h1>
+      {% for match in matchList %}
         <div class="card" style="width: 300px;">
             <div class="card-divider">
-              <h4>{{matchName}}</h4>
+              <h4>{{ match }}</h4>
             </div>
             <div class="card-section">
-              <p>{{matchInfo}}</p>
+              <p>{{ matchList[match] }}</p>
             </div>
             <img src="https://cdn.tasteatlas.com/images/dishes/b1415ad0f4b245ffb49b6e4b1686c542.jpg?mw=900">
           </div>
+          <br>
+      {% endfor %}
     </body>
-    </html>
+</html>

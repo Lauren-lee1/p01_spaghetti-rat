@@ -218,4 +218,6 @@ briannaT-- 2022-12-15 0:32
   for each match
 * looked more into how to implement working js into profile page for 
   dropdown menus, still confuzzled
+* added js script to the bottom of profile.html, all foundation elements 
+  that require js should be fully functional
 ==============================================================

@@ -721,7 +721,7 @@ c = db.cursor()
 
 print("\n============PROFILE TABLE============\n") #WORKS
 
-profile_setup("grapes", "Nada Hameed", "2005-11-26", "66", "Drawing", "Video Games", "spotify", "female", "ESTP")
+profile_setup("grapes", "Nada Hameed", "2005-03-30", "66", "Singing", "Dancing", "spotify", "female", "ESTP")
 profile_setup("shua", "Joshua Hong", "1995-12-30", "70", "Singing", "Dancing", "spotify", "male", "ISFJ")
 
 table = c.execute("SELECT * from profile")

@@ -674,7 +674,7 @@ def get_match_info(match, matches):
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()
 
-    name = c.execute("SELECT name FROM profile WHERE user=?", (match)).fetchone()
+    name = c.execute("SELECT name FROM profile WHERE user=?", (match,)).fetchone()
     percentage = matches[match]
 
     return [name, percentage]
@@ -689,15 +689,15 @@ def get_extra_match_info(match):
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()
 
-    birthday = c.execute("SELECT birthday FROM profile WHERE user=?", (match)).fetchone()
-    star_sign = c.execute("SELECT star_sign FROM profile WHERE user=?", (match)).fetchone()
-    mbti = c.execute("SELECT mbti FROM profile WHERE user=?", (match)).fetchone()
+    birthday = c.execute("SELECT birthday FROM profile WHERE user=?", (match,)).fetchone()
+    star_sign = c.execute("SELECT star_sign FROM profile WHERE user=?", (match,)).fetchone()
+    mbti = c.execute("SELECT mbti FROM profile WHERE user=?", (match,)).fetchone()
 
-    height = c.execute("SELECT height FROM profile WHERE user=?", (match)).fetchone()
-    hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user=?", (match)).fetchone()
-    hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user=?", (match)).fetchone()
+    height = c.execute("SELECT height FROM profile WHERE user=?", (match,)).fetchone()
+    hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user=?", (match,)).fetchone()
+    hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user=?", (match,)).fetchone()
 
-    spotify = c.execute("SELECT spotify FROM profile WHERE user=?", (match)).fetchone()
+    spotify = c.execute("SELECT spotify FROM profile WHERE user=?", (match,)).fetchone()
 
     return "\nbirthday: " + birthday + "\nstar sign: " + star_sign + "\nmbti: " + mbti + "\nheight: " + height + "\nhobby 1: " + hobby_1 + "\nhobby 2: " + hobby_2
 
@@ -705,7 +705,7 @@ def get_extra_match_info(match):
 #===============================================================================
 #==================================TESTING======================================
 #===============================================================================
-
+''''
 create_users_db()
 create_profile_db()
 create_pref_db()
@@ -733,7 +733,7 @@ print("\n============PREF TABLE============\n") #WORKS
 pref_setup("grapes", "", "", "1", "1", "68", "74", "0", "1", "0")
 pref_setup("hong", "", "", "1", "1", "62", "68", "1", "0", "0")
 pref_setup("frog", "", "", "1", "1", "64", "70", "1", "0", "0")
-'''
+
 table = c.execute("SELECT * from pref")
 print(" table from set up profile call")
 print(table.fetchall())
@@ -749,6 +749,7 @@ print(match_hobbies("grapes","hong"))
 
 print("\n============MATCH MBTI============\n") #should return 1 ---WORKS
 print(match_mbti("grapes","hong"))
-'''
+
 print("\n============MATCH============\n") # --WORKS
 print(match("grapes"))
+'''

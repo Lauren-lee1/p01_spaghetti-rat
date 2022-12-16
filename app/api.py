@@ -41,6 +41,5 @@ def duck():
    
     img = dictionary['url']
 
-    return render_template('match.html',image = img)
-
-print(duck())
+    return img
+print(type(duck()))

@@ -4,6 +4,7 @@
 # time spent:
 
 import db
+import api
 #import auth
 
 from flask import Flask, redirect, render_template, request, session, url_for
@@ -117,7 +118,7 @@ def disp_matches():
         for letter in i[0]: #turn tuple data into string data to be displayed on match page
             match_name = match_name + letter
         matchList[match_name]=i[1]
-    return render_template('match.html', matchList = matchList)
+    return render_template('match.html', matchList = matchList, img=api.duck())
 #================================================#
 
 if __name__ == "__main__":  # true if this file NOT imported

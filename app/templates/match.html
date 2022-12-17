@@ -20,11 +20,9 @@
               <h4>{{ match }}</h4>
             </div>
             <div class="card-section">
-              <p>{{ matchList[match] }}</p>
+              <p>{{ matchList[match][0] }}</p>
             </div>
-            {% for img in duckList %}
-            <img src= {{ img }}>
-            {% endfor %}
+            <img src= {{ matchList[match][1] }}>
           </div>
           <br>
       {% endfor %}

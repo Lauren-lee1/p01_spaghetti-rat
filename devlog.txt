@@ -229,3 +229,8 @@ laurenL-- 2022-16-15 22:54
 * created yes/no api and duck api methods
 * created messaging file to give messaging functionalities
 ==============================================================
+
+briannaT-- 2022-12-17 15:02
+--------------------------------------------------------------
+* generated random duck photos to display with each card for every match
+==============================================================

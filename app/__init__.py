@@ -112,16 +112,15 @@ def pref_table():
 @app.route("/match", methods=['GET', 'POST'])
 def disp_matches():
     matchList = {}
-    duckList = []
     matches = matching.match(session['username'])
     for match in matches.keys():
         i = matching.get_match_info(match, matches)
         match_name=""
         for letter in i[0]: #turn tuple data into string data to be displayed on match page
             match_name = match_name + letter
-        matchList[match_name]=i[1]
-        duckList.append(api.duck())
-    return render_template('match.html', matchList = matchList, duckList = duckList)
+        matchList[match_name]=[i[1]]
+        matchList[match_name].append(api.duck())
+    return render_template('match.html', matchList = matchList)
 #================================================#
 
 if __name__ == "__main__":  # true if this file NOT imported

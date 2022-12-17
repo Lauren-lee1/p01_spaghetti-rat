@@ -37,4 +37,4 @@ def duck():
     res = requests.get(url)
     img = res.json()['url']
 
-    return render_template('match.html', img = img)
+    return img

@@ -5,6 +5,7 @@
 
 import db
 import api
+import matching
 #import auth
 
 from flask import Flask, redirect, render_template, request, session, url_for
@@ -111,14 +112,16 @@ def pref_table():
 @app.route("/match", methods=['GET', 'POST'])
 def disp_matches():
     matchList = {}
-    matches = db.match(session['username'])
+    duckList = []
+    matches = matching.match(session['username'])
     for match in matches.keys():
-        i = db.get_match_info(match, matches)
+        i = matching.get_match_info(match, matches)
         match_name=""
         for letter in i[0]: #turn tuple data into string data to be displayed on match page
             match_name = match_name + letter
         matchList[match_name]=i[1]
-    return render_template('match.html', matchList = matchList, img=api.duck())
+        duckList.append(api.duck())
+    return render_template('match.html', matchList = matchList, duckList = duckList)
 #================================================#
 
 if __name__ == "__main__":  # true if this file NOT imported

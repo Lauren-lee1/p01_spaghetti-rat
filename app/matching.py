@@ -9,6 +9,7 @@ p01
 import sqlite3
 import datetime
 import api
+import db
 
 '''
 returns how many shared hobbies user and other user have in common
@@ -44,8 +45,8 @@ def get_star_sign(user):
 returns if other_user star_sign matches other user mbti preferences
 '''
 def match_star_sign(user, other_user):
-    good_star_sign = get_good_star_sign(get_star_sign(user))
-    bad_star_sign = get_bad_star_sign(get_star_sign(user))
+    good_star_sign = db.get_good_star_sign(get_star_sign(user))
+    bad_star_sign = db.get_bad_star_sign(get_star_sign(user))
 
     their_star_sign = get_star_sign(other_user)
 
@@ -68,8 +69,8 @@ def get_mbti(user):
 returns if other_user mbti matches other user mbti preferences
 '''
 def match_mbti(user, other_user):
-    good_mbti = get_good_mbti(get_mbti(user))
-    bad_mbti = get_bad_mbti(get_mbti(user))
+    good_mbti = db.get_good_mbti(get_mbti(user))
+    bad_mbti = db.get_bad_mbti(get_mbti(user))
 
     their_mbti = get_mbti(other_user)
 

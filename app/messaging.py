@@ -32,7 +32,6 @@ def get_message(user):
     return c.execute("SELECT latest_message FROM messaging WHERE user =?", (user,)).fetchone()
 
 def get_time(user):
-    def get_message(user):
     DB_FILE="messaging.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()

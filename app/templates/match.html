@@ -22,7 +22,9 @@
             <div class="card-section">
               <p>{{ matchList[match] }}</p>
             </div>
+            {% for img in duckList %}
             <img src= {{ img }}>
+            {% endfor %}
           </div>
           <br>
       {% endfor %}

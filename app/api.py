@@ -33,13 +33,8 @@ def yes_no(): #no keys
     return dictionary['answer']
 
 def duck():
-    url = "https://random-d.uk/api/quack"
+    url =  "https://random-d.uk/api/v2/quack"
+    res = requests.get(url)
+    img = res.json()['url']
 
-    open = request.urlopen(url)
-   
-    dictionary = json.loads(open.read())
-   
-    img = dictionary['url']
-
-    return img
-print(type(duck()))
+    return render_template('match.html', img = img)

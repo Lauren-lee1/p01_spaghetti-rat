@@ -382,6 +382,40 @@ def profile_setup(user, name, birthday, height, hobby_1, hobby_2, spotify, gende
     db.close()  #close database
 
 '''
+updates your profile
+* string user, name, birthday, hobby_1, hobby_2, spotify, gender, mbti
+'''
+def profile_update(user, name, birthday, height, hobby_1, hobby_2, spotify, gender, mbti):
+    DB_FILE = "profile.db"
+
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+
+    c.execute("UPDATE profile SET name = ?, birthday = ?, height = ?, hobby_1 = ?, hobby_2 = ?, spotify = ?, gender = ?, mbti = ? WHERE user = ?", (name, birthday, height, hobby_1, hobby_2, spotify, gender, mbti, user))
+
+    db.commit() #save changes
+    db.close() #close database
+
+'''
+gets profile / user information
+* string user
+returns profile information in a list
+'''
+def get_profile(user):
+    DB_FILE = "profile.db"
+
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+
+    c.execute("SELECT name, birthday, height, hobby_1, hobby_2, spotify, gender, mbti FROM profile WHERE user = ?", (user,))
+    pro = c.fetchone()
+
+    db.commit() #save changes
+    db.close() #close database
+
+    return pro
+
+'''
 set up your preference db
 '''
 def pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary):
@@ -405,8 +439,38 @@ def pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_
     db.commit() #save changes
     db.close()  #close database
 
+'''
+updates your preferences
+'''
+def pref_update(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary):
+    DB_FILE = "pref.db"
 
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
 
+    c.execute("UPDATE pref SET star_sign = ?, mbti = ?, use_star_sign = ?, use_mbti = ?, low_height = ?, high_height = ?, female = ?, male = ?, nonbinary = ? WHERE user = ?", (star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary, user))
+
+    db.commit() #save changes
+    db.close() #close database
+
+'''
+gets preference information
+* string user
+returns preference information in a list
+'''
+def get_pref(user):
+    DB_FILE = "pref.db"
+
+    db = sqlite3.connect(DB_FILE)
+    c = db.cursor()
+
+    c.execute("SELECT star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary FROM pref WHERE user = ?", (user,))
+    pref = c.fetchone()
+
+    db.commit() #save changes
+    db.close() #close database
+
+    return pref
 #===============================================================================
 #==================================TESTING======================================
 #===============================================================================

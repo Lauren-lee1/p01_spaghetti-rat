@@ -6,7 +6,6 @@
 import db
 import api
 import matching
-#import auth
 
 from flask import Flask, redirect, render_template, request, session, url_for
 
@@ -21,6 +20,9 @@ db.create_pref_db()
 #====================FLASK====================#
 app = Flask(__name__)
 app.secret_key = "heightorpersonality"
+
+profile_info = False
+pref_info = False
 
 '''
 root route, renders the login page
@@ -73,29 +75,56 @@ def log_out():
     return redirect('/')
 
 '''
-profile route, allows user to add / edit their personal matching information and creates corresponding profile in db
+display route, shows users their existing information (if there is any), allows them to edit and submit new information
 '''
-@app.route("/profile", methods=['GET', 'POST'])
+@app.route("/display", methods=['GET', 'POST'])
 def disp_profile():
-    if request.method == 'GET':
+    global profile_info, pref_info
+    if profile_info == False and pref_info == False:
+        #print("\n===========new user==============\n")
         return render_template('profile.html')
-    user = session['username']
-    name = request.form['name']
-    birthday = request.form['birthday']
-    height = request.form['height']
-    hobby_1 = request.form['hobby1']
-    hobby_2 = request.form['hobby2']
-    spotify = None
-    gender = request.form['gender']
-    mbti = request.form['mbti']
-    db.profile_setup(user, name, birthday, height, hobby_1, hobby_2, spotify, gender, mbti)
-    return render_template('profile.html', personal_info="Your personal information has been successfully updated!")
+    if profile_info == True and pref_info == False:
+        #print("\n=====================needs pref=================\n")
+        profile_data = db.get_profile(session['username'])
+        return render_template('profile.html', msg="Complete the preferences form to find matches!", name=profile_data[0], birth=profile_data[1], height=profile_data[2], hobby1=profile_data[3], hobby2=profile_data[4], gender=profile_data[6], mbti=profile_data[7])
+    if profile_info == False and pref_info == True:
+        #print("\n=====================needs prof=================\n")
+        pref_data = db.get_pref(session['username'])
+        return render_template('profile.html', msg="Complete your profile form to find matches!", pref_star=pref_data[0], pref_mbti=pref_data[1], use_star=pref_data[2], use_mbti=pref_data[3], low_height=pref_data[4], high_height=pref_data[5], pref_female=pref_data[6], pref_male=pref_data[7], pref_nonbinary=pref_data[8])
+    if profile_info == True and pref_info == True:
+        #print("\n============nothing============\n")
+        profile_data = db.get_profile(session['username'])
+        pref_data = db.get_pref(session['username'])
+        return render_template('profile.html', name=profile_data[0], birth=profile_data[1], height=profile_data[2], hobby1=profile_data[3], hobby2=profile_data[4], gender=profile_data[6], mbti=profile_data[7], pref_star=pref_data[0], pref_mbti=pref_data[1], use_star=pref_data[2], use_mbti=pref_data[3], low_height=pref_data[4], high_height=pref_data[5], pref_female=pref_data[6], pref_male=pref_data[7], pref_nonbinary=pref_data[8])
 
 '''
-preferences route, allows user to add / edit their romantic preferences and creates a table with the info in db
+profile route, creates a profile if the user doesn't already have one, updates the newly submitted information if the user does have one, redirects to display route
+'''
+@app.route("/profile", methods=['GET', 'POST'])
+def update_pro():
+    global profile_info
+    user = session['username']
+    name = request.form.get('name')
+    birthday = request.form.get('birthday')
+    height = request.form.get('height')
+    hobby_1 = request.form.get('hobby1')
+    hobby_2 = request.form.get('hobby2')
+    spotify = None
+    gender = request.form.get('gender')
+    mbti = request.form.get('mbti')
+    if request.method == 'POST' and profile_info == False:
+        db.profile_setup(user, name, birthday, height, hobby_1, hobby_2, spotify, gender, mbti)
+        profile_info = True
+    if request.method == 'POST' and profile_info == True:
+        db.profile_update(user, name, birthday, height, hobby_1, hobby_2, spotify, gender, mbti)
+    return redirect(url_for('disp_profile'))
+
+'''
+preferences route, creates a preference profile if the user doesn't already have one, updates the newly submitted information if the user does have one, redirects to display route
 '''
 @app.route("/preferences", methods=['GET', 'POST'])
-def pref_table():
+def update_pref():
+    global pref_info
     user = session['username']
     star_sign = request.form['pref_star']
     mbti = request.form['pref_mbti']
@@ -106,9 +135,16 @@ def pref_table():
     female = request.form['pref_female']
     male = request.form['pref_male']
     nonbinary = request.form['pref_nonbinary']
-    db.pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary)
-    return render_template('profile.html', pref_info="Your preferences have been successfully updated!")
+    if request.method == 'POST' and pref_info == False:
+        db.pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary)
+        pref_info = True
+    if request.method == 'POST' and pref_info == True:
+        db.pref_update(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary)
+    return redirect(url_for('disp_profile'))
 
+'''
+match route, calls matching methods and provides the html file with the match information + cute ducky photos to put into cards :)
+'''
 @app.route("/match", methods=['GET', 'POST'])
 def disp_matches():
     matchList = {}

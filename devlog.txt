@@ -230,7 +230,14 @@ laurenL-- 2022-16-15 22:54
 * created messaging file to give messaging functionalities
 ==============================================================
 
-briannaT-- 2022-12-17 15:02
+briannaT-- 2022-12-17 23:45
 --------------------------------------------------------------
 * generated random duck photos to display with each card for every match
+* added functionality to the profile page: users can now see all the previously
+  entered information and can edit + submit new information as necessary
+* created a display route, which stores all user data and tells them if they
+  haven't completed the profile or preference forms
+* created db functions to retrieve and update user information
+* discovered once the db files reach length 8192, thrown with an "OperationalError", 
+  where the db says it's locked
 ==============================================================

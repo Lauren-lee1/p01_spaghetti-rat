@@ -281,8 +281,9 @@ def match(user):
             #love calculator
             other_name = c.execute("SELECT name FROM profile WHERE user=?", (x,)).fetchone()
             #division
-            total_points = points #total_points is how many points are coming from the unused metric(s), points is the points you want distributed to each used metric
             points = (total_points / float(5 - counter)) * (5-counter-1)
+            total_points = points #total_points is how many points are coming from the unused metric(s), points is the points you want distributed to each used metric
+            
             love_calc = ((points + api.love_calculator(name, other_name) ) / (points + 100)) * 20
             matches[x] = (star_sign_score + mbti_score + height_score + shared_hobby + love_calc + points)
     '''   

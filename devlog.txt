@@ -252,3 +252,12 @@ briannaT-- 2022-12-18 3:27
   that the user refreshes the page
 * messaging page is also bugged if accessed from the match page, doesn't show most recent update
 ==============================================================
+
+
+emersonG-- 2022-12-19 12:34
+--------------------------------------------------------------
+* worked on html formating
+* worked on linking pages
+* helped work on menu option
+* changed signup and login structures
+==============================================================

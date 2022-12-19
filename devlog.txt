@@ -266,4 +266,5 @@ nadaH-- 2022-12-19 6:07
 --------------------------------------------------------------
 * started implementing dictionary for matches sorted based on score (decreasing)
   * (not fuctionable yet)
+* tested matching accuracy
 ==============================================================

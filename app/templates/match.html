@@ -12,6 +12,16 @@
         <title>your matches</title>
     </head>
 
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li class="menu-text">Spaghetti Rat</li>
+          <li><a href="/display">View Profile</a></li>
+          <li><a href="/logout">Log Out</a></li>
+        </ul>
+      </div>
+    </div>
+
     <body>
       <h1>Your Matches</h1>
       {% for match in matchList %}
@@ -21,6 +31,7 @@
             </div>
             <div class="card-section">
               <p>{{ matchList[match][0] }}</p>
+              <a href={{ url_for ('disp_ans', username=match, ans=matchList[match][2]) }} class="button small">Match</a>
             </div>
             <img src= {{ matchList[match][1] }}>
           </div>

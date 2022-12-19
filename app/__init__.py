@@ -6,6 +6,7 @@
 import db
 import api
 import matching
+import messaging
 
 from flask import Flask, redirect, render_template, request, session, url_for
 
@@ -14,15 +15,13 @@ from flask import Flask, redirect, render_template, request, session, url_for
 db.create_users_db()
 db.create_profile_db()
 db.create_pref_db()
+db.create_messaging_db()
 
 #===========================================#
 
 #====================FLASK====================#
 app = Flask(__name__)
 app.secret_key = "heightorpersonality"
-
-profile_info = False
-pref_info = False
 
 '''
 root route, renders the login page
@@ -79,19 +78,18 @@ display route, shows users their existing information (if there is any), allows 
 '''
 @app.route("/display", methods=['GET', 'POST'])
 def disp_profile():
-    global profile_info, pref_info
-    if profile_info == False and pref_info == False:
+    if db.get_profile(session['username']) == None and db.get_pref(session['username']) == None:
         #print("\n===========new user==============\n")
         return render_template('profile.html')
-    if profile_info == True and pref_info == False:
+    if db.get_profile(session['username']) != None and db.get_pref(session['username']) == None:
         #print("\n=====================needs pref=================\n")
         profile_data = db.get_profile(session['username'])
         return render_template('profile.html', msg="Complete the preferences form to find matches!", name=profile_data[0], birth=profile_data[1], height=profile_data[2], hobby1=profile_data[3], hobby2=profile_data[4], gender=profile_data[6], mbti=profile_data[7])
-    if profile_info == False and pref_info == True:
+    if db.get_profile(session['username']) == None and db.get_pref(session['username']) != None:
         #print("\n=====================needs prof=================\n")
         pref_data = db.get_pref(session['username'])
         return render_template('profile.html', msg="Complete your profile form to find matches!", pref_star=pref_data[0], pref_mbti=pref_data[1], use_star=pref_data[2], use_mbti=pref_data[3], low_height=pref_data[4], high_height=pref_data[5], pref_female=pref_data[6], pref_male=pref_data[7], pref_nonbinary=pref_data[8])
-    if profile_info == True and pref_info == True:
+    if db.get_profile(session['username']) != None and db.get_pref(session['username']) != None:
         #print("\n============nothing============\n")
         profile_data = db.get_profile(session['username'])
         pref_data = db.get_pref(session['username'])
@@ -102,7 +100,6 @@ profile route, creates a profile if the user doesn't already have one, updates t
 '''
 @app.route("/profile", methods=['GET', 'POST'])
 def update_pro():
-    global profile_info
     user = session['username']
     name = request.form.get('name')
     birthday = request.form.get('birthday')
@@ -112,10 +109,9 @@ def update_pro():
     spotify = None
     gender = request.form.get('gender')
     mbti = request.form.get('mbti')
-    if request.method == 'POST' and profile_info == False:
+    if request.method == 'POST' and db.get_profile(session['username']) == None:
         db.profile_setup(user, name, birthday, height, hobby_1, hobby_2, spotify, gender, mbti)
-        profile_info = True
-    if request.method == 'POST' and profile_info == True:
+    if request.method == 'POST' and db.get_profile(session['username']) != None:
         db.profile_update(user, name, birthday, height, hobby_1, hobby_2, spotify, gender, mbti)
     return redirect(url_for('disp_profile'))
 
@@ -124,7 +120,6 @@ preferences route, creates a preference profile if the user doesn't already have
 '''
 @app.route("/preferences", methods=['GET', 'POST'])
 def update_pref():
-    global pref_info
     user = session['username']
     star_sign = request.form['pref_star']
     mbti = request.form['pref_mbti']
@@ -135,10 +130,9 @@ def update_pref():
     female = request.form['pref_female']
     male = request.form['pref_male']
     nonbinary = request.form['pref_nonbinary']
-    if request.method == 'POST' and pref_info == False:
+    if request.method == 'POST' and db.get_pref(session['username']) == None:
         db.pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary)
-        pref_info = True
-    if request.method == 'POST' and pref_info == True:
+    if request.method == 'POST' and db.get_pref(session['username']) != None:
         db.pref_update(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary)
     return redirect(url_for('disp_profile'))
 
@@ -156,7 +150,40 @@ def disp_matches():
             match_name = match_name + letter
         matchList[match_name]=[i[1]]
         matchList[match_name].append(api.duck())
+        matchList[match_name].append(api.yes_no())
     return render_template('match.html', matchList = matchList)
+
+@app.route("/match/<username>/<ans>", methods=['GET', 'POST'])
+def disp_ans(username, ans):
+    extra_info = []
+    if ans == 'no':
+        return render_template('no.html', user = username, answer = ans)
+    if ans == 'yes':
+        print(username)
+        more = matching.get_extra_match_info(username)
+        print(more)
+        for item in more:
+            item = str(item)[1:-2]
+            extra_info.append(item)
+        
+        #print(extra_info)
+        return render_template('yes.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5])
+    return "error"
+
+@app.route("/message/<username>", methods=['GET', 'POST'])
+def display_message(username):
+    if messaging.get_message(session['username'], username) != None:
+        msg = messaging.get_message(session['username'], username)
+        time = messaging.get_time(session['username'], username)
+        return render_template('message.html', user=username, messaged=True, latest=msg, time=time)
+    return render_template('message.html', user=username)
+
+@app.route("/message/<username>/update", methods=['GET', 'POST'])
+def update_messages(username):
+    msg = request.form.get('msg')
+    msg_info = messaging.send_message(session['username'], username, msg)
+    msg_info = list(msg_info[0])
+    return render_template('message.html', user=username, messaged=True, latest=msg_info[1], time=msg_info[2], status="message has been sent successfully!")
 #================================================#
 
 if __name__ == "__main__":  # true if this file NOT imported

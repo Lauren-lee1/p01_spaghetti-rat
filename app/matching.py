@@ -323,4 +323,4 @@ def get_extra_match_info(match):
 
     spotify = c.execute("SELECT spotify FROM profile WHERE user=?", (match,)).fetchone()
 
-    return "\nbirthday: " + birthday + "\nstar sign: " + star_sign + "\nmbti: " + mbti + "\nheight: " + height + "\nhobby 1: " + hobby_1 + "\nhobby 2: " + hobby_2
+    return [birthday, star_sign, mbti, height, hobby_1, hobby_2]

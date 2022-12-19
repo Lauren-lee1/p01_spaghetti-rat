@@ -241,3 +241,14 @@ briannaT-- 2022-12-17 23:45
 * discovered once the db files reach length 8192, thrown with an "OperationalError", 
   where the db says it's locked
 ==============================================================
+
+briannaT-- 2022-12-18 3:27
+--------------------------------------------------------------
+* implemented yes/no api (but yes and no answer changes if you refresh the page)
+* began implementing messaging capabilities
+* dynamic routing for the matches, each of the user's matches can be messaged
+  depending on the api call's result
+* messaging pages show most recent message, the time is bugged, shows the current time
+  that the user refreshes the page
+* messaging page is also bugged if accessed from the match page, doesn't show most recent update
+==============================================================

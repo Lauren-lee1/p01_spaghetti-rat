@@ -136,6 +136,7 @@ def match(user):
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
+    #matches_sorted = {}
 
     #user preference information:
     use_star_sign = list(c.execute("SELECT use_star_sign FROM pref WHERE user =?", (user,)).fetchone())[0]
@@ -284,6 +285,12 @@ def match(user):
             points = (total_points / float(5 - counter)) * (5-counter-1)
             love_calc = ((points + api.love_calculator(name, other_name) ) / (points + 100)) * 20
             matches[x] = (star_sign_score + mbti_score + height_score + shared_hobby + love_calc + points)
+    '''   
+    for i in sorted(matches.values()):
+        key = list(matches)[i]
+        value = int(list(matches.values())[i])
+        matches_sorted.update({key:float(value)})
+    '''
     return matches
 
 '''

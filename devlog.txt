@@ -254,10 +254,16 @@ briannaT-- 2022-12-18 3:27
 ==============================================================
 
 
-emersonG-- 2022-12-19 12:34
+emersonG-- 2022-12-19 00:34
 --------------------------------------------------------------
 * worked on html formating
 * worked on linking pages
 * helped work on menu option
 * changed signup and login structures
+==============================================================
+
+nadaH-- 2022-12-19 6:07
+--------------------------------------------------------------
+* started implementing dictionary for matches sorted based on score (decreasing)
+  * (not fuctionable yet)
 ==============================================================

@@ -183,7 +183,7 @@ def update_messages(username):
     msg = request.form.get('msg')
     msg_info = messaging.send_message(session['username'], username, msg)
     msg_info = list(msg_info[0])
-    return render_template('message.html', user=username, messaged=True, latest=msg_info[1], time=msg_info[2], status="message has been sent successfully!")
+    return render_template('message.html', user=username, user2 = session['username'], messaged=True, latest=msg_info[1], time=msg_info[2], status="message has been sent successfully!")
 #================================================#
 
 if __name__ == "__main__":  # true if this file NOT imported

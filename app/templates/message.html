@@ -12,11 +12,12 @@
         <title>message</title>
     </head>
 
-    <body>
+    <body class ="text-center">
         <div class="top-bar">
             <div class="top-bar-left">
             <ul class="dropdown menu" data-dropdown-menu>
                 <li class="menu-text">Spaghetti Rat</li>
+                <li><a href="/">Home</a></li>
                 <li><a href="/display">View Profile</a></li>
                 <li><a href="/match">Your matches</a></li>
                 <li><a href="/logout">Log Out</a></li>
@@ -24,13 +25,17 @@
             </div>
         </div>
 
-        <h1>Your conversation with {{user}}</h1>
+        <h1>Your conversation with <strong>{{user}}</strong></h1>
         <form action="{{url_for ('update_messages', username=user)}}" method="POST">
             {% if messaged == True %}
                 {{status}}
                 <br><br>            
-                <h4>The latest message: </h4> 
-                {{latest}}
+                <h4><em>The latest message: </em></h4> 
+                <blockquote>
+                    {{latest}}
+                    <cite>{{user2}}</cite>
+                </blockquote>
+                
                 <br><br>
                 Sent at <u>{{time}}</u>
             {% endif %}

@@ -184,6 +184,10 @@ def update_messages(username):
     msg_info = messaging.send_message(session['username'], username, msg)
     msg_info = list(msg_info[0])
     return render_template('message.html', user=username, user2 = session['username'], messaged=True, latest=msg_info[1], time=msg_info[2], status="message has been sent successfully!")
+
+@app.errorhandler(500)
+def no_info():
+    return render_template('nomatchinfo.html'), 500
 #================================================#
 
 if __name__ == "__main__":  # true if this file NOT imported

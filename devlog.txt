@@ -268,3 +268,16 @@ nadaH-- 2022-12-19 6:07
   * (not fuctionable yet)
 * tested matching accuracy
 ==============================================================
+
+laurenL & briannaT & nadaH & emersonG-- 2022-12-20 1:17
+--------------------------------------------------------------
+* continued debugging
+* made a prioritized to-do list
+* worked on messaging functionality
+* identified issues with yes/no api usage and messaging
+==============================================================
+
+nadaH-- 2022-12-20 20:09
+--------------------------------------------------------------
+* edited profile.html
+==============================================================

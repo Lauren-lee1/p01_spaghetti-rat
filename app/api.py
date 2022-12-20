@@ -23,7 +23,7 @@ def love_calculator(name1, name2):
 
     response = requests.request("GET", url, headers=headers, params=querystring)
 
-    return json.loads(response.text)["percentage"]
+    return float(json.loads(response.text)["percentage"])
 
 def yes_no(): #no keys
     url = "https://yesno.wtf/api"

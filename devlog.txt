@@ -288,3 +288,11 @@ nadaH & laurenL-- 2022-12-20 23:30
 * discovered that match isn't even running and that the front-end has some issues, so
   once those are resolved, the match code should work
 ==============================================================
+
+emersonG-- 2022-12-20 00:02
+--------------------------------------------------------------
+* debugged __innit__
+* tried to fix front end errors
+* worked on profile template
+==============================================================
+

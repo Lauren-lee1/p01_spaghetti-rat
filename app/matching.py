@@ -132,6 +132,7 @@ choose 1+ optional:
 - remaining percentage is divided up between the number of filled in categories and added
 '''
 def match(user):
+    matches = {}
     DB_FILE="pref.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
@@ -160,77 +161,13 @@ def match(user):
     name = list(c.execute("SELECT name FROM profile WHERE user =?", (user,)).fetchone())[0]
 
     #filter by height and gender first:
-    female = []
-    male = []
-    nonbinary = []
-    if age > 16:
-        if gender_pref[0] == 1:
-            female = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+2, age-2, "female" )).fetchall()
-        if gender_pref[1] == 1:
-            male = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+2, age-2, "male" )).fetchall()
-        if gender_pref[2] == 1:
-            nonbinary = c.execute("SELECT user FROM profile WHERE (age<=? AND age>=?) AND gender=?", (age+2, age-2, "nonbinary" )).fetchall()
-    if age <= 16:
-        if gender_pref[0] == 1:
-            female = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+1, age-1, "female" )).fetchall()
-        if gender_pref[1] == 1:
-            male = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+1, age-1, "male" )).fetchall()
-        if gender_pref[2] == 1:
-            nonbinary = c.execute("SELECT user FROM profile WHERE (age<=? AND age>=?) AND gender=?", (age+1, age-1, "nonbinary" )).fetchall()
-    total = female + male + nonbinary
-    matches = {}
+    total = check_age_gender(user)
     #=======all no optional==============#
     if use_star_sign == 0 and use_mbti == 0 and low_height is None and high_height is None:
-        for x in total:
-            ("**************sssss******************")
-            x = list(x)[0]
-            #love calculator = 50%
-            other_name = c.execute("SELECT name FROM profile WHERE user=?", (x,)).fetchone()
-            love_calc = 0.5 * api.love_calculator(name, other_name)
-            #hobby
-            shared_hobby = 0
-            #other_hobby_1 =  c.execute("SELECT hobby_1 FROM profile WHERE user=?", (x)).fetchone()
-            #other_hobby_2 =  c.execute("SELECT hobby_2 FROM profile WHERE user=?", (x)).fetchone()
-            if match_hobbies(user, x) == 1:
-                shared_hobby = shared_hobby + 30
-            if match_hobbies(user, x) == 2:
-                shared_hobby = shared_hobby + 20
-            matches[x] = (shared_hobby + love_calc)
+        matches = no_optional(user, total)
     #============ all optional selected ====================#
     if use_star_sign == 1 and use_mbti == 1 and low_height is not None and high_height is not None:
-        print("********************************")
-        for x in total:
-            x = list(x)[0]
-            #star sign
-            star_sign_score = 0
-            if match_star_sign(user, x) == 1:
-                star_sign_score = 15
-            if match_star_sign(user, x) == -1:
-                star_sign_score = -10
-            #mbti
-            mbti_score = 0
-            if match_mbti(user, x) == 1:
-                mbti_score = 20
-            if match_mbti(user, x) == -1:
-                mbti_score = -10
-            #height
-            height_score = 0
-            if match_height(user, x):
-                height_score = 20
-            if match_height(x, user):
-                height_score = height_score + 20
-            height_score = height_score/2
-            #hobby
-            shared_hobby = 0
-            if match_hobbies(user, x) == 1:
-                shared_hobby = 10
-            if match_hobbies(user, x) == 2:
-                shared_hobby = 25
-            #love calculator
-            other_name = c.execute("SELECT name FROM profile WHERE user=?", (x,)).fetchone()
-            love_calc = 0.2 * api.love_calculator(name, other_name)
-            #total
-            matches[x] = (star_sign_score + mbti_score + height_score + shared_hobby + love_calc)
+         matches = all_optional(user, total)
     #================= any one is optional ======================#
     optional = [15, 20, 20]
     options = [True, True, True]
@@ -292,8 +229,156 @@ def match(user):
         value = int(list(matches.values())[i])
         matches_sorted.update({key:float(value)})
     '''
+    return check_gender_pref(user, matches)
+
+def check_age_gender(user):
+    DB_FILE="pref.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    female = list(c.execute("SELECT female FROM pref WHERE user =?", (user,)).fetchone())[0]
+    male = list(c.execute("SELECT male FROM pref WHERE user =?", (user,)).fetchone())[0]
+    nonbinary = list(c.execute("SELECT nonbinary FROM pref WHERE user =?", (user,)).fetchone())[0]
+
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    age = list(c.execute("SELECT age FROM profile WHERE user =?", (user,)).fetchone())[0]
+
+    gender_pref=[female, male, nonbinary]
+    female = []
+    male = []
+    nonbinary = []
+    if age > 16:
+        if gender_pref[0] == 1:
+            female = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+2, age-2, "female" )).fetchall()
+        if gender_pref[1] == 1:
+            male = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+2, age-2, "male" )).fetchall()
+        if gender_pref[2] == 1:
+            nonbinary = c.execute("SELECT user FROM profile WHERE (age<=? AND age>=?) AND gender=?", (age+2, age-2, "nonbinary" )).fetchall()
+    if age <= 16:
+        if gender_pref[0] == 1:
+            female = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+1, age-1, "female" )).fetchall()
+        if gender_pref[1] == 1:
+            male = c.execute("SELECT user FROM profile WHERE age<=? AND age>=? AND gender=?", (age+1, age-1, "male" )).fetchall()
+        if gender_pref[2] == 1:
+            nonbinary = c.execute("SELECT user FROM profile WHERE (age<=? AND age>=?) AND gender=?", (age+1, age-1, "nonbinary" )).fetchall()
+    total = female + male + nonbinary
+    return total
+
+def no_optional(user, total):
+    matches = {}
+    DB_FILE="pref.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    use_star_sign = list(c.execute("SELECT use_star_sign FROM pref WHERE user =?", (user,)).fetchone())[0]
+    use_mbti = list(c.execute("SELECT use_mbti FROM pref WHERE user =?", (user,)).fetchone())[0]
+
+    low_height = list(c.execute("SELECT low_height FROM pref WHERE user =?", (user,)).fetchone())[0]
+    high_height = list(c.execute("SELECT high_height FROM pref WHERE user =?", (user,)).fetchone())[0]
+
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    name = list(c.execute("SELECT name FROM profile WHERE user =?", (user,)).fetchone())[0]
+
+   # if use_star_sign == 0 and use_mbti == 0 and low_height is None and high_height is None:
+    for x in total:
+        ("**************sssss******************")
+        x = list(x)[0]
+        #love calculator = 50%
+        other_name = c.execute("SELECT name FROM profile WHERE user=?", (x,)).fetchone()
+        love_calc = 0.5 * api.love_calculator(name, other_name)
+        #hobby
+        shared_hobby = 0
+        #other_hobby_1 =  c.execute("SELECT hobby_1 FROM profile WHERE user=?", (x)).fetchone()
+        #other_hobby_2 =  c.execute("SELECT hobby_2 FROM profile WHERE user=?", (x)).fetchone()
+        if match_hobbies(user, x) == 1:
+            shared_hobby = shared_hobby + 30
+        if match_hobbies(user, x) == 2:
+            shared_hobby = shared_hobby + 20
+        matches[x] = (shared_hobby + love_calc)
     return matches
 
+def all_optional(user, total):
+    matches = {}
+   # if use_star_sign == 1 and use_mbti == 1 and low_height is not None and high_height is not None:
+    print("********************************")
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    name = list(c.execute("SELECT name FROM profile WHERE user =?", (user,)).fetchone())[0]
+    
+    for x in total:
+        x = list(x)[0]
+        #star sign
+        star_sign_score = 0
+        if match_star_sign(user, x) == 1:
+            star_sign_score = 15
+        if match_star_sign(user, x) == -1:
+            star_sign_score = -10
+        #mbti
+        mbti_score = 0
+        if match_mbti(user, x) == 1:
+            mbti_score = 20
+        if match_mbti(user, x) == -1:
+            mbti_score = -10
+        #height
+        height_score = 0
+        if match_height(user, x):
+            height_score = 20
+        if match_height(x, user):
+            height_score = height_score + 20
+        height_score = height_score/2
+        #hobby
+        shared_hobby = 0
+        if match_hobbies(user, x) == 1:
+            shared_hobby = 10
+        if match_hobbies(user, x) == 2:
+            shared_hobby = 25
+        #love calculator
+        other_name = c.execute("SELECT name FROM profile WHERE user=?", (x,)).fetchone()
+        love_calc = 0.2 * api.love_calculator(name, other_name)
+        #total
+        matches[x] = (star_sign_score + mbti_score + height_score + shared_hobby + love_calc)
+    return matches
+
+def check_gender_pref(user, matches):
+    DB_FILE="profile.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    user_gender = c.execute("SELECT gender FROM profile WHERE user=?", (user, )).fetchone()
+
+    DB_FILE="pref.db"
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+    
+    if user_gender == "female":
+        print("******************female")
+        for x in matches:
+            if c.execute("SELECT female FROM pref WHERE user=?", (x, )).fetchone() == 0:
+                print("&&&&&&&&&&&&&&&&d")
+                del matches[x]
+    if user_gender == "male":
+        print("******************male")
+        for x in matches:
+            if c.execute("SELECT male FROM pref WHERE user=?", (x, )).fetchone() == 0:
+                print("&&&&&&&&&&&&&&&&d")
+                del matches[x]
+    if user_gender == "nonbinary":
+        print("******************nb")
+        for x in matches:
+            if c.execute("SELECT nonbinary FROM pref WHERE user=?", (x, )).fetchone() == 0:
+                print("&&&&&&&&&&&&&&&&d")
+                del matches[x]
+    return matches
+        
+    
 '''
 get preliminary information of match
 *string match (match name)

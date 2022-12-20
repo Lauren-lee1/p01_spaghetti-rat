@@ -277,7 +277,14 @@ laurenL & briannaT & nadaH & emersonG-- 2022-12-20 1:17
 * identified issues with yes/no api usage and messaging
 ==============================================================
 
-nadaH-- 2022-12-20 20:09
+nadaH & laurenL-- 2022-12-20 23:30
 --------------------------------------------------------------
 * edited profile.html
+* created several helper methods for age and gender filtering, and also what to factor
+  in based on how many optional preferences you choose to fill, in order to try and
+  shorten runtime because currently the matches page takes a while to load
+* worked on making sure gender preferences match both ways (not yet functionable, but
+  the website still runs without it)
+* discovered that match isn't even running and that the front-end has some issues, so
+  once those are resolved, the match code should work
 ==============================================================

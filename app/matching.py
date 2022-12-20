@@ -268,6 +268,7 @@ def check_age_gender(user):
     return total
 
 def no_optional(user, total):
+    print("*******no optional")
     matches = {}
     DB_FILE="pref.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create

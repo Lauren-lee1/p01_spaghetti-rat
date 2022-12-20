@@ -121,15 +121,15 @@ preferences route, creates a preference profile if the user doesn't already have
 @app.route("/preferences", methods=['GET', 'POST'])
 def update_pref():
     user = session['username']
-    star_sign = request.form['pref_star']
-    mbti = request.form['pref_mbti']
-    use_star_sign = request.form['use_star']
-    use_mbti = request.form['use_mbti']
-    low_height = request.form['low_height']
-    high_height = request.form['high_height']
-    female = request.form['pref_female']
-    male = request.form['pref_male']
-    nonbinary = request.form['pref_nonbinary']
+    star_sign = request.form.get('pref_star')
+    mbti = request.form.get('pref_mbti')
+    use_star_sign = request.form.get('use_star')
+    use_mbti = request.form.get('use_mbti')
+    low_height = request.form.get('low_height')
+    high_height = request.form.get('high_height')
+    female = request.form.get('pref_female')
+    male = request.form.get('pref_male')
+    nonbinary = request.form('pref_nonbinary')
     if request.method == 'POST' and db.get_pref(session['username']) == None:
         db.pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary)
     if request.method == 'POST' and db.get_pref(session['username']) != None:

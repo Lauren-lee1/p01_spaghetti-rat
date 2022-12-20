@@ -129,7 +129,7 @@ def update_pref():
     high_height = request.form.get('high_height')
     female = request.form.get('pref_female')
     male = request.form.get('pref_male')
-    nonbinary = request.form('pref_nonbinary')
+    nonbinary = request.form.get('pref_nonbinary')
     if request.method == 'POST' and db.get_pref(session['username']) == None:
         db.pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary)
     if request.method == 'POST' and db.get_pref(session['username']) != None:

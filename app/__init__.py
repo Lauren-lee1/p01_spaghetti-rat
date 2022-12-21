@@ -65,7 +65,7 @@ def register_account():
     if db.user_exists(user):
         return render_template('register.html', msg="username is in use!")
     else:
-        db.add_user(user, passw)
+        db.add_user(user, passw, img)
         return render_template('login.html', msg = "user registered!, log in with your new credentials.")
 
 @app.route("/logout", methods=['GET', 'POST'])

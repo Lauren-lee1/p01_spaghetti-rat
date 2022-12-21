@@ -8,6 +8,7 @@ p01
 
 import sqlite3
 import datetime
+import api
 
 '''
 creates users table:
@@ -19,7 +20,7 @@ def create_users_db():
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create it
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
     # users table
-    c.execute("CREATE TABLE IF NOT EXISTS users(user TEXT, pass TEXT)")
+    c.execute("CREATE TABLE IF NOT EXISTS users(user TEXT, pass TEXT, img TEXT)")
 
     db.commit() #save changes
     db.close()  #close database
@@ -36,7 +37,8 @@ def add_user(user, passw):
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
     # add newly registered people in
-    c.execute("INSERT INTO users (user, pass) VALUES (?,?)", (user, passw))
+    img = api.duck()
+    c.execute("INSERT INTO users (user, pass, img) VALUES (?,?,?)", (user, passw, img))
 
     #prints users table
     table = c.execute("SELECT * from users")
@@ -45,6 +47,16 @@ def add_user(user, passw):
 
     db.commit() #save changes
     db.close()  #close database
+
+def get_duck(user):
+    DB_FILE="users.db"
+
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+
+    img = c.execute("SELECT img FROM users WHERE user = ?", (user,)).fetchone()
+
+    return img
 
 '''
 Used for user.db
@@ -471,6 +483,30 @@ def get_pref(user):
     db.close() #close database
 
     return pref
+
+# '''
+# creates users table:
+# user (string) | pass (string)
+# '''
+# def create_api_db():
+#     DB_FILE="api.db"
+
+#     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create it
+#     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+#     # users table
+#     c.execute("CREATE TABLE IF NOT EXISTS api(user TEXT, other_user TEXT, message INTEGER)")
+
+#     db.commit() #save changes
+#     db.close()  #close database
+
+# '''
+# If you call yes/no api: if no is returned -- added to database
+# to determine if you can message that person --> check if that user is in the db
+# if someone messages you and you got a no, then that no is deleted from the db
+# '''
+# def set_up_api():
+
+
 #===============================================================================
 #==================================TESTING======================================
 #===============================================================================

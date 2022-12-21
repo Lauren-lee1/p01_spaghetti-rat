@@ -115,7 +115,7 @@ db.pref_setup("diana", "Aries", "INFJ", 0, 1, 69, 79, 0, 1, 0)
 
 ####### Gabriel Thompson ##########
 db.add_user("g", "t")
-db.profile_setup("g", "Gabriel Thompson", "2005-12-27", 69, "coding", "music", "https://open.spotify.com/artist/2auC28zjQyVTsiZKNgPRGs?si=PUdAA3Z0Txe2bRw8nDmm7g", "female", "INFJ")
+db.profile_setup("g", "Gabriel Thompson", "2005-12-27", 69, "coding", "music", "https://open.spotify.com/artist/2auC28zjQyVTsiZKNgPRGs?si=PUdAA3Z0Txe2bRw8nDmm7g", "male", "INFJ")
 db.pref_setup("g", "Capricorn", "INTP", 0, 1, 60, 74, 1, 0, 1)
 
 ####### Shreya Roy ##########
@@ -125,7 +125,7 @@ db.pref_setup("shreya", "Cancer", "INTP", 1, 1, 63, 78, 0, 1, 1)
 
 ####### Harry Zhu ##########
 db.add_user("harry", "zhu")
-db.profile_setup("harry", "Harry Zhu", "2005-10-18", 71, "gaming", "sports", "", "female", "ISTP")
+db.profile_setup("harry", "Harry Zhu", "2005-10-18", 71, "gaming", "sports", "", "male", "ISTP")
 db.pref_setup("harry", "Libra", "ISTP", 0, 1, 59, 72, 1, 0, 0)
 
 ####### Ameer Alnasser ##########

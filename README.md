@@ -33,8 +33,19 @@ source rat/bin/activate
 pip install -r requirements.txt
 ```
 
-3. Start Flask server 
+3. cd into app directory
 ```
-python app/__init__.py
+cd app
 ```
-4. Go to ```http://127.0.0.1:5000/``` in browser
+
+4. Populate databses
+
+```
+python setup.py
+```
+
+5. Start Flask server 
+```
+python __init__.py
+```
+6. Go to ```http://127.0.0.1:5000/``` in browser

@@ -21,8 +21,7 @@ db.pref_setup("little", "Aries", "INFJ", 1, 1, 65, 73, 0, 1, 0)
 
 ####### Nada Hameed ##########
 db.add_user("nada", "hameed")
-db.profile_setup("nada", "Nada Hameed", "2005-11-26", 65, "art", "stealing", "https://open.spotify.com/user/dokgpvafom9moi9n9v1i04uus?si=854eb52725c44052", "female", "INTJ")
-db.pref_setup("little", "Sagittarius", "INTJ", 1, 1, 66, 74, 0, 1, 0)
+
 
 ####### Lelouch Lamperouge ##########
 db.add_user("lelouch", "lamperouge")
@@ -37,7 +36,7 @@ db.pref_setup("cardi", "Libra", "ESFP", 1, 1, 60, 73, 0, 1, 0)
 ####### Green Grapes ##########
 db.add_user("grapes", "grapes")
 db.profile_setup("grapes", "Green Grapes", "2005-11-11", 67, "beekeeping", "making pasta sauce", "https://open.spotify.com/artist/7tYKF4w9nC0nq9CsPZTHyP?si=704d19e1251642cc", "male", "ESTJ")
-db.pref_setup("cardi", "Scorpio", "ESTJ", 1, 1, 50, 80, 1, 1, 1)
+db.pref_setup("grapes", "Scorpio", "ESTJ", 1, 1, 50, 80, 1, 1, 1)
 
 ####### Conan Gray ##########
 db.add_user("conan", "gray")
@@ -72,7 +71,7 @@ db.pref_setup("lauren", "Virgo", "INTJ", 1, 0, 69, 74, 0, 1, 0)
 ####### Ash Ketchum ##########
 db.add_user("ash", "ketchum")
 db.profile_setup("ash", "Ash Ketchum", "2005-05-22", 55, "gaming", "bird watching", "https://open.spotify.com/playlist/6qT326z4bKQh8qzZn9D4eA?si=43053d77a89e48da", "male", "ESFP")
-db.pref_setup("lauren", "Gemini", "ESFJ", 1, 1, 55, 62, 1, 1, 1)
+db.pref_setup("ash", "Gemini", "ESFJ", 1, 1, 55, 62, 1, 1, 1)
 
 ####### joe biden ##########
 db.add_user("boe", "jiden")
@@ -103,3 +102,73 @@ db.pref_setup("jimin", "Libra", "ESTP", 1, 1, 62, 66, 1, 0, 0)
 db.add_user("rap", "mon")
 db.profile_setup("rap", "Rap Monster", "2004-09-12", 71, "art", "beekeeping", "https://open.spotify.com/artist/2auC28zjQyVTsiZKNgPRGs?si=PUdAA3Z0Txe2bRw8nDmm7g", "male", "ENFP")
 db.pref_setup("rap", "Virgo", "ENFP", 1, 1, 62, 69, 1, 1, 1)
+
+####### danny xiong ##########
+db.add_user("danny", "xiong")
+db.profile_setup("danny", "Danny Xiong", "2005-07-27", 71, "card games", "singing", "https://open.spotify.com/user/xekvxzjtq6qfwkzxwb3sj3g11?si=17131ff6f2fb4bd1", "male", "ENFJ")
+db.pref_setup("danny", "Leo", "ENFP", 1, 0, 62, 67, 1, 0, 0)
+
+####### Diana Akhmedova ##########
+db.add_user("diana", "a")
+db.profile_setup("diana", "Diana Akhmedova", "2005-04-14", 70, "art", "gaming", "https://open.spotify.com/artist/2auC28zjQyVTsiZKNgPRGs?si=PUdAA3Z0Txe2bRw8nDmm7g", "female", "INFJ")
+db.pref_setup("diana", "Aries", "INFJ", 0, 1, 69, 79, 0, 1, 0)
+
+####### Gabriel Thompson ##########
+db.add_user("g", "t")
+db.profile_setup("g", "Gabriel Thompson", "2005-12-27", 69, "coding", "music", "https://open.spotify.com/artist/2auC28zjQyVTsiZKNgPRGs?si=PUdAA3Z0Txe2bRw8nDmm7g", "female", "INFJ")
+db.pref_setup("g", "Capricorn", "INTP", 0, 1, 60, 74, 1, 0, 1)
+
+####### Shreya Roy ##########
+db.add_user("shreya", "roy")
+db.profile_setup("shreya", "Shreya Roy", "2005-06-23", 64, "texting", "making pasta sauce", "https://open.spotify.com/user/5dtf3j6ikhfwvrjsy669uorde", "female", "INFP")
+db.pref_setup("shreya", "Cancer", "INTP", 1, 1, 63, 78, 0, 1, 1)
+
+####### Harry Zhu ##########
+db.add_user("harry", "zhu")
+db.profile_setup("harry", "Harry Zhu", "2005-10-18", 71, "gaming", "sports", "", "female", "ISTP")
+db.pref_setup("harry", "Libra", "ISTP", 0, 1, 59, 72, 1, 0, 0)
+
+####### Ameer Alnasser ##########
+db.add_user("ameer", "alnasser")
+db.profile_setup("ameer", "Ameer Alnasser", "2005-05-06", 69, "walking", "gaming", "", "male", "ENFP")
+db.pref_setup("ameer", "Taurus", "ENFP", 1, 1, 60, 70, 1, 0, 1)
+
+####### Kevin Li ##########
+db.add_user("kevin", "li")
+db.profile_setup("kevin", "Kevin Li", "2005-07-11", 66, "stealing", "making pasta sauce", "", "male", "INFP")
+db.pref_setup("kevin", "Cancer", "INFP", 1, 1, 0, 9000, 1, 0, 0)
+
+####### Henry Bach ##########
+db.add_user("henry", "bach")
+db.profile_setup("henry", "Henry Bach", "2005-10-21", 73, "texting", "nerding", "", "nonbinary", "ENFJ")
+db.pref_setup("henry", "Libra", "ENFJ", 0, 0, 48, 120, 1, 0, 0)
+
+####### Aden Garbutt ##########
+db.add_user("aden", "garbutt")
+db.profile_setup("aden", "Aden Garbutt", "2005-03-14", 72, "sports", "gaming", "", "male", "INTJ")
+db.pref_setup("aden", "Pisces", "INTJ", 0, 1, 65, 72, 1, 0, 0)
+
+####### Shafiul Haque ##########
+db.add_user("shafiul", "haque")
+db.profile_setup("shafiul", "Shafiul Haque", "2006-08-13", 66, "sports", "bird watching", "https://open.spotify.com/user/ndrp5nkss2o1dxgoogiktqicn?si=865edf17746f402e", "male", "INTJ")
+db.pref_setup("shafiul", "Leo", "INTJ", 1, 1, 60, 72, 1, 0, 0)
+
+####### Emerson Gelobter ##########
+db.add_user("emerson", "gelobter")
+db.profile_setup("emerson", "Emerson Gelobter", "2005-02-02", 74, "sports", "music", "", "male", "ENTJ")
+db.pref_setup("emerson", "Aquarius", "ENTJ", 1, 0, 60, 70, 1, 0, 0)
+
+####### May Qiu ##########
+db.add_user("may", "qiu")
+db.profile_setup("may", "May Qiu", "2005-05-09", 61, "card games", "drama", "", "female", "ENFJ")
+db.pref_setup("may", "Taurus", "ENFJ", 1, 0, 65, 73, 0, 1, 0)
+
+####### Yat Long Chan ##########
+db.add_user("yat", "long")
+db.profile_setup("yat", "Yat Long Chan", "2005-10-15", 68, "gaming", "nerding", "https://open.spotify.com/user/21bjtbetsau4lbmxryjg5gkya?si=1cf658127efd4d4b", "male", "ISTP")
+db.pref_setup("yat", "Libra", "ISTP", 1, 1, 56, 79, 1, 0, 0)
+
+####### Brianna Tieu ##########
+db.add_user("brianna", "tieu")
+db.profile_setup("brianna", "tieu", "2005-09-19", 66, "gaming", "baton twirling", "https://open.spotify.com/user/31ktg2xwa4jh56jvtpk7dmhmocqq?si=a08319fc88b94149", "female", "ISFP")
+db.pref_setup("brianna", "Libra", "ISTP", 1, 1, 65, 77, 0, 1, 0)

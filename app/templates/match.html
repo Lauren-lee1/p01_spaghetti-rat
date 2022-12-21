@@ -38,8 +38,9 @@
                 match button: info + yes or no api call to determine whether or not user can msg
                 msg button: msg the user
               -->
-              <a href={{ url_for ('disp_ans', username=match, ans=matchList[match][2]) }} class="button small">Match</a>
-              <a href={{ url_for ('display_message', username=match }} class="button small">Message</a>
+              <a href={{ url_for ('disp_ans', username=matchList[match][3], ans=matchList[match][2]) }} class="button small">Match</a>
+              <br>
+              <a href={{ url_for ('display_message', username=matchList[match][3]) }} class="button small">Message</a>
             </div>
           </div>
           <br>

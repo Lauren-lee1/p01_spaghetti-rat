@@ -96,8 +96,8 @@ def match_height(user, other_user):
 
     low_height = c.execute("SELECT low_height FROM pref WHERE user =?", (user,)).fetchone()
     high_height = c.execute("SELECT high_height FROM pref WHERE user =?", (user,)).fetchone()
-
-    if height >= low_height and height <= high_height:
+    if low_height is not None or high_height is not None:
+        if height >= low_height and height <= high_height:
             return True
     return False
 #===========================need to be tested===================================#
@@ -417,4 +417,4 @@ def get_extra_match_info(match):
 
     spotify = c.execute("SELECT spotify FROM profile WHERE user=?", (match,)).fetchone()
 
-    return [birthday, star_sign, mbti, height, hobby_1, hobby_2]
+    return [birthday, star_sign, mbti, height, hobby_1, hobby_2, spotify]

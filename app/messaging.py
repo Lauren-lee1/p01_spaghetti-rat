@@ -32,10 +32,13 @@ def get_message(user, reciever):
 
     user_sent = c.execute("SELECT latest_message FROM messaging WHERE user =? AND reciever=?", (user,reciever)).fetchone() ##chamged from fetchall to fetchone
     other_sent = c.execute("SELECT latest_message FROM messaging WHERE user =? AND reciever=?", (user,reciever)).fetchone()##chamged from fetchall to fetchone
-    if other_sent > user_sent:
-        return other_sent
-    else:
-        return user_sent
+   
+    if other_sent is not None or user_sent is not None:
+        if other_sent > user_sent:
+            return other_sent
+        else:
+            return user_sent
+    return ""
     
 
 def get_time(user, reciever):

@@ -82,15 +82,15 @@ def disp_profile():
     if db.get_profile(session['username']) == None and db.get_pref(session['username']) == None:
         #print("\n===========new user==============\n")
         return render_template('profile.html')
-    if db.get_profile(session['username']) != None and db.get_pref(session['username']) == None:
+    if db.get_profile(session['username']) is not None and db.get_pref(session['username']) == None:
         #print("\n=====================needs pref=================\n")
         profile_data = db.get_profile(session['username'])
         return render_template('profile.html', msg="Complete the preferences form to find matches!", name=profile_data[0], birth=profile_data[1], height=profile_data[2], hobby1=profile_data[3], hobby2=profile_data[4], gender=profile_data[6], mbti=profile_data[7])
-    if db.get_profile(session['username']) == None and db.get_pref(session['username']) != None:
+    if db.get_profile(session['username']) == None and db.get_pref(session['username']) is not None:
         #print("\n=====================needs prof=================\n")
         pref_data = db.get_pref(session['username'])
         return render_template('profile.html', msg="Complete your profile form to find matches!", pref_star=pref_data[0], pref_mbti=pref_data[1], use_star=pref_data[2], use_mbti=pref_data[3], low_height=pref_data[4], high_height=pref_data[5], pref_female=pref_data[6], pref_male=pref_data[7], pref_nonbinary=pref_data[8])
-    if db.get_profile(session['username']) != None and db.get_pref(session['username']) != None:
+    if db.get_profile(session['username']) is not None and db.get_pref(session['username']) is not None:
         #print("\n============nothing============\n")
         profile_data = db.get_profile(session['username'])
         pref_data = db.get_pref(session['username'])
@@ -107,12 +107,12 @@ def update_pro():
     height = request.form.get('height')
     hobby_1 = request.form.get('hobby1')
     hobby_2 = request.form.get('hobby2')
-    spotify = None
+    spotify = request.form.get('spotify')
     gender = request.form.get('gender')
     mbti = request.form.get('mbti')
     if request.method == 'POST' and db.get_profile(session['username']) == None:
         db.profile_setup(user, name, birthday, height, hobby_1, hobby_2, spotify, gender, mbti)
-    if request.method == 'POST' and db.get_profile(session['username']) != None:
+    if request.method == 'POST' and db.get_profile(session['username']) is not None:
         db.profile_update(user, name, birthday, height, hobby_1, hobby_2, spotify, gender, mbti)
     return redirect(url_for('disp_profile'))
 
@@ -133,7 +133,7 @@ def update_pref():
     nonbinary = request.form.get('pref_nonbinary')
     if request.method == 'POST' and db.get_pref(session['username']) == None:
         db.pref_setup(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary)
-    if request.method == 'POST' and db.get_pref(session['username']) != None:
+    if request.method == 'POST' and db.get_pref(session['username']) is not None:
         db.pref_update(user, star_sign, mbti, use_star_sign, use_mbti, low_height, high_height, female, male, nonbinary)
     return redirect(url_for('disp_profile'))
 
@@ -150,21 +150,28 @@ def disp_matches():
         for letter in i[0]: #turn tuple data into string data to be displayed on match page
             match_name = match_name + letter
         matchList[match_name]=[i[1]]
-        matchList[match_name].append(db.get_duck(i[0]))
+
+        duck = db.get_duck(match)
+        duck_link=""
+        for letter in duck[0]: #turn tuple data into link for ducks :)
+            duck_link = duck_link + letter
+        matchList[match_name].append(duck_link)
         matchList[match_name].append(messaging.ask_api_message(session['username'], match_name))
+        matchList[match_name].append(match)
     return render_template('match.html', matchList = matchList)
 
 @app.route("/match/<username>/<ans>", methods=['GET', 'POST'])
 def disp_ans(username, ans):
     extra_info = []
     more = matching.get_extra_match_info(username)
+    print(more)
     for item in more:
             item = str(item)[1:-2]
             extra_info.append(item)
-    if ans == False:
-        return render_template('no.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5])
-    if ans == True:
-        return render_template('yes.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5])
+    if bool(ans) == False:
+        return render_template('no.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6])
+    if bool(ans) == True:
+        return render_template('yes.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6])
     return "error"
 
 @app.route("/message/<username>", methods=['GET', 'POST'])
@@ -172,7 +179,7 @@ def display_message(username):
     if messaging.check_api_db(session['username'], username) == False:
         return render_template('prevno.html')
     else:
-        if messaging.get_message(session['username'], username) != None:
+        if messaging.get_message(session['username'], username) is not None:
             msg = messaging.get_message(session['username'], username)
             time = messaging.get_time(session['username'], username)
             return render_template('message.html', user=username, messaged=True, latest=msg, time=time)

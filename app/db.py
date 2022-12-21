@@ -551,3 +551,12 @@ print(match_mbti("grapes","hong"))
 print("\n============MATCH============\n") # --WORKS
 print(match("grapes"))
 '''
+DB_FILE="profile.db"
+db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
+c = db.cursor()
+
+table = c.execute("SELECT * from profile")
+print(" table from set up profile call")
+print(table.fetchall())
+
+print(c.execute("SELECT height FROM profile WHERE user = ?", ("lauren",)).fetchone())

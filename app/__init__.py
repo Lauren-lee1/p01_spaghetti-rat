@@ -16,6 +16,7 @@ db.create_users_db()
 db.create_profile_db()
 db.create_pref_db()
 db.create_messaging_db()
+db.create_api_db()
 
 #===========================================#
 
@@ -149,33 +150,32 @@ def disp_matches():
         for letter in i[0]: #turn tuple data into string data to be displayed on match page
             match_name = match_name + letter
         matchList[match_name]=[i[1]]
-        matchList[match_name].append(api.duck())
-        matchList[match_name].append(api.yes_no())
+        matchList[match_name].append(db.get_duck(i[0]))
+        matchList[match_name].append(messaging.ask_api_message(session['username'], match_name))
     return render_template('match.html', matchList = matchList)
 
 @app.route("/match/<username>/<ans>", methods=['GET', 'POST'])
 def disp_ans(username, ans):
     extra_info = []
-    if ans == 'no':
-        return render_template('no.html', user = username, answer = ans)
-    if ans == 'yes':
-        print(username)
-        more = matching.get_extra_match_info(username)
-        print(more)
-        for item in more:
+    more = matching.get_extra_match_info(username)
+    for item in more:
             item = str(item)[1:-2]
             extra_info.append(item)
-        
-        #print(extra_info)
+    if ans == False:
+        return render_template('no.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5])
+    if ans == True:
         return render_template('yes.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5])
     return "error"
 
 @app.route("/message/<username>", methods=['GET', 'POST'])
 def display_message(username):
-    if messaging.get_message(session['username'], username) != None:
-        msg = messaging.get_message(session['username'], username)
-        time = messaging.get_time(session['username'], username)
-        return render_template('message.html', user=username, messaged=True, latest=msg, time=time)
+    if messaging.check_api_db(session['username'], username) == False:
+        return render_template('prevno.html')
+    else:
+        if messaging.get_message(session['username'], username) != None:
+            msg = messaging.get_message(session['username'], username)
+            time = messaging.get_time(session['username'], username)
+            return render_template('message.html', user=username, messaged=True, latest=msg, time=time)
     return render_template('message.html', user=username)
 
 @app.route("/message/<username>/update", methods=['GET', 'POST'])

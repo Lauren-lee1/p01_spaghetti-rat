@@ -98,7 +98,7 @@ def match_height(user, other_user):
     high_height = c.execute("SELECT high_height FROM pref WHERE user =?", (user,)).fetchone()
 
     if height >= low_height and height <= high_height:
-        return True
+            return True
     return False
 #===========================need to be tested===================================#
 '''

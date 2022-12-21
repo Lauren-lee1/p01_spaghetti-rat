@@ -9,7 +9,7 @@
         <html class="no-js" lang="en">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/js/foundation.min.js" crossorigin="anonymous"></script>
-        <title>your matches</title>
+        <title>Your matches</title>
     </head>
 
     <div class="top-bar">
@@ -34,7 +34,12 @@
             <div class="card-section">
               <h4>{{ match }}</h4>
               <p>{{ matchList[match][0] }}</p>
+              <!--
+                match button: info + yes or no api call to determine whether or not user can msg
+                msg button: msg the user
+              -->
               <a href={{ url_for ('disp_ans', username=match, ans=matchList[match][2]) }} class="button small">Match</a>
+              <a href={{ url_for ('display_message', username=match }} class="button small">Message</a>
             </div>
           </div>
           <br>

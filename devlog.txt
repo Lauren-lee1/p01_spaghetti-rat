@@ -304,3 +304,14 @@ nadaH & laurenL-- 2022-12-20 20:53
 * updated messaging functionality so that user can see their messages if they
   match
 ==============================================================
+
+briannaT-- 2022-12-21 2:57
+--------------------------------------------------------------
+* fixed duck photos with the new organization of the db (every user gets one
+  assigned duck)
+* fixed showing of extra match info
+* dropdowns for the hobbies
+* started js script to keep the values of the previously submitted hobbies
+  after form submission / page refresh (couldn't get to work </3)
+* fixed gender dropdown, previously gave no values
+==============================================================

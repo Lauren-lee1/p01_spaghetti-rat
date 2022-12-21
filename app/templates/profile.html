@@ -10,7 +10,6 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/css/foundation.min.css" crossorigin="anonymous">
       <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.5/dist/js/foundation.min.js" crossorigin="anonymous"></script>
       <title>Profile</title>
-      <script src="../static/js/dropdown.js" defer></script>
     </head>
 
     <div class="top-bar">
@@ -49,12 +48,11 @@
                 <p class="help-text" id="helptextheight">Your height <b>in inches!</b></p>
               </div>
               <div class="cell small-12">
-                <label>First Hobby
+                <label><b>Hobbies</b>
                   <!--<input type="text" value="{{hobby1}}" placeholder="firstcoolhobby" name="hobby1" aria-describedby="hobby1text" required>-->
                    <div class="cell medium-6">
-                    {{hobby1}}
-                    <label>Hobbies
-                      <select id="hobby1" id="hobby1" name="hobby1" onclick="hobby1()" required>
+                    <label> Your first current hobby is: <u>{{hobby1}}</u>
+                      <select id="hobby1" id="hobby1" name="hobby1" required>
                         <option value=""></option>
                         <option value="sports">sports</option>
                         <option value="bird watching">bird watching</option>
@@ -83,8 +81,8 @@
                 <p class="help-text" id="helptexthobby1">One of your hobbies!</p>
               </div>
               <div class="cell small-12">
-                <label>Second Hobby
-                  <select id="hobby2" id="hobby2" name="hobby2" onclick="hobby2()" required>
+                <label>Your second current hobby is: <u>{{hobby2}}</u>
+                  <select id="hobby2" id="hobby2" name="hobby2" required>
                     <option value=""></option>
                     <option value="sports">sports</option>
                     <option value="bird watching">bird watching</option>
@@ -111,18 +109,20 @@
                 <p class="help-text" id="helptexthobby2">Another one of your hobbies!</p>
               </div>
               <div class="cell small-12">
-                <label>Spotify
-                  <input type="text" value="{{spotify}}" name="spotify" aria-describedby="spotifyprofile">
+                <label>Spotify<br>
+                  <a href="{{spotify}}">Your spotify profile!</a>
+                  <input type="text" value="" name="spotify" aria-describedby="spotifyprofile">
                 </label>
               </div>
               <div class="cell small-12">
-                <label>Gender
+                <label><b>Gender</b><br>
+                  Your gender is: <u>{{gender}}</u>
                   <!--<input type="text" value="{{gender}}" placeholder="ex: nonbinary" name="gender" aria-describedby="gendertext" required>-->
-                  <input type="text" list="genders" placeholder="If OTHER type it in" required>
+                  <input type="text" list="genders" name="gender" placeholder="If OTHER type it in" required>
                   <datalist id="genders">
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Nonbinary</option>
+                    <option value="male">male</option>
+                    <option value="female">female</option>
+                    <option value="nonbinary">nonbinary</option>
                   </datalist>
                 </label>
                 <p class="help-text" id="helptextgender">Input your gender!</p>

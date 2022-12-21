@@ -484,27 +484,20 @@ def get_pref(user):
 
     return pref
 
-# '''
-# creates users table:
-# user (string) | pass (string)
-# '''
-# def create_api_db():
-#     DB_FILE="api.db"
+'''
+creates users table:
+user (string) | other_user (string)
+'''
+def create_api_db():
+    DB_FILE="api.db"
 
-#     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create it
-#     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
-#     # users table
-#     c.execute("CREATE TABLE IF NOT EXISTS api(user TEXT, other_user TEXT, message INTEGER)")
+    db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create it
+    c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
+    # users table
+    c.execute("CREATE TABLE IF NOT EXISTS api(user TEXT, other_user TEXT)")
 
-#     db.commit() #save changes
-#     db.close()  #close database
-
-# '''
-# If you call yes/no api: if no is returned -- added to database
-# to determine if you can message that person --> check if that user is in the db
-# if someone messages you and you got a no, then that no is deleted from the db
-# '''
-# def set_up_api():
+    db.commit() #save changes
+    db.close()  #close database
 
 
 #===============================================================================

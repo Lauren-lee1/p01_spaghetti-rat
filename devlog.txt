@@ -296,3 +296,11 @@ emersonG-- 2022-12-20 00:02
 * worked on profile template
 ==============================================================
 
+nadaH & laurenL-- 2022-12-20 20:53
+--------------------------------------------------------------
+* update to-do list
+* added duck img link to users.db instead of generating a new img each time
+  (in an effort to reduce runtime)
+* updated messaging functionality so that user can see their messages if they
+  match
+==============================================================

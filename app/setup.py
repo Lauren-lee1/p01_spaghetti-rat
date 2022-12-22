@@ -189,9 +189,9 @@ db.profile_setup("topher", "topher mykolyk", "1977-11-07", 70, "stealing", "musi
 db.pref_setup("topher", "Scorpio", "INTP", 1, 1, 0, 100, 1, 0, 0)
 
 ####### Ashley Lin ##########
-db.add_user("ash", "lin")
-db.profile_setup("ash", "Ashley Lin", "2005-10-09", 63, "singing", "cheese rolling", "https://open.spotify.com/user/davalynn0809?si=lnyE6infSJWGrCQENjSNhw", "female", "ENFJ")
-db.pref_setup("ash", "Libra", "ENFJ", 1, 1, 67, 81, 0, 1, 0)
+db.add_user("ashley", "lin")
+db.profile_setup("ashley", "Ashley Lin", "2005-10-09", 63, "singing", "cheese rolling", "https://open.spotify.com/user/davalynn0809?si=lnyE6infSJWGrCQENjSNhw", "female", "ENFJ")
+db.pref_setup("ashley", "Libra", "ENFJ", 1, 1, 67, 81, 0, 1, 0)
 
 ####### Davalynn Lee ##########
 db.add_user("dav", "lee")

@@ -149,8 +149,7 @@ def disp_matches():
         match_name=""
         for letter in i[0]: #turn tuple data into string data to be displayed on match page
             match_name = match_name + letter
-        matchList[match_name]=[i[1]]
-
+        matchList[match_name]=[int(i[1])]
         duck = db.get_duck(match)
         duck_link=""
         for letter in duck[0]: #turn tuple data into link for ducks :)
@@ -158,7 +157,9 @@ def disp_matches():
         matchList[match_name].append(duck_link)
         matchList[match_name].append(messaging.ask_api_message(session['username'], match_name))
         matchList[match_name].append(match)
+
     return render_template('match.html', matchList = matchList)
+
 
 @app.route("/match/<username>/<ans>", methods=['GET', 'POST'])
 def disp_ans(username, ans):

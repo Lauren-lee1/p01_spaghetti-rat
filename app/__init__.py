@@ -169,9 +169,9 @@ def disp_ans(username, ans):
     for item in more:
             item = str(item)[1:-2]
             extra_info.append(item)
-    if bool(ans) == False:
+    if ans == "False":
         return render_template('no.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6])
-    if bool(ans) == True:
+    if ans == "True":
         return render_template('yes.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6])
     return "error"
 

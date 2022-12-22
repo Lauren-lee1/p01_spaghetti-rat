@@ -79,6 +79,7 @@ def check_api_db(user, other_user):
         return True
     else:
         return False
+
 '''
 deletes user from db if other user messages them
 false -- still cannot edit

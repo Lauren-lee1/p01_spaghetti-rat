@@ -149,7 +149,7 @@ def disp_matches():
         match_name=""
         for letter in i[0]: #turn tuple data into string data to be displayed on match page
             match_name = match_name + letter
-        matchList[match_name]=[int(i[1])]
+        matchList[match_name]=[str(int(i[1]))]
         duck = db.get_duck(match)
         duck_link=""
         for letter in duck[0]: #turn tuple data into link for ducks :)
@@ -169,10 +169,11 @@ def disp_ans(username, ans):
     for item in more:
             item = str(item)[1:-2]
             extra_info.append(item)
+    extra_info[6] = extra_info[6].strip("\'")
     if ans == "False":
         return render_template('no.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6])
     if ans == "True":
-        return render_template('yes.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6])
+        return render_template('yes.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6]+".com")
     return "error"
 
 @app.route("/message/<username>", methods=['GET', 'POST'])

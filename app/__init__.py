@@ -85,7 +85,7 @@ def disp_profile():
     if db.get_profile(session['username']) is not None and db.get_pref(session['username']) == None:
         #print("\n=====================needs pref=================\n")
         profile_data = db.get_profile(session['username'])
-        return render_template('profile.html', msg="Complete the preferences form to find matches!", name=profile_data[0], birth=profile_data[1], height=profile_data[2], hobby1=profile_data[3], hobby2=profile_data[4], gender=profile_data[6], mbti=profile_data[7])
+        return render_template('profile.html', msg="Complete the preferences form to find matches!", name=profile_data[0], birth=profile_data[1], height=profile_data[2], hobby1=profile_data[3], hobby2=profile_data[4], spotify=profile_data[5], gender=profile_data[6], mbti=profile_data[7])
     if db.get_profile(session['username']) == None and db.get_pref(session['username']) is not None:
         #print("\n=====================needs prof=================\n")
         pref_data = db.get_pref(session['username'])

@@ -170,5 +170,30 @@ db.pref_setup("yat", "Libra", "ISTP", 1, 1, 56, 79, 1, 0, 0)
 
 ####### Brianna Tieu ##########
 db.add_user("brianna", "tieu")
-db.profile_setup("brianna", "tieu", "2005-09-19", 66, "gaming", "baton twirling", "https://open.spotify.com/user/31ktg2xwa4jh56jvtpk7dmhmocqq?si=a08319fc88b94149", "female", "ISFP")
+db.profile_setup("brianna", "Brianna Tieu", "2005-09-19", 66, "gaming", "baton twirling", "https://open.spotify.com/user/31ktg2xwa4jh56jvtpk7dmhmocqq?si=a08319fc88b94149", "female", "ISFP")
 db.pref_setup("brianna", "Libra", "ISTP", 1, 1, 65, 77, 0, 1, 0)
+
+####### Sarah Huynh ##########
+db.add_user("sarah", "huynh")
+db.profile_setup("sarah", "Sarah Huynh", "2005-07-01", 65, "science", "card games", "https://open.spotify.com/user/sarahhuynh715?si=gwDUVffWRmya8cZS5Pi6Ug", "female", "INFJ")
+db.pref_setup("sarah", "Cancer", "ISTP", 1, 1, 65, 77, 0, 1, 0)
+
+####### Momoca Mairaj ##########
+db.add_user("momoca", "mairaj")
+db.profile_setup("momoca", "Momoca Mairaj", "2005-03-23", 67, "drama", "photography", "https://open.spotify.com/user/t94l91ourjvn264u5gtk847gf?si=6HHoSxCaQQ6awMIjS8NiBg", "female", "ESFP")
+db.pref_setup("momoca", "Aries", "ISTP", 0, 1, 67, 1000, 0, 1, 0)
+
+####### topher mykolyk ##########
+db.add_user("topher", "mykolyk")
+db.profile_setup("topher", "topher mykolyk", "1977-11-07", 70, "stealing", "music", "https://open.spotify.com/playlist/37i9dQZF1DX1OIMC8iDi74", "male", "INTP")
+db.pref_setup("topher", "Scorpio", "INTP", 1, 1, 0, 100, 1, 0, 0)
+
+####### Ashley Lin ##########
+db.add_user("ash", "lin")
+db.profile_setup("ash", "Ashley Lin", "2005-10-09", 63, "singing", "cheese rolling", "https://open.spotify.com/user/davalynn0809?si=lnyE6infSJWGrCQENjSNhw", "female", "ENFJ")
+db.pref_setup("ash", "Libra", "ENFJ", 1, 1, 67, 81, 0, 1, 0)
+
+####### Davalynn Lee ##########
+db.add_user("dav", "lee")
+db.profile_setup("dav", "Davalynn Lee", "2005-08-09", 61, "texting", "cheese rolling", "https://open.spotify.com/user/davalynn0809?si=lnyE6infSJWGrCQENjSNhw", "female", "ESTJ")
+db.pref_setup("dav", "Leo", "ESTJ", 1, 1, 66, 72, 0, 1, 0)

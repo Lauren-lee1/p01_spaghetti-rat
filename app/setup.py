@@ -17,7 +17,7 @@ db.pref_setup("joshua", "Capricorn", "ISFJ", 1, 1, 62, 69, 1, 0, 0)
 ####### Little Thunder ##########
 db.add_user("little", "thunder")
 db.profile_setup("little", "Little Thunder", "2005-04-17", 64, "art", "baton twirling", "https://open.spotify.com/artist/5ADiN1Hz0l78tS4qoKTb5n?si=1143c1bdacab4505", "female", "INFJ")
-db.pref_setup("little", "Aries", "INFJ", 1, 1, 65, 73, 0, 1, 0)
+db.pref_setup("little", "Aries", "INFJ", 1, 1, 65, 73, 1, 1, 1)
 
 ####### Nada Hameed ##########
 db.add_user("nada", "hameed")
@@ -31,7 +31,7 @@ db.pref_setup("lelouch", "Sagittarius", "INTJ", 1, 1, 60, 69, 1, 0, 0)
 ####### Cardi B ##########
 db.add_user("cardi", "b")
 db.profile_setup("cardi", "Cardi B", "2005-10-11", 63, "music", "singing", "https://open.spotify.com/artist/4kYSro6naA4h99UJvo89HB?si=8bf86b708d6c4281", "female", "ESFP")
-db.pref_setup("cardi", "Libra", "ESFP", 1, 1, 60, 73, 0, 1, 0)
+db.pref_setup("cardi", "Libra", "ESFP", 1, 1, 60, 73, 1, 1, 1)
 
 ####### Green Grapes ##########
 db.add_user("grapes", "grapes")
@@ -56,12 +56,12 @@ db.pref_setup("rose", "Aquarius", "ESFJ", 1, 1, 67, 76, 1, 1, 0)
 ####### Fish Food ##########
 db.add_user("fish", "food")
 db.profile_setup("fish", "Fish Food", "2005-07-24", 68, "card games", "walking", "https://open.spotify.com/track/59QZJuUWAKLF03GdYduxg0?si=3c118850af934a21", "nonbinary", "ENTP")
-db.pref_setup("fish", "Leo", "ENTP", 1, 1, 64, 72, 0, 1, 0)
+db.pref_setup("fish", "Leo", "ENTP", 1, 1, 64, 72, 1, 1, 1)
 
 ####### Abraham Lincoln ##########
 db.add_user("abe", "lincoln")
-db.profile_setup("abe", "Abraham Lincoln", "2003-02-12", 76, "card games", "cheese rolling", "https://open.spotify.com/artist/1QAJqy2dA3ihHBFIHRphZj?si=39dc3e4ddda84404", "male", "INTP")
-db.pref_setup("abe", "Aquarius", "INTP", 1, 1, 64, 72, 1, 0, 0)
+db.profile_setup("abe", "Abraham Lincoln", "1977-02-12", 76, "card games", "cheese rolling", "https://open.spotify.com/artist/1QAJqy2dA3ihHBFIHRphZj?si=39dc3e4ddda84404", "male", "INTP")
+db.pref_setup("abe", "Aquarius", "INTP", 1, 1, 64, 72, 1, 1, 1)
 
 ####### Lauren Lee ##########
 db.add_user("lauren", "lee")
@@ -90,8 +90,8 @@ db.pref_setup("timothee", "Capricorn", "INFP", 0, 0, 53, 67, 1, 1, 1)
 
 ####### beyonce ##########
 db.add_user("bey", "once")
-db.profile_setup("bey", "Beyonce", "2006-09-04", 67, "singing", "music", "https://open.spotify.com/artist/6vWDO969PvNqNYHIOW5v0m?si=XZ5O6HWtThO0VTIavJIX_Q", "female", "ISFJ")
-db.pref_setup("bey", "Virgo", "ISFJ", 1, 0, 69, 75, 0, 1, 0)
+db.profile_setup("bey", "Beyonce", "1977-09-04", 67, "singing", "music", "https://open.spotify.com/artist/6vWDO969PvNqNYHIOW5v0m?si=XZ5O6HWtThO0VTIavJIX_Q", "female", "ISFJ")
+db.pref_setup("bey", "Virgo", "ISFJ", 1, 0, 69, 75, 1, 1, 1)
 
 ####### jimin ##########
 db.add_user("jimin", "park")
@@ -232,3 +232,33 @@ db.pref_setup("joseph", "Scorpio", "ENTP", 0, 1, 61, 69, 1, 0, 0)
 db.add_user("qi", "guang")
 db.profile_setup("qi", "Qi Guang Zhu", "2004-12-01", 69, "gaming", "card games", "https://open.spotify.com/user/wt23fdtfw8dv5wxhpugrmf88r?si=31934cd0ffb54641", "male", "ISFP")
 db.pref_setup("qi", "Sagittarius", "ISFP", 1, 1, 24, 96, 1, 1, 1)
+
+####### Jonathan Vasquez ##########
+db.add_user("jonathan", "vasquez")
+db.profile_setup("jonathan", "Jonathan Vasquez", "2005-06-21", 68, "art", "music", "https://open.spotify.com/user/x9wllvmam6ms169hoflmqeiq9?si=thG6lyNhSASw6k8wc_Swtw", "male", "ENFP")
+db.pref_setup("jonathan", "Gemini", "ENFP", 0, 0, 56, 82, 1, 0, 0)
+
+####### ayman habib ##########
+db.add_user("ayman", "habib")
+db.profile_setup("ayman", "Ayman Habib", "2005-06-11", 68, "gaming", "music", "https://open.spotify.com/user/x9wllvmam6ms169hoflmqeiq9?si=thG6lyNhSASw6k8wc_Swtw", "male", "ENFP")
+db.pref_setup("ayman", "Gemini", "ENFP", 1, 1, 67, 1000, 0, 1, 0)
+
+####### Jina Koh ##########
+db.add_user("jina", "koh")
+db.profile_setup("jina", "Jina Koh", "2005-08-10", 66, "drama", "music", "https://open.spotify.com/user/yesjinakoh?si=6eB97WwIQf6riMVxVhfI2Q", "female", "ISFP")
+db.pref_setup("jina", "Leo", "ISFP", 1, 1, 66, 74, 0, 1, 0)
+
+####### Jacob Guo ##########
+db.add_user("jacob", "guo")
+db.profile_setup("jacob", "Jacob Guo", "2005-08-19", 72, "sports", "stealing", "https://open.spotify.com/user/22z3nkev357zqmuwkkjb4o2qi?si=xdaW8zp4TtOH2A-RTMeaww", "male", "INTJ")
+db.pref_setup("jacob", "Leo", "INTJ", 0, 0, 60, 10000, 1, 0, 0)
+
+####### Levi Simon ##########
+db.add_user("levi", "simon")
+db.profile_setup("levi", "Levi Simon", "2005-05-27", 74, "music", "walking", "https://open.spotify.com/user/xjd1km5oprmrerwiylh0o0t2h?si=7kfWyrHqQFeJ2g6AHUNnkQ", "male", "ENTP")
+db.pref_setup("levi", "Gemini", "ENTP", 0, 0, 59, 72, 1, 0, 0)
+
+####### Levi Simon ##########
+db.add_user("maya", "nelson")
+db.profile_setup("maya", "Maya Nelson", "2005-09-02", 65, "music", "nerding", "", "female", "INFJ")
+db.pref_setup("maya", "Virgo", "INFJ", 0, 1, 67, 72, 0, 1, 0)

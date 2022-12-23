@@ -94,18 +94,18 @@ def update_permission(user, receiver):
     DB_FILE="messaging.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()
-    message_bool = c.execute("SELECT latest_message FROM messaging WHERE user =? AND receiver=?", (user,receiver)).fetchone()
+    message_bool = c.execute("SELECT latest_message FROM messaging WHERE user =? AND receiver=?", (user, receiver)).fetchone()
     db.commit() #save changes
     db.close()  #close database
     DB_FILE="api.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()
     
-    api_bool = c.execute("SELECT bool FROM api WHERE user =? AND other_user=?", (user,receiver)).fetchone()
+    api_bool = c.execute("SELECT bool FROM api WHERE user =? AND other_user=?", (receiver, user)).fetchone()
     db.commit() #save changes
     db.close()  #close database
     if api_bool == 0 and message_bool is not None:
-         c.execute('REPLACE INTO api(user, other_user, bool) VALUES (?,?,?)',(user, receiver, 1))
+         c.execute('REPLACE INTO api(user, other_user, bool) VALUES (?,?,?)',(receiver, user, 1))
 
 
 #send message
@@ -148,7 +148,7 @@ def get_message(user, receiver):
     db.commit() #save changes
     db.close()  #close database
     if other_sent is not None and user_sent is not None:
-        if other_sent > user_sent:
+        if other_sent < user_sent:
             return list(other_message)[0]
         else:
             return list(user_message)[0]

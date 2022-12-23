@@ -128,8 +128,10 @@ def send_message(user, receiver, message):
     else: 
          latest = c.execute("SELECT latest_message FROM messaging WHERE user =? AND receiver=?", (user,receiver)).fetchone()
          if latest is None:
+            print("insert")
             c.execute('INSERT INTO messaging(user, latest_message, date, receiver) VALUES (?,?,?,?)',(user, message, date, receiver))
          else:
+            print("replace")
             c.execute('REPLACE INTO messaging(user,latest_message, date, receiver) VALUES (?,?,?,?)',(user, message, date, receiver))
     db.commit() #save changes
     db.close()  #close database
@@ -147,17 +149,28 @@ def get_message(user, receiver):
     other_message = c.execute("SELECT latest_message FROM messaging WHERE user =? AND receiver=?", (receiver, user)).fetchone()##chamged from fetchall to fetchone
     db.commit() #save changes
     db.close()  #close database
+    print("testetseteset")
+    print(user_sent)
+    print(other_sent)
     if other_sent is not None and user_sent is not None:
-        if other_sent < user_sent:
+        print("tfhjgjgfj")
+        if list(other_sent)[0] > list(user_sent)[0]:
+            print("++++++++++++omg" + list(other_message)[0])
             return list(other_message)[0]
         else:
+            print("++++++++++asdfadsf" +  list(user_message)[0])
             return list(user_message)[0]
     if other_sent is None and user_sent is not None:
+        print("usermessage")
         return list(user_message)[0]
     if other_sent is not None and user_sent is None:
+        print("other message")
         return list(other_message)[0]
     if other_sent is None and user_sent is None:
+        print("hgjgkjhj")
         return ""
+    print("hgkjhkjgkjgkjgh")
+    return ""
 
     
 #get latest message time

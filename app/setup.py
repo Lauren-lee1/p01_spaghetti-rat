@@ -262,3 +262,8 @@ db.pref_setup("levi", "Gemini", "ENTP", 0, 0, 59, 72, 1, 0, 0)
 db.add_user("maya", "nelson")
 db.profile_setup("maya", "Maya Nelson", "2005-09-02", 65, "music", "nerding", "", "female", "INFJ")
 db.pref_setup("maya", "Virgo", "INFJ", 0, 1, 67, 72, 0, 1, 0)
+
+####### Natalie Soler ##########
+db.add_user("natalie", "soler")
+db.profile_setup("natalie", "Natalie Soler", "2005-01-01", 68, "gaming", "art", "https://open.spotify.com/user/nlnn927ulhlyeamogct6sx44i?si=gxgu_3okRgqaplSVg17sPA", "nonbinary", "INFP")
+db.pref_setup("natalie", "Capricorn", "INFP", 0, 0, 0, 100, 1, 0, 1)

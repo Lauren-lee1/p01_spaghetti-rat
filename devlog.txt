@@ -323,3 +323,8 @@ laurenL & nadaH-- 2022-12-23 00:22
 * once given no, can't message unless that match messaged them
 ==============================================================
 
+laurenL-- 2022-12-23 00:46
+--------------------------------------------------------------
+* realized that messaging doesn't work entirely bc latest message is not displayed but tired
+* update design doc with right compontents and new file paths!
+==============================================================

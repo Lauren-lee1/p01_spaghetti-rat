@@ -494,7 +494,7 @@ def create_api_db():
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create it
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
     # users table
-    c.execute("CREATE TABLE IF NOT EXISTS api(user TEXT, other_user TEXT), bool INTEGER")
+    c.execute("CREATE TABLE IF NOT EXISTS api(user TEXT,  TEXT, bool INTEGER)")
 
     db.commit() #save changes
     db.close()  #close database

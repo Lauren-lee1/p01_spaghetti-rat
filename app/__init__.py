@@ -155,14 +155,13 @@ def disp_matches():
         for letter in duck[0]: #turn tuple data into link for ducks :)
             duck_link = duck_link + letter
         matchList[match_name].append(duck_link)
-        matchList[match_name].append(messaging.ask_api_message(session['username'], match_name))
         matchList[match_name].append(match)
 
     return render_template('match.html', matchList = matchList)
 
 
 @app.route("/match/<username>/<ans>", methods=['GET', 'POST'])
-def disp_ans(username, ans):
+def disp_ans(username):
     extra_info = []
     more = matching.get_extra_match_info(username)
     print(more)
@@ -170,29 +169,43 @@ def disp_ans(username, ans):
             item = str(item)[1:-2]
             extra_info.append(item)
     extra_info[6] = extra_info[6].strip("\'")
-    if ans == "False":
+    ans = db.random_update_api_db(session['username'], username)
+    if ans == False:
         return render_template('no.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6])
-    if ans == "True":
-        return render_template('yes.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6]+".com")
+    if ans == True:
+        return render_template('yes.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6])
     return "error"
 
 @app.route("/message/<username>", methods=['GET', 'POST'])
 def display_message(username):
-    if messaging.check_api_db(session['username'], username) == False:
-        return render_template('prevno.html')
-    else:
-        if messaging.get_message(session['username'], username) is not None:
-            msg = messaging.get_message(session['username'], username)
-            time = messaging.get_time(session['username'], username)
-            return render_template('message.html', user=username, messaged=True, latest=msg, time=time)
-    return render_template('message.html', user=username)
+    if messaging.check_db(session['username'], username) ==  False:
+        db.nonrandom_update_api_db(session['username'], username)
+    else: 
+       # if db.can_message(session['username'], username) == True:
+        msg = messaging.get_message(session['username'], username)
+        time = messaging.get_time(session['username'], username)
+        sender = messaging.get_user(session['username'], username)
+        return render_template('message.html', user=username, sender = sender, latest=msg, time=time)
+    # if messaging.can_message(session['username'], username) == False:
+    #     return render_template('prevno.html')
+    # else:
+    #     return render_template('prevno.html')
+    # #     #if messaging.get_message(session['username'], username) is not None:
+    # #     msg = messaging.get_message(session['username'], username)
+    # #     time = messaging.get_time(session['username'], username)
+    # #     return render_template('message.html', user=username, messaged=True, latest=msg, time=time)
+    # # return render_template('message.html', user=username)
 
 @app.route("/message/<username>/update", methods=['GET', 'POST'])
 def update_messages(username):
-    msg = request.form.get('msg')
-    msg_info = messaging.send_message(session['username'], username, msg)
-    msg_info = list(msg_info[0])
-    return render_template('message.html', user=username, user2 = session['username'], messaged=True, latest=msg_info[1], time=msg_info[2], status="message has been sent successfully!")
+    if db.can_message(session['username'], username):
+        msg = request.form.get('msg')
+        db.send_message(session['username'], username, msg)
+        db.update_permission(session['username'], username)
+        time = db.get_time(session['username'], username)
+        return render_template('message.html', user=username, sender = session['username'], latest=msg, time=time)
+    else:
+        return render_template('prevno.html')
 
 @app.errorhandler(500)
 def no_info():

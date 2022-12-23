@@ -197,3 +197,38 @@ db.pref_setup("ashley", "Libra", "ENFJ", 1, 1, 67, 81, 0, 1, 0)
 db.add_user("dav", "lee")
 db.profile_setup("dav", "Davalynn Lee", "2005-08-09", 61, "texting", "cheese rolling", "https://open.spotify.com/user/davalynn0809?si=lnyE6infSJWGrCQENjSNhw", "female", "ESTJ")
 db.pref_setup("dav", "Leo", "ESTJ", 1, 1, 66, 72, 0, 1, 0)
+
+####### Davalynn Lee ##########
+db.add_user("dav", "lee")
+db.profile_setup("dav", "Davalynn Lee", "2005-08-09", 61, "texting", "cheese rolling", "https://open.spotify.com/user/davalynn0809?si=lnyE6infSJWGrCQENjSNhw", "female", "ESTJ")
+db.pref_setup("dav", "Leo", "ESTJ", 1, 1, 66, 72, 0, 1, 0)
+
+####### Kate Alvarez ##########
+db.add_user("kate", "alvarez")
+db.profile_setup("kate", "Kate Alvarez", "2005-09-29", 62, "science", "nerding", "https://open.spotify.com/artist/6HvZYsbFfjnjFrWF950C9d?si=9615efe1614f4398", "female", "INFP")
+db.pref_setup("kate", "Libra", "INFP", 1, 1, 60, 100, 0, 1, 0)
+
+####### Oston Chen ##########
+db.add_user("oston", "chen")
+db.profile_setup("oston", "Oston Chen", "2005-01-17", 68, "walking", "texting", "https://open.spotify.com/user/ai9snxywxkvasmxwo1o4f1rdc", "male", "ENFJ")
+db.pref_setup("oston", "Libra", "ENFJ", 0, 0, 61, 67, 1, 0, 0)
+
+####### Evan Leung ##########
+db.add_user("evan", "leung")
+db.profile_setup("evan", "Evan Leung", "2005-04-18", 73, "gaming", "nerding", "https://open.spotify.com/user/6xh3vty04sp0rpmseat1pg94e", "male", "ENFJ")
+db.pref_setup("evan", "Aries", "INTP", 0, 0, 10, 72, 1, 0, 0)
+
+####### Hui Wang ##########
+db.add_user("hui", "wang")
+db.profile_setup("hui", "Hui Wang", "2005-07-26", 68, "gaming", "sports", "https://open.spotify.com/user/31wrjqoeizp7ujecx4mu2oti3pbi", "male", "ISFP")
+db.pref_setup("hui", "Leo", "ISFP", 0, 0, 60, 68, 1, 0, 0)
+
+####### Joseph Bahk ##########
+db.add_user("joseph", "bakh")
+db.profile_setup("joseph", "Joseph Bakh", "2005-10-31", 68, "singing", "sports", "https://open.spotify.com/user/flvgdeo7husie8iuju598cvv1?si=ewBDp7nOSdmbtbfCpMB1Sw", "male", "ENTP")
+db.pref_setup("joseph", "Scorpio", "ENTP", 0, 1, 61, 69, 1, 0, 0)
+
+####### Qi Guang Zhu ##########
+db.add_user("qi", "guang")
+db.profile_setup("qi", "Qi Guang Zhu", "2004-12-01", 69, "gaming", "card games", "https://open.spotify.com/user/wt23fdtfw8dv5wxhpugrmf88r?si=31934cd0ffb54641", "male", "ISFP")
+db.pref_setup("qi", "Sagittarius", "ISFP", 1, 1, 24, 96, 1, 1, 1)

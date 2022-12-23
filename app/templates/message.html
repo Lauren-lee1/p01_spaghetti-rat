@@ -27,13 +27,11 @@
 
         <h1>Your conversation with <strong>{{user}}</strong></h1>
         <form action="{{url_for ('update_messages', username=user)}}" method="POST">
-            {% if messaged == True %}
-                {{status}}
+            
                 <br><br>            
-                <h4><em>The latest message: </em></h4> 
+                <h4><em>The latest message from {{sender}}: </em></h4> 
                 <blockquote>
                     {{latest}}
-                    <cite>{{user2}}</cite>
                 </blockquote>
                 
                 <br><br>

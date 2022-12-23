@@ -29,6 +29,8 @@ def match_hobbies(user, other_user):
          ret_val = 2
     if  (hobby_2 == other_hobby_2 and hobby_1 != other_hobby_1) or (hobby_2 != other_hobby_2 and hobby_1 == other_hobby_1) or (hobby_1 != other_hobby_2 and hobby_2 == other_hobby_1) or (hobby_1 == other_hobby_2 and hobby_2 != other_hobby_1) :
          ret_val = 1
+    db.commit() #save changes
+    db.close()  #close database
     return ret_val
 
 '''helper fxn for star_sign'''
@@ -38,7 +40,8 @@ def get_star_sign(user):
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
     star_sign = (c.execute("SELECT star_sign FROM profile WHERE user =?", (user,)).fetchone())
-
+    db.commit() #save changes
+    db.close()  #close database
     return list(star_sign)[0]
 
 '''
@@ -63,7 +66,8 @@ def get_mbti(user):
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
     mbti = (c.execute("SELECT mbti FROM profile WHERE user =?", (user,)).fetchone())
-
+    db.commit() #save changes
+    db.close()  #close database
     return list(mbti)[0]
 '''
 returns if other_user mbti matches other user mbti preferences
@@ -89,6 +93,8 @@ def match_height(user, other_user):
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
     height = c.execute("SELECT height FROM profile WHERE user =?", (other_user,)).fetchone()
+    db.commit() #save changes
+    db.close()  #close database
 
     DB_FILE="pref.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
@@ -96,6 +102,8 @@ def match_height(user, other_user):
 
     low_height = c.execute("SELECT low_height FROM pref WHERE user =?", (user,)).fetchone()
     high_height = c.execute("SELECT high_height FROM pref WHERE user =?", (user,)).fetchone()
+    db.commit() #save changes
+    db.close()  #close database
     if low_height is not None or high_height is not None:
         if height >= low_height and height <= high_height:
             return True
@@ -159,7 +167,7 @@ def match(user):
     #hobby_1 = c.execute("SELECT hobby_1 FROM profile WHERE user =?", (user,)).fetchone()
     #hobby_2 = c.execute("SELECT hobby_2 FROM profile WHERE user =?", (user,)).fetchone()
     name = list(c.execute("SELECT name FROM profile WHERE user =?", (user,)).fetchone())[0]
-
+    
     #filter by height and gender first:
     total = check_age_gender(user)
     #=======all no optional==============#
@@ -223,6 +231,7 @@ def match(user):
             
             love_calc = ((points + api.love_calculator(name, other_name) ) / (points + 100)) * 20
             matches[x] = (star_sign_score + mbti_score + height_score + shared_hobby + love_calc + points)
+        
     '''   
     for i in sorted(matches.values()):
         key = list(matches)[i]
@@ -239,6 +248,8 @@ def check_age_gender(user):
     female = list(c.execute("SELECT female FROM pref WHERE user =?", (user,)).fetchone())[0]
     male = list(c.execute("SELECT male FROM pref WHERE user =?", (user,)).fetchone())[0]
     nonbinary = list(c.execute("SELECT nonbinary FROM pref WHERE user =?", (user,)).fetchone())[0]
+    db.commit() #save changes
+    db.close()  #close database
 
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
@@ -265,6 +276,8 @@ def check_age_gender(user):
         if gender_pref[2] == 1:
             nonbinary = c.execute("SELECT user FROM profile WHERE (age<=? AND age>=?) AND gender=?", (age+1, age-1, "nonbinary" )).fetchall()
     total = female + male + nonbinary
+    db.commit() #save changes
+    db.close()  #close database
     return total
 
 def no_optional(user, total):
@@ -279,6 +292,8 @@ def no_optional(user, total):
 
     low_height = list(c.execute("SELECT low_height FROM pref WHERE user =?", (user,)).fetchone())[0]
     high_height = list(c.execute("SELECT high_height FROM pref WHERE user =?", (user,)).fetchone())[0]
+    db.commit() #save changes
+    db.close()  #close database
 
     DB_FILE="profile.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
@@ -302,6 +317,8 @@ def no_optional(user, total):
         if match_hobbies(user, x) == 2:
             shared_hobby = shared_hobby + 20
         matches[x] = (shared_hobby + love_calc)
+    db.commit() #save changes
+    db.close()  #close database
     return matches
 
 def all_optional(user, total):
@@ -313,7 +330,6 @@ def all_optional(user, total):
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
     name = list(c.execute("SELECT name FROM profile WHERE user =?", (user,)).fetchone())[0]
-    
     for x in total:
         x = list(x)[0]
         #star sign
@@ -346,6 +362,8 @@ def all_optional(user, total):
         love_calc = 0.2 * api.love_calculator(name, other_name)
         #total
         matches[x] = (star_sign_score + mbti_score + height_score + shared_hobby + love_calc)
+    db.commit() #save changes
+    db.close()  #close database
     return matches
 
 def check_gender_pref(user, matches):
@@ -354,29 +372,41 @@ def check_gender_pref(user, matches):
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
 
     user_gender = c.execute("SELECT gender FROM profile WHERE user=?", (user, )).fetchone()
-
+    db.commit() #save changes
+    db.close()  #close database
+    if user_gender is not None:
+        user_gender = list(user_gender)[0]
+    print(user_gender)
     DB_FILE="pref.db"
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
-    
+
+    copy = matches.copy()
+    print(matches)
     if user_gender == "female":
         print("******************female")
-        for x in matches:
-            if c.execute("SELECT female FROM pref WHERE user=?", (x, )).fetchone() == 0:
+        for x in copy:
+            if list(c.execute("SELECT female FROM pref WHERE user=?", (x, )).fetchone())[0] == 0:
                 print("&&&&&&&&&&&&&&&&d")
-                del matches[x]
+                print(matches.pop(x))
+                print(copy)
+                print(matches)
+                print("xyz")
     if user_gender == "male":
         print("******************male")
-        for x in matches:
-            if c.execute("SELECT male FROM pref WHERE user=?", (x, )).fetchone() == 0:
+        for x in copy:
+            if list(c.execute("SELECT male FROM pref WHERE user=?", (x, )).fetchone())[0] == 0:
                 print("&&&&&&&&&&&&&&&&d")
-                del matches[x]
+                matches.pop(x)
     if user_gender == "nonbinary":
         print("******************nb")
-        for x in matches:
-            if c.execute("SELECT nonbinary FROM pref WHERE user=?", (x, )).fetchone() == 0:
+        for x in copy:
+            if list(c.execute("SELECT nonbinary FROM pref WHERE user=?", (x, )).fetchone())[0] == 0:
                 print("&&&&&&&&&&&&&&&&d")
-                del matches[x]
+                matches.pop(x)
+    db.commit() #save changes
+    db.close()  #close database
+    print("huh")
     return matches
         
     
@@ -394,7 +424,8 @@ def get_match_info(match, matches):
 
     name = c.execute("SELECT name FROM profile WHERE user=?", (match,)).fetchone()
     percentage = matches[match]
-
+    db.commit() #save changes
+    db.close()  #close database
     return [name, percentage]
 
 '''
@@ -417,4 +448,6 @@ def get_extra_match_info(match):
 
     spotify = c.execute("SELECT spotify FROM profile WHERE user=?", (match,)).fetchone()
 
+    db.commit() #save changes
+    db.close()  #close database
     return [birthday, star_sign, mbti, height, hobby_1, hobby_2, spotify]

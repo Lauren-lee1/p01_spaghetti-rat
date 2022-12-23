@@ -143,7 +143,7 @@ creates messaging table:
 user (string) |
 latest_message (string) |
 date (string) |
-reciever (string) |
+receiver (string) |
 '''
 def create_messaging_db():
     DB_FILE="messaging.db"
@@ -151,7 +151,7 @@ def create_messaging_db():
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
     # preferences table
-    c.execute("CREATE TABLE IF NOT EXISTS messaging(user TEXT, latest_message TEXT, date TEXT, reciever TEXT)")
+    c.execute("CREATE TABLE IF NOT EXISTS messaging(user TEXT, latest_message TEXT, date TEXT, receiver TEXT)")
 
     db.commit() #save changes
     db.close()  #close database
@@ -494,7 +494,7 @@ def create_api_db():
     db = sqlite3.connect(DB_FILE) #open if file exists, otherwise create it
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
     # users table
-    c.execute("CREATE TABLE IF NOT EXISTS api(user TEXT,  TEXT, bool INTEGER)")
+    c.execute("CREATE TABLE IF NOT EXISTS api(user TEXT, other_user TEXT, bool INTEGER)")
 
     db.commit() #save changes
     db.close()  #close database

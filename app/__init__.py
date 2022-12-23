@@ -169,18 +169,26 @@ def disp_ans(username):
             item = str(item)[1:-2]
             extra_info.append(item)
     extra_info[6] = extra_info[6].strip("\'")
-    ans = db.random_update_api_db(session['username'], username)
+    ans = messaging.random_update_api_db(session['username'], username)
+    if messaging.check_db(session['username'], username) == True:
+        if messaging.can_message(session['username'], username) == False:
+            return render_template('no.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6])
     if ans == False:
         return render_template('no.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6])
     if ans == True:
         return render_template('yes.html', user = username, answer = ans, bday=extra_info[0], star_sign=extra_info[1], mbti=extra_info[2], height=extra_info[3], hobby1=extra_info[4], hobby2=extra_info[5], spotify=extra_info[6])
-    return "error"
 
 @app.route("/message/<username>", methods=['GET', 'POST'])
 def display_message(username):
     if messaging.check_db(session['username'], username) ==  False:
-        db.nonrandom_update_api_db(session['username'], username)
+        print("it is false")
+        messaging.nonrandom_update_api_db(session['username'], username)
+        msg = messaging.get_message(session['username'], username)
+        time = messaging.get_time(session['username'], username)
+        sender = messaging.get_user(session['username'], username)
+        return render_template('message.html', user=username, sender = sender, latest=msg, time=time)
     else: 
+        print("true")
        # if db.can_message(session['username'], username) == True:
         msg = messaging.get_message(session['username'], username)
         time = messaging.get_time(session['username'], username)
@@ -198,11 +206,11 @@ def display_message(username):
 
 @app.route("/message/<username>/update", methods=['GET', 'POST'])
 def update_messages(username):
-    if db.can_message(session['username'], username):
+    if messaging.can_message(session['username'], username):
         msg = request.form.get('msg')
-        db.send_message(session['username'], username, msg)
-        db.update_permission(session['username'], username)
-        time = db.get_time(session['username'], username)
+        messaging.send_message(session['username'], username, msg)
+        messaging.update_permission(session['username'], username)
+        time = messaging.get_time(session['username'], username)
         return render_template('message.html', user=username, sender = session['username'], latest=msg, time=time)
     else:
         return render_template('prevno.html')

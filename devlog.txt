@@ -305,3 +305,12 @@ briannaT-- 2022-12-21 2:57
   after form submission / page refresh (couldn't get to work </3)
 * fixed gender dropdown, previously gave no values
 ==============================================================
+
+laurenL & nadaH-- 2022-12-22 23:49
+--------------------------------------------------------------
+* worked on getting messaging to work
+* worked on getting yes/no api to work, which will allow users to message
+  after seeing info
+* messaging works (had to commit and close dbs)
+* spotify only displays if you match
+==============================================================

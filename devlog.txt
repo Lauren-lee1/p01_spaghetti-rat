@@ -314,3 +314,12 @@ laurenL & nadaH-- 2022-12-22 23:49
 * messaging works (had to commit and close dbs)
 * spotify only displays if you match
 ==============================================================
+
+laurenL & nadaH-- 2022-12-23 00:22
+--------------------------------------------------------------
+* messaging display works
+* yes/no api integration works
+* user can message w out seeing info -- if see info, subjected to yes/no
+* once given no, can't message unless that match messaged them
+==============================================================
+

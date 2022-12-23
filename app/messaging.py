@@ -107,7 +107,7 @@ def get_message(user, reciever):
         else:
             return str(user_message)
     if other_sent is None and user_sent is not None:
-        return str(user_message))
+        return str(user_message)
     if other_sent is not None and user_sent is None:
         return str(other_message)
     if other_sent is None and user_sent is None:
@@ -151,7 +151,7 @@ def get_user(user, reciever):
         else:
             return str(user_user)
     if other_sent is None and user_sent is not None:
-        return str(user_user))
+        return str(user_user)
     if other_sent is not None and user_sent is None:
         return str(other_user)
     if other_sent is None and user_sent is None:

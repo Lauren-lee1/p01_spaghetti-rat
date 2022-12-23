@@ -160,7 +160,7 @@ def disp_matches():
     return render_template('match.html', matchList = matchList)
 
 
-@app.route("/match/<username>/<ans>", methods=['GET', 'POST'])
+@app.route("/match/<username>/answer", methods=['GET', 'POST'])
 def disp_ans(username):
     extra_info = []
     more = matching.get_extra_match_info(username)

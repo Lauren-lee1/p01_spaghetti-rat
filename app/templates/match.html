@@ -29,18 +29,18 @@
       {% for match in matchList %}
         <div class="card" style="width: 300px;">
             <div class="card-divider">
-              <img src= {{ matchList[match][1] + "%"}}>
+              <img src= {{ matchList[match][1]}}>
             </div>
             <div class="card-section">
               <h4>{{ match }}</h4>
-              <p>{{ matchList[match][0] }}</p>
+              <p>{{ matchList[match][0]+ "%" }}</p>
               <!--
                 match button: info + yes or no api call to determine whether or not user can msg
                 msg button: msg the user
               -->
-              <a href={{ url_for ('disp_ans', username=matchList[match][3] }} class="button small">Match</a>
+              <a href={{ url_for ('disp_ans', username=matchList[match][2] )}} class="button small">Match</a>
               <br>
-              <a href={{ url_for ('display_message', username=matchList[match][3]) }} class="button small">Message</a>
+              <a href={{ url_for ('display_message', username=matchList[match][2] )}} class="button small">Message</a>
             </div>
           </div>
           <br>
